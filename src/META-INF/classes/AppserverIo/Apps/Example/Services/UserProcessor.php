@@ -24,7 +24,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Apps\Example\Exceptions\LoginException;
-use AppserverIo\Apps\Example\Exceptions\UserNotFoundException;
+use AppserverIo\Apps\Example\Exceptions\FoundInvalidUserException;
 
 /**
  * A singleton session bean implementation that handles the
