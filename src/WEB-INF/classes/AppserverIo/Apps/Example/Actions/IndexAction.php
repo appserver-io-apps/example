@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Assertion
+ * AppserverIo\Apps\Example\Actions\IndexAction
  *
  * NOTICE OF LICENSE
  *

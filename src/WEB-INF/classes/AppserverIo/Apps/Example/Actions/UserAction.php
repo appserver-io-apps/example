@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Assertion
+ * AppserverIo\Apps\Example\Actions\UserAction
  *
  * NOTICE OF LICENSE
  *
@@ -25,10 +25,15 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
-use AppserverIo\Apps\Example\Utils\RequestKeys;
+use AppserverIo\Apps\Example\Utils\ProxyKeys;
+use AppserverIo\Apps\Example\Utils\ContextKeys;
 
 /**
- * Example servlet implementation that handles an upload request.
+ * Example action implementation that loads data over a persistence container proxy
+ * and renders a list, based on the returned values.
+ *
+ * Additional it provides functionality to edit, delete und persist the data of the
+ * user actually logged into the system.
  *
  * @category   Appserver
  * @package    TechDivision_ApplicationServerExample
@@ -38,7 +43,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       http://www.appserver.io
  */
-class UploadAction extends ExampleBaseAction
+class UserAction extends ExampleBaseAction
 {
 
     /**
@@ -46,12 +51,13 @@ class UploadAction extends ExampleBaseAction
      *
      * @var string
      */
-    const UPLOAD_TEMPLATE = 'static/templates/upload.phtml';
+    const USER_DETAIL_TEMPLATE = 'static/templates/user_detail.phtml';
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
      *
-     * Renders an upload dialoge with a select and submit button.
+     * Loads the data of the user actually logged into the system and attaches it to the servlet
+     * context ready to be rendered by the template.
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
@@ -60,28 +66,8 @@ class UploadAction extends ExampleBaseAction
      */
     public function indexAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
     {
-        $servletResponse->appendBodyStream($this->processTemplate(UploadAction::UPLOAD_TEMPLATE, $servletRequest, $servletResponse));
-    }
-
-    /**
-     * Loads the sample entity with the sample ID found in the request and attaches
-     * it to the servlet context ready to be rendered by the template.
-     *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
-     *
-     * @return void
-     * @see IndexServlet::indexAction()
-     */
-    public function uploadAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
-    {
-
-        // sample for saving file to appservers upload tmp folder with tmpname
-        $fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD);
-        $fileToUpload->init();
-        $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
-
-        // after the successfull upload, render the template again
-        $this->indexAction($servletRequest, $servletResponse);
+        $viewData = $this->getProxy(ProxyKeys::USER_PROCESSOR)->getUserViewData($this->getUsername());
+        $this->setAttribute(ContextKeys::VIEW_DATA, $viewData);
+        $servletResponse->appendBodyStream($this->processTemplate(UserAction::USER_DETAIL_TEMPLATE, $servletRequest, $servletResponse));
     }
 }

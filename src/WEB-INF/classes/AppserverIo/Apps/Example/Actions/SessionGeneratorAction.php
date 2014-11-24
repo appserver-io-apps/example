@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Assertion
+ * AppserverIo\Apps\Example\Actions\SessionGeneratorAction
  *
  * NOTICE OF LICENSE
  *
@@ -23,11 +23,13 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
+use AppserverIo\Psr\Servlet\SessionUtils;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
 
 /**
- * Example servlet implementation that requests digest authentication to be loaded.
+ * Example servlet implementation that validates passed user credentials against
+ * persistence container proxy and stores the user data in the session.
  *
  * @category   Appserver
  * @package    TechDivision_ApplicationServerExample
@@ -37,7 +39,7 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       http://www.appserver.io
  */
-class DigestAuthenticationAction extends ExampleBaseAction
+class SessionGeneratorAction extends ExampleBaseAction
 {
 
     /**
@@ -45,10 +47,17 @@ class DigestAuthenticationAction extends ExampleBaseAction
      *
      * @var string
      */
-    const INDEX_TEMPLATE = 'static/templates/digestAuthentication.phtml';
+    const SESSION_GENERATOR_TEMPLATE = 'static/templates/sessionGenerator.phtml';
 
     /**
-     * Default action to invoke if no action parameter has been found in the request.
+     * The generted session ID.
+     *
+     * @var string
+     */
+    protected $sessionId;
+
+    /**
+     * Default action to create an endless number of session (for performance testing purposes only).
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
@@ -57,8 +66,24 @@ class DigestAuthenticationAction extends ExampleBaseAction
      */
     public function indexAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
     {
-        $servletResponse->appendBodyStream(
-            $this->processTemplate(DigestAuthenticationAction::INDEX_TEMPLATE, $servletRequest, $servletResponse)
-        );
+        // create a random session and start it
+        $servletRequest->setRequestedSessionName('example_' . SessionUtils::generateRandomString());
+        $session = $servletRequest->getSession(true);
+
+        // write the session to the member varialbe
+        $this->sessionId = $session->getId();
+
+        // render the template
+        $servletResponse->appendBodyStream($this->processTemplate(SessionGeneratorAction::SESSION_GENERATOR_TEMPLATE, $servletRequest, $servletResponse));
+    }
+
+    /**
+     * Returns the generated session ID.
+     *
+     * @return string The session ID
+     */
+    public function getSessionId()
+    {
+        return $this->sessionId;
     }
 }

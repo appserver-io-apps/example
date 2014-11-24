@@ -19,6 +19,16 @@
 		"vendor-dir" : "src/vendor",
 		"component-dir" : "src/components"
 	},
+    "autoload" : {
+        "psr-0" : {
+            "AppserverIo\\Apps\\Example" : [
+                "src/WEB-INF/classes/",
+                "src/META-INF/classes/",
+                "tests/WEB-INF/classes/",
+                "tests/META-INF/classes/"
+            ]
+        }
+    },
 	"authors" : [{
 			"name" : "Tim Wagner",
 			"email" : "tw@appserver.io"
