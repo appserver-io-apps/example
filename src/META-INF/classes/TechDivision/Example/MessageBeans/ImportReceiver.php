@@ -51,7 +51,7 @@ class ImportReceiver extends AbstractReceiver
      * Will be invoked when a new message for this message bean will be available.
      *
      * @param \AppserverIo\Psr\MessageQueueProtocol\Message $message   A message this message bean is listen for
-     * @param string                                     $sessionId The session ID
+     * @param string                                        $sessionId The session ID
      *
      * @return void
      * @see \AppserverIo\Psr\MessageQueueProtocol\Receiver::onMessage()
