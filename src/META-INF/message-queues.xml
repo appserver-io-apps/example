@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message-queues>
+    <message-queue type="ImportReceiver">
+        <destination>queue/import</destination>
+    </message-queue>
+    <message-queue type="ImportChunkReceiver">
+        <destination>queue/import_chunk</destination>
+    </message-queue>
+    <message-queue type="CreateASingleActionTimer">
+        <destination>queue/create_a_single_action_timer</destination>
+    </message-queue>
+    <message-queue type="CreateAIntervalTimer">
+        <destination>queue/create_a_interval_timer</destination>
+    </message-queue>
+</message-queues>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4">
+
+    <display-name>appserver.io example application</display-name>
+    <description>This is the example application for the appserver.io servlet engine.</description>
+
+    <session-config>
+    
+        <session-name>example_login</session-name>
+        <session-file-prefix>example_session_</session-file-prefix>
+        
+        <!--
+        <session-save-path>/tmp</session-save-path>
+        <garbage-collection-probability>0.1</garbage-collection-probability>
+        <session-save-path>60</session-save-path>
+        <session-maximum-age>0</session-maximum-age>
+        <session-inactivity-timeout>1440</session-inactivity-timeout>
+        <session-cookie-lifetime>86400</session-cookie-lifetime>
+        <session-cookie-domain>localhost</session-cookie-domain>
+        <session-cookie-path>/</session-cookie-path>
+        <session-cookie-secure>false</session-cookie-secure>
+        <session-http-only>false</session-http-only>
+        -->
+        
+    </session-config>
+
+    <servlet>
+        <description>The hello world as servlet implementation.</description>
+        <display-name>Hello World</display-name>
+        <servlet-name>helloWorld</servlet-name>
+        <servlet-class>\AppserverIo\Apps\Example\Servlets\HelloWorldServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+    
+        <description>The routlt controller servlet implementation.</description>
+        <display-name>The routlt controller servlet</display-name>
+        <servlet-name>routlt</servlet-name>
+        <servlet-class>\AppserverIo\Routlt\ControllerServlet</servlet-class>
+        
+        <init-param>
+            <param-name>configurationFile</param-name>
+            <param-value>WEB-INF/routes.json</param-value>
+        </init-param>
+        
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>helloWorld</servlet-name>
+        <url-pattern>/helloWorld.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>routlt</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>routlt</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+    <security>
+        <url-pattern>/index.do/basicAuthentication*</url-pattern>
+        <auth>
+            <auth_type>Basic</auth_type>
+            <realm>test</realm>
+            <adapter_type>htpasswd</adapter_type>
+            <options>
+                <file>WEB-INF/htpasswd</file>
+            </options>
+        </auth>
+    </security>
+
+    <security>
+        <url-pattern>/index.do/digestAuthentication*</url-pattern>
+        <auth>
+            <auth_type>Digest</auth_type>
+            <realm>Digest-Example-Realm</realm>
+            <adapter_type>htdigest</adapter_type>
+            <options>
+                <file>WEB-INF/htdigest</file>
+            </options>
+        </auth>
+    </security>
+    
+</web-app>

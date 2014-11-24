@@ -1,0 +1,40 @@
+{
+    "routes": [
+        {
+            "urlMapping": "/index*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\IndexAction"
+        },
+        {
+            "urlMapping": "/upload*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\UploadAction"
+        },
+        {
+            "urlMapping": "/login*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\LoginAction"
+        },
+        {
+            "urlMapping": "/basicAuthentication*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\BasicAuthenticationAction"
+        },
+        {
+            "urlMapping": "/digestAuthentication*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\DigestAuthenticationAction"
+        },
+        {
+            "urlMapping": "/webSocket*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\WebSocketAction"
+        },
+        {
+            "urlMapping": "/messageQueue*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\MessageQueueAction"
+        },
+        {
+            "urlMapping": "/sessionGenerator*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\SessionGeneratorAction"
+        },
+        {
+            "urlMapping": "/user*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\UserAction"
+        }
+    ]
+}

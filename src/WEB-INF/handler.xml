@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app version="2.4">
+
+    <display-name>Simple Web Socket Example</display-name>
+    <description>Simple Web Socket Example</description>
+
+    <handler>
+        <description><![CDATA[Handler to handle sample entities.]]></description>
+        <display-name>SampleHandler</display-name>
+        <handler-name>SampleHandler</handler-name>
+        <handler-class>\TechDivision\Example\Handlers\SampleHandler</handler-class>
+    </handler>
+
+    <handler>
+        <description><![CDATA[Handler to handle user entities.]]></description>
+        <display-name>UserHandler</display-name>
+        <handler-name>UserHandler</handler-name>
+        <handler-class>\TechDivision\Example\Handlers\UserHandler</handler-class>
+    </handler>
+
+    <handler-mapping>
+        <handler-name>SampleHandler</handler-name>
+        <url-pattern>/sample</url-pattern>
+    </handler-mapping>
+
+    <handler-mapping>
+        <handler-name>UserHandler</handler-name>
+        <url-pattern>/user</url-pattern>
+    </handler-mapping>
+
+</web-app>

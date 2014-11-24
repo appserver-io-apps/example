@@ -1,0 +1,26 @@
+<datasources>
+
+    <!--
+    <datasource type="TechDivision\PersistenceContainer\Application">
+        <name>AppserverIo\Apps\Example</name>
+        <pathToEntities>META-INF/classes/TechDivision/Example/Entities</pathToEntities>
+        <database>
+            <driver>pdo_mysql</driver>
+            <user>appserver</user>
+            <password>appserver</password>
+            <databaseName>appserver_ApplicationServer</databaseName>
+        </database>
+    </datasource>
+    -->
+    
+    <datasource name="appserver.io-example-application">
+        <database>
+            <driver>pdo_sqlite</driver>
+            <user>appserver</user>
+            <password>appserver</password>
+            <path>META-INF/data/appserver_ApplicationServer.sqlite</path>
+            <memory>false</memory>
+        </database>
+    </datasource>
+    
+</datasources>

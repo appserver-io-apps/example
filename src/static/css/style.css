@@ -1,0 +1,55 @@
+/* custom styles */
+
+body {
+    font-size: 15px;
+}
+
+.nav > li > a {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+
+.navbar-brand {
+    font-weight: 200;
+}
+
+ul li.active span {
+    color: #4bcddb;
+}
+
+a, a:hover, a:active {
+    color: #222;
+}
+
+.navbar-text a, .navbar-text a:hover, .navbar-text a:active {
+    color: #999;
+}
+
+table {
+    text-align: left;
+}
+
+.content {
+    padding-top: 80px;
+    text-align: center;
+}
+
+.form-center {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    color: #777;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+
