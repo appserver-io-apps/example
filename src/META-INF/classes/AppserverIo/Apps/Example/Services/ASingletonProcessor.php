@@ -80,7 +80,7 @@ class ASingletonProcessor extends \Stackable implements TimedObjectInterface
     /**
      * Returns the initial context instance.
      *
-     * @return \TechDivision\ApplicationServer\InitialContext The initial context instance
+     * @return \AppserverIo\Appserver\Application\Interfaces\ContextInterface The initial context instance
      */
     public function getInitialContext()
     {

@@ -8,14 +8,14 @@
         <description><![CDATA[Handler to handle sample entities.]]></description>
         <display-name>SampleHandler</display-name>
         <handler-name>SampleHandler</handler-name>
-        <handler-class>\TechDivision\Example\Handlers\SampleHandler</handler-class>
+        <handler-class>\AppserverIo\Apps\Example\Handlers\SampleHandler</handler-class>
     </handler>
 
     <handler>
         <description><![CDATA[Handler to handle user entities.]]></description>
         <display-name>UserHandler</display-name>
         <handler-name>UserHandler</handler-name>
-        <handler-class>\TechDivision\Example\Handlers\UserHandler</handler-class>
+        <handler-class>\AppserverIo\Apps\Example\Handlers\UserHandler</handler-class>
     </handler>
 
     <handler-mapping>
