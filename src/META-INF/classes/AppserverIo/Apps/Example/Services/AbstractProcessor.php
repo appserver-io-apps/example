@@ -168,7 +168,7 @@ class AbstractProcessor
     /**
      * Returns the initial context instance.
      *
-     * @return \TechDivision\ApplicationServer\InitialContext The initial context instance
+     * @return \AppserverIo\Appserver\Core\InitialContext The initial context instance
      */
     public function getInitialContext()
     {
@@ -178,7 +178,7 @@ class AbstractProcessor
     /**
      * Return's the system configuration
      *
-     * @return \TechDivision\Configuration\Interfaces\NodeInterface The system configuration
+     * @return \AppserverIo\Configuration\Interfaces\NodeInterface The system configuration
      */
     public function getSystemConfiguration()
     {

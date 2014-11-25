@@ -5,9 +5,9 @@
 	
 	<installation>
 		<steps>
-			<step type="TechDivision\ApplicationServer\Provisioning\CreateDatabaseStep">
+			<step type="AppserverIo\Appserver\Core\Provisioning\CreateDatabaseStep">
 			    <params>
-			        <param name="pathToEntities" type="string">META-INF/classes/AppserverIo/Apps/Example/Entities</param>
+			        <param name="pathToEntities" type="string">common/classes/AppserverIo/Apps/Example/Entities</param>
 			    </params>
 			</step>
 		</steps>
