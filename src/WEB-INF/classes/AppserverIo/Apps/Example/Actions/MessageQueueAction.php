@@ -117,7 +117,7 @@ class MessageQueueAction extends ExampleBaseAction
         $message = new StringMessage(ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR . $filename);
 
         // create a new message and send it
-        $send = $sender->send($message, false);
+        $sender->send($message, false);
 
         // reload all entities and render the dialog
         $this->indexAction($servletRequest, $servletResponse);

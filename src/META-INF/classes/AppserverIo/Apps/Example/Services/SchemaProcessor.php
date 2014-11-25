@@ -74,7 +74,7 @@ class SchemaProcessor extends AbstractProcessor
         $classes = $entityManager->getMetadataFactory()->getAllMetadata();
 
         // drop the schema if it already exists and create it new
-        $tool->dropSchema($classes);
-        $tool->createSchema($classes);
+        $schemaTool->dropSchema($classes);
+        $schemaTool->createSchema($classes);
     }
 }

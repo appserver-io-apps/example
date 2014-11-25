@@ -13,22 +13,25 @@
 		"phpunit/phpunit" : "3.7.*",
 		"appserver-io/phar" : "0.1.*",
 		"appserver-io/build" : "0.1.*",
-		"appserver-io/appserver" : "0.10.*"
+		"nikic/phlexy" : "dev-master",
+		"appserver-io/appserver" : "dev-master",
+		"squizlabs/php_codesniffer" : "1.5.3"
 	},
 	"config" : {
 		"vendor-dir" : "src/vendor",
 		"component-dir" : "src/components"
 	},
-    "autoload" : {
-        "psr-0" : {
-            "AppserverIo\\Apps\\Example" : [
-                "src/WEB-INF/classes/",
-                "src/META-INF/classes/",
-                "tests/WEB-INF/classes/",
-                "tests/META-INF/classes/"
-            ]
-        }
-    },
+	"autoload" : {
+		"psr-0" : {
+			"AppserverIo\\Apps\\Example" : [
+				"common/classes/",
+				"src/WEB-INF/classes/",
+				"src/META-INF/classes/",
+				"tests/WEB-INF/classes/",
+				"tests/META-INF/classes/"
+			]
+		}
+	},
 	"authors" : [{
 			"name" : "Tim Wagner",
 			"email" : "tw@appserver.io"

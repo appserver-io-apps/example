@@ -22,4 +22,4 @@
  */
 
 $loader = require 'src/vendor/autoload.php';
-$loader->add('AppserverIo\\Apps\\Example', 'src/META-INF/classes');
+$loader->add('AppserverIo\\Apps\\Example', array('src/common/classes', 'src/META-INF/classes', 'src/WEB-INF/classes'));

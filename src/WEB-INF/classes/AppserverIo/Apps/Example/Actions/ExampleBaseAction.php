@@ -24,7 +24,7 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
-use TechDivision\Naming\InitialContext;
+use AppserverIo\Appserver\Naming\InitialContext;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
 use AppserverIo\Psr\Servlet\Http\HttpSession;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
