@@ -24,6 +24,7 @@
 	"autoload" : {
 		"psr-0" : {
 			"AppserverIo\\Apps\\Example" : [
+				"common/classes/",
 				"src/WEB-INF/classes/",
 				"src/META-INF/classes/",
 				"tests/WEB-INF/classes/",
