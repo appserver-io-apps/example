@@ -23,7 +23,7 @@
 
 namespace AppserverIo\Apps\Example\MessageBeans;
 
-use TechDivision\Naming\InitialContext;
+use AppserverIo\Appserver\Naming\InitialContext;
 use AppserverIo\Apps\Example\Entities\Sample;
 use AppserverIo\Psr\MessageQueueProtocol\Message;
 use AppserverIo\Appserver\MessageQueue\Receiver\AbstractReceiver;
