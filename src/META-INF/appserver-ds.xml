@@ -1,7 +1,7 @@
 <datasources>
 
     <!--
-    <datasource type="TechDivision\PersistenceContainer\Application">
+    <datasource type="AppserverIo\Appserver\PersistenceContainer\Application">
         <name>AppserverIo\Apps\Example</name>
         <pathToEntities>META-INF/classes/TechDivision/Example/Entities</pathToEntities>
         <database>

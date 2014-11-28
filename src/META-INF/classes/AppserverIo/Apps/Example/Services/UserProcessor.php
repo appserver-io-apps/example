@@ -54,14 +54,14 @@ class UserProcessor extends AbstractProcessor
     /**
      * The user, logged into the system.
      *
-     * @var \AppserverIo\Apps\Example\Entities\User
+     * @var \AppserverIo\Apps\Example\Entities\User $user
      */
     protected $user;
 
     /**
      * The DIC provider instance.
      *
-     * @var \TechDivision\DependencyInjectionContainer\Interfaces\ProviderInterface
+     * @var \AppserverIo\Appserver\DependencyInjectionContainer\Interfaces\ProviderInterface $provider
      * @Resource(name="ProviderInterface")
      */
     protected $provider;
@@ -86,7 +86,7 @@ class UserProcessor extends AbstractProcessor
      * @param string $password The password that should match the username
      *
      * @return void
-     * @throws AppserverIo\Apps\Example\Exceptions\LoginException Is thrown if the user with the passed username doesn't exist or match the password
+     * @throws \AppserverIo\Apps\Example\Exceptions\LoginException Is thrown if the user with the passed username doesn't exist or match the password
      */
     public function login($username, $password)
     {
