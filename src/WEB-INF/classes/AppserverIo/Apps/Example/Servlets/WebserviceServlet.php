@@ -137,11 +137,11 @@ class WebserviceServlet extends HttpServlet
     /**
      * Dummy method that'll will be invoked by a SOAP call.
      *
-     * @param string $something The string to be logged
+     * @param array $parameters The actual request parameters
      *
      * @return void
      */
-    public function logSomething($parameters)
+    public function logSomething(array $parameters)
     {
         if (isset($parameters[WebserviceServlet::PARAMETER_LOG])) {
             return $parameters[WebserviceServlet::PARAMETER_LOG];
@@ -163,7 +163,7 @@ class WebserviceServlet extends HttpServlet
     /**
      * Calling this method results in an \Exception.
      *
-     * @return void
+     * @return void
      * @throws \Exception Is always thrown
      */
     public function throwException()
