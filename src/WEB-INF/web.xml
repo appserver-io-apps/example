@@ -32,6 +32,21 @@
     </servlet>
 
     <servlet>
+        <description>An example webservice server implmentation.</description>
+        <display-name>The webservice controller servlet</display-name>
+        <servlet-name>webservice</servlet-name>
+        <servlet-class>\AppserverIo\Apps\Example\Servlets\WebserviceServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+    
+        <description>The routlt controller servlet implementation.</description>
+        <display-name>Random runtime servlet</display-name>
+        <servlet-name>randomRuntime</servlet-name>
+        <servlet-class>\AppserverIo\Apps\Example\Servlets\RandomRuntimeServlet</servlet-class>
+    </servlet>
+
+    <servlet>
     
         <description>The routlt controller servlet implementation.</description>
         <display-name>The routlt controller servlet</display-name>
@@ -48,6 +63,26 @@
     <servlet-mapping>
         <servlet-name>helloWorld</servlet-name>
         <url-pattern>/helloWorld.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>webservice</servlet-name>
+        <url-pattern>/webservice.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>webservice</servlet-name>
+        <url-pattern>/webservice.do*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>randomRuntime</servlet-name>
+        <url-pattern>/randomRuntime.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>randomRuntime</servlet-name>
+        <url-pattern>/randomRuntime.do*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

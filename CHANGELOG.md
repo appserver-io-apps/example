@@ -1,3 +1,14 @@
+# Version 0.10.2
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add servlets to simulate requests with a random runtime + dummy SOAP server/client implementation
+* Refactor JMeter testcases to allow protocol definition by variable
+
 # Version 0.10.1
 
 ## Bugfixes
