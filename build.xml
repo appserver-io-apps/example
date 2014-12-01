@@ -91,16 +91,13 @@
     </target>
 
     <!-- ==================================================================== -->
-    <!-- Copies any built package to the snapshot hosting server.             -->
+    <!-- Moves any built package to the download directory of the server.     -->
     <!-- ==================================================================== -->
-    <target name="copy-to-hub" description="Copies any built package to the snapshot hosting server.">
-        <echo message="Now try to upload ${package.name} to snapshot server"/>
-        <exec executable="scp" failonerror="true">
-            <arg line="-o StrictHostKeyChecking=no -i ${user.home}/.ssh/id_dsa ${php-target.dir}/${package.filename} ${hub.scp-user}@${hub.address}:${hub.snapshot-path}${package.filename}"/>
-        </exec>
-        <exec executable="scp" failonerror="true">
-            <arg line="-o StrictHostKeyChecking=no -i ${user.home}/.ssh/id_dsa ${php-target.dir}/${package.filename} ${hub.scp-user}@${hub.address}:${hub.snapshot-path}${appserver.webapp.name}-latest.phar"/>
-        </exec>
+    <target name="move-to-hub" description="Moves any built package to the download directory of the server.">
+        <!-- copy it once first -->
+        <copy file="${php-target.dir}/${package.filename}" tofile="${hub.snapshot-path}${package.filename}"/>
+        <!-- now move the file -->
+        <move file="${php-target.dir}/${package.filename}" tofile="${hub.snapshot-path}${appserver.webapp.name}-latest.phar"/>
     </target>
 
     <!-- ==================================================================== -->
