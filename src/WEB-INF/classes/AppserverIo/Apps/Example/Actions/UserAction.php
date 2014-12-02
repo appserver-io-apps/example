@@ -70,4 +70,19 @@ class UserAction extends ExampleBaseAction
         $this->setAttribute(ContextKeys::VIEW_DATA, $viewData);
         $servletResponse->appendBodyStream($this->processTemplate(UserAction::USER_DETAIL_TEMPLATE, $servletRequest, $servletResponse));
     }
+
+    /**
+     * Invoked if the uses has to be saved.
+     *
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     *
+     * @return void
+     */
+    public function saveAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    {
+        // add a message, that the save action is not yet implemented
+        $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('The saveAction() method is not yet implemented!'));
+        $this->indexAction($servletRequest, $servletResponse);
+    }
 }
