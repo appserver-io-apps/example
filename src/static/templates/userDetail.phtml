@@ -1,7 +1,7 @@
 <?php
 
 /**
- * templates\websocket.phtml
+ * templates\user_detail.phtml
  *
  * NOTICE OF LICENSE
  *
@@ -15,6 +15,21 @@ namespace AppserverIo\Apps\Example\Servlets;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 
+// load the entity data if available
+if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
+    $userId = $entity->getUserId();
+    $username = $entity->getUsername();
+    $userLocale = $entity->getUserLocale();
+    $syncedAt = $entity->getSyncedAt();
+    $rate = $entity->getRate();
+    $password = $entity->getPassword();
+    $ldapSynced = $entity->getLdapSynced();
+    $enabled = $entity->getEnabled();
+    $email = $entity->getEmail();
+    $contractedHours = $entity->getContractedHours();
+}
+
+/** @var $this \AppserverIo\Apps\Example\Actions\UserAction */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,14 +65,14 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <p class="navbar-text"><?php if ($this->isLoggedIn()): ?>Logged in as: <strong><?php echo $this->getUsername() ?></strong>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $this->getLogoutLink() ?>">logout</a><?php else: ?>Not logged in.<?php endif; ?></p>
+                        <p class="navbar-text"><?php if ($this->isLoggedIn()): ?>Logged in as: <strong><?php echo $this->getUsername() ?></strong>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $this->getLogoutLink() ?>">logout</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $this->getUserEditLink() ?>">edit</a><?php else: ?>Not logged in.<?php endif; ?></p>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
-                    <li><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
+                    <li class="active"><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
                     <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
-                    <li class="active"><a href="index.do/webSocket"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;&nbsp;WebSocket</a></li>
+                    <?php if ($this->isWebSocketEnabled()): ?><li><a href="index.do/webSocket"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;&nbsp;WebSocket</a></li><?php endif; ?>
                     <li><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Message-Queue</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;Authentication <b class="caret"></b></a>
@@ -76,7 +91,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
         <?php if ($errorMessages = $this->getAttribute(ContextKeys::ERROR_MESSAGES)): ?>
             <div class="alert alert-danger">
                 <?php foreach ($errorMessages as $errorMessage): ?>
-                    <?php echo $errorMessage ?></br>
+                    <?php echo $errorMessage ?><br/>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
@@ -87,29 +102,21 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
         <br>
 
-        <h1>Websocket example</h1>
+        <h1>Your Data</h1>
 
-        <br>
-
-        <form id="personForm" class="form-inline" action="index" method="post">
-            <input type="hidden" name="<?php echo RequestKeys::ACTION ?>" value="persist" />
-            <input type="hidden" name="<?php echo RequestKeys::SAMPLE_ID ?>" />
-            <input type="text" name="<?php  echo RequestKeys::NAME ?>" class="form-control" placeholder="Type your name..." />
-            <button type="submit" class="btn btn-defalt">Submit</button>
+        <form class="form-center" role="form" action="index.do/user/save" method="post">
+            <input type="hidden" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::USER_ID ?>" value="<?php echo $userId ?>" />
+            <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="<?php echo RequestKeys::USERNAME ?>" value="<?php echo $username ?>" />
+            <input type="text" class="form-control" placeholder="E-Mail" required="" autofocus="" name="<?php echo RequestKeys::EMAIL ?>" value="<?php echo $email ?>" />
+            <input type="text" class="form-control" placeholder="Locale" required="" autofocus="" name="<?php echo RequestKeys::USER_LOCALE ?>" value="<?php echo $userLocale ?>" />
+            <input type="text" class="form-control" placeholder="Contracted Hours" required="" autofocus="" name="<?php echo RequestKeys::CONTRACTED_HOURS ?>" value="<?php echo $contractedHours ?>" />
+            <input type="text" class="form-control" placeholder="Rate" required="" autofocus="" name="<?php echo RequestKeys::RATE ?>" value="<?php echo $rate ?>" />
+            <input type="checkbox" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::ENABLED ?>" value="<?php echo enabled ?>" />
+            <input type="checkbox" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::LDAP_SYNCED ?>" value="<?php echo $ldapSynced ?>" />
+            <input type="text" class="form-control" placeholder="Synched At" required="" autofocus="" name="<?php echo RequestKeys::SYNCED_AT ?>" value="<?php echo $syncedAt ?>" />
+            <input type="password" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>" value="<?php echo $password ?>" />
+            <button class="btn btn-lg btn-info btn-block" type="submit">Save</button>
         </form>
-
-        <br><br>
-
-        <table id="results" class="table table-hover">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody/>
-        </table>
 
         <div class="footer">
             <p>&copy; and built with pride by <a href="http://appserver.io" target="_blank">appserver.io</a></p>
@@ -121,42 +128,5 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 <script src="components/jquery/jquery.min.js"></script>
 <script src="components/bootstrap/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
-    var connSample = new WebSocket('ws://' + window.location.hostname + ':8589/example/sample');
-
-    connSample.onopen = function(e) {
-        console.log("Connection to sample handler established!");
-        connSample.send('action=overview');
-    };
-
-    var connUser = new WebSocket('ws://' + window.location.hostname + ':8589/example/user');
-
-    connUser.onopen = function(e) {
-        console.log("Connection to user handler established!");
-    };
-
-    connSample.onmessage = function(e) {
-        console.log("Sample-Handler: " + e.data);
-        $(function($) {
-            var data = JSON.parse(e.data);
-            for (i = 0; i < data.length; i++) {
-                $('#results > tbody:last').append('<tr><td>'+ data[i].sampleId +'</td><td>'+ data[i].name +'</td><td>Edit</td></tr>');
-            }
-        });
-    };
-
-    connUser.onmessage = function(e) {
-        console.log("User-Handler: " + e.data);
-    };
-
-    $(function($) {
-        $("#personForm").submit(function(event) {
-            var serializedValues = $(this).serialize();
-            console.log(serializedValues);
-            connSample.send(serializedValues);
-            event.preventDefault();
-        });
-    });
-</script>
 </body>
 </html>

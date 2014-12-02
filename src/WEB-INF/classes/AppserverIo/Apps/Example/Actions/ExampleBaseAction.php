@@ -250,6 +250,16 @@ abstract class ExampleBaseAction extends DispatchAction
     }
 
     /**
+     * Returns TRUE if the web socket server is available, else FALSE.
+     *
+     * @return boolean TRUE if the web socket server is available
+     */
+    public function isWebSocketEnabled()
+    {
+        return is_resource(@fsockopen('127.0.0.1', 8589));
+    }
+
+    /**
      * Returns the link to logout the actual user.
      *
      * @return string The link to logout the user actually logged in

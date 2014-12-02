@@ -46,7 +46,7 @@ class WebSocketAction extends ExampleBaseAction
      *
      * @var string
      */
-    const WEBSOCKET_TEMPLATE = 'static/templates/websocket.phtml';
+    const WEBSOCKET_TEMPLATE = 'static/templates/webSocket.phtml';
 
     /**
      * Default action to invoke if no action parameter has been found in the request.

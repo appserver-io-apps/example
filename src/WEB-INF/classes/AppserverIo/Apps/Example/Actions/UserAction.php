@@ -51,7 +51,7 @@ class UserAction extends ExampleBaseAction
      *
      * @var string
      */
-    const USER_DETAIL_TEMPLATE = 'static/templates/user_detail.phtml';
+    const USER_DETAIL_TEMPLATE = 'static/templates/userDetail.phtml';
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
