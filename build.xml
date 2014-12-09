@@ -6,26 +6,26 @@
 
     <!-- ==================================================================== -->
     <!-- Generate a time stamp for further use in build targets               -->
-    <!-- ==================================================================== --> 
+    <!-- ==================================================================== -->
     <tstamp>
         <format property="time.stamp" pattern="yyyy-MM-dd_HHmmss"/>
     </tstamp>
-	
+
     <!-- initialize file based properties -->
     <property file="${basedir}/build.properties"/>
     <property file="${basedir}/build.default.properties"/>
     <property file="${basedir}/build.${os.family}.properties"/>
-    
+
     <!-- initialize the library specific properties -->
     <property name="codepool" value="vendor"/>
-    
+
     <!-- initialize the directory where we can find the real build files -->
-    <property name="vendor.dir" value ="${basedir}/src/${codepool}" />
+    <property name="vendor.dir" value ="${basedir}/${codepool}" />
     <property name="build.dir" value="${vendor.dir}/appserver-io/build" />
     <property name="php-target.dir" value="${basedir}/target"/>
     <property name="hub.address" value="appserver.io"/>
     <property name="hub.snapshot-path" value="/var/www/apps.appserver.io/${appserver.webapp.name}/"/>
-    
+
     <!-- ==================================================================== -->
     <!-- Import the common build configuration file                           -->
     <!-- ==================================================================== -->
@@ -39,7 +39,7 @@
             <available file="${build.dir}" type="dir"/>
         </condition>
     </target>
-    
+
     <!-- ==================================================================== -->
     <!-- Installs all dependencies defined in composer.json                   -->
     <!-- ==================================================================== -->
