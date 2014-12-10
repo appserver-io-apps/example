@@ -1,3 +1,23 @@
+# Version 0.10.4
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add AnnotatedServlet as example for annotation based servlet configuration
+
+# Version 0.10.3
+
+## Bugfixes
+
+* Add error message if try to store user, because action ist not yet implemented
+
+## Features
+
+* Hide web socket example if web socket server is not available
+
 # Version 0.10.2
 
 ## Bugfixes
