@@ -23,9 +23,12 @@
 
 namespace AppserverIo\Apps\Example\Servlets;
 
+use AppserverIo\Psr\Servlet\ServletConfig;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
+use AppserverIo\MessageQueueClient\QueueSession;
+use AppserverIo\Psr\MessageQueueProtocol\Messages\IntegerMessage;
 
 /**
  * Annotated servlet handling GET requests.
@@ -43,10 +46,41 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
  *        displayName="I'm the AnnotatedServlet",
  *        description="A annotated servlet implementation.",
  *        urlPattern={"/annotated.do", "/annotated.do*"},
- *        initParams={{"name1", "value1"}, {"name2", "value2"}})
+ *        initParams={{"duration", "60000000"}})
  */
 class AnnotatedServlet extends HttpServlet
 {
+
+    /**
+     * Name of the initialization parameter with the duration.
+     *
+     * @var string
+     */
+    const DURATION = 'duration';
+
+    /**
+     * The duration in microseconds up from when, when we want to invoke the timer.
+     *
+     * @var integer
+     */
+    protected $duration = 0;
+
+    /**
+     * The queue session to send a message with.
+     *
+     * @var \AppserverIo\MessageQueueClient\QueueSession
+     * @Resource(name="php:pms/example/queue/create_a_single_action_timer")
+     */
+    protected $queueSender;
+
+    /**
+     * (non-PHPdoc)
+     * @see \AppserverIo\Psr\Servlet\GenericServlet::init()
+     */
+    public function init(ServletConfig $servletConfig)
+    {
+       $this->duration = (integer) $servletConfig->getInitParameter(AnnotatedServlet::DURATION);
+    }
 
     /**
      * Handles a HTTP GET request.
@@ -61,5 +95,20 @@ class AnnotatedServlet extends HttpServlet
     public function doGet(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
     {
         $servletResponse->appendBodyStream($this->getServletConfig()->getServletName());
+    }
+
+    /**
+     * Handles a HTTP POST request.
+     *
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     *
+     * @return void
+     * @throws \AppserverIo\Psr\Servlet\ServletException Is thrown if the request method is not implemented
+     * @see \AppserverIo\Psr\Servlet\Http\HttpServlet::doGet()
+     */
+    public function doPost(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    {
+        $this->queueSender->send(new IntegerMessage($this->duration));
     }
 }
