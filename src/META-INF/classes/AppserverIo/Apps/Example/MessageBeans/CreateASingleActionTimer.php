@@ -58,19 +58,23 @@ class CreateASingleActionTimer extends AbstractReceiver implements TimedObjectIn
     public function onMessage(Message $message, $sessionId)
     {
 
-        // load the timer service
-        $timerServiceRegistry = $this->getApplication()->getManager(TimerServiceContext::IDENTIFIER);
-        $timerService = $timerServiceRegistry->locate(substr(strrchr(__CLASS__, '\\'), 1));
+        // load the timer service registry
+        $timerServiceRegistry = $this->getApplication()->search('TimerServiceContext');
+
+        // load the timer service for this class -> that allows us to invoke the
+        // CreateASingleActionTimer::timeout() method in the specified number of
+        // milliseconds!
+        $timerService = $timerServiceRegistry->locate('CreateASingleActionTimer');
 
         // our single action timer should be invoked 60 seconds from now
-        $duration = 60000000;
+        $duration = $message->getMessage();
 
         // we create a single action timer
         $timerService->createSingleActionTimer($duration);
 
         // log a message that the single action timer has been successfully created
         $this->getApplication()->getInitialContext()->getSystemLogger()->info(
-            sprintf('Successfully created a single action timer with a duration of %d seconds', $duration)
+            sprintf('Successfully created a single action timer with a duration of %d microseconds', $duration)
         );
 
         // update the message monitor for this message
@@ -87,7 +91,7 @@ class CreateASingleActionTimer extends AbstractReceiver implements TimedObjectIn
     public function timeout(TimerInterface $timer)
     {
         $this->getApplication()->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been by interface', __METHOD__)
+            sprintf('%s has successfully been invoked by interface', __METHOD__)
         );
     }
 }

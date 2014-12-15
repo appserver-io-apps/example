@@ -105,7 +105,7 @@ class MessageQueueAction extends ExampleBaseAction
         $applicationName = $this->getServletRequest()->getContext()->getName();
 
         // initialize the connection and the session
-        $queue = MessageQueue::createQueue('queue/import');
+        $queue = MessageQueue::createQueue('pms/import');
         $connection = QueueConnectionFactory::createQueueConnection($applicationName);
         $session = $connection->createQueueSession();
         $sender = $session->createSender($queue);
@@ -155,7 +155,7 @@ class MessageQueueAction extends ExampleBaseAction
             $applicationName = $this->getServletRequest()->getContext()->getName();
 
             // initialize the connection and the session
-            $queue = MessageQueue::createQueue('queue/create_a_interval_timer');
+            $queue = MessageQueue::createQueue('pms/createAIntervalTimer');
             $connection = QueueConnectionFactory::createQueueConnection($applicationName);
             $session = $connection->createQueueSession();
             $sender = $session->createSender($queue);
