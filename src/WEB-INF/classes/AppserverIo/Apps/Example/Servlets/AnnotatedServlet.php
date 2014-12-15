@@ -88,7 +88,7 @@ class AnnotatedServlet extends HttpServlet
      */
     public function init(ServletConfig $servletConfig)
     {
-       $this->duration = (integer) $servletConfig->getInitParameter(AnnotatedServlet::DURATION);
+        $this->duration = (integer) $servletConfig->getInitParameter(AnnotatedServlet::DURATION);
     }
 
     /**
