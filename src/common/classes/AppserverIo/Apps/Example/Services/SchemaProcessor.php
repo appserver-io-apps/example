@@ -23,8 +23,6 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use Doctrine\ORM\Tools\SchemaTool;
-
 /**
  * A singleton session bean implementation that handles the
  * schema data for Doctrine by using Doctrine ORM itself.
@@ -37,24 +35,9 @@ use Doctrine\ORM\Tools\SchemaTool;
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link       https://github.com/appserver-io-apps/example
  * @link       http://www.appserver.io
- *
- * @Stateless
  */
-class SchemaProcessor extends AbstractProcessor implements SchemaProcessorInterface
+interface SchemaProcessorInterface
 {
-
-    /**
-     * Example method that should be invoked after constructor.
-     *
-     * @return void
-     * @PostConstruct
-     */
-    public function initialize()
-    {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
-        );
-    }
 
     /**
      * Deletes the database schema and creates it new.
@@ -63,18 +46,5 @@ class SchemaProcessor extends AbstractProcessor implements SchemaProcessorInterf
      *
      * @return void
      */
-    public function createSchema()
-    {
-
-        // load the entity manager and the schema tool
-        $entityManager = $this->getEntityManager();
-        $schemaTool = new SchemaTool($entityManager);
-
-        // load the class definitions
-        $classes = $entityManager->getMetadataFactory()->getAllMetadata();
-
-        // drop the schema if it already exists and create it new
-        $schemaTool->dropSchema($classes);
-        $schemaTool->createSchema($classes);
-    }
+    public function createSchema();
 }
