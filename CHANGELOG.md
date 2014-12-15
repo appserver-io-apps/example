@@ -1,4 +1,4 @@
-# Version 0.10.5
+# Version 0.10.6
 
 ## Bugfixes
 
@@ -7,6 +7,16 @@
 ## Features
 
 * Refactoring for new annotated MQ example
+
+# Version 0.10.5
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Added a pointcuts.xml as an example for AOP configuration over XML
 
 # Version 0.10.4
 
