@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <message-queues>
     <message-queue type="ImportReceiver">
-        <destination>queue/import</destination>
+        <destination>pms/import</destination>
     </message-queue>
     <message-queue type="ImportChunkReceiver">
-        <destination>queue/import_chunk</destination>
+        <destination>pms/importChunk</destination>
     </message-queue>
     <message-queue type="CreateASingleActionTimer">
-        <destination>queue/create_a_single_action_timer</destination>
+        <destination>pms/createASingleActionTimer</destination>
     </message-queue>
     <message-queue type="CreateAIntervalTimer">
-        <destination>queue/create_a_interval_timer</destination>
+        <destination>pms/createAIntervalTimer</destination>
     </message-queue>
 </message-queues>

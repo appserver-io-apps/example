@@ -72,7 +72,7 @@ class ImportReceiver extends AbstractReceiver
         $applicationName = $this->getApplication()->getName();
 
         // initialize the connection and the session
-        $queue = MessageQueue::createQueue('queue/import_chunk');
+        $queue = MessageQueue::createQueue('pms/importChunk');
         $connection = QueueConnectionFactory::createQueueConnection($applicationName);
         $session = $connection->createQueueSession();
         $sender = $session->createSender($queue);

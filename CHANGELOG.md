@@ -1,3 +1,13 @@
+# Version 0.10.5
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactoring for new annotated MQ example
+
 # Version 0.10.4
 
 ## Bugfixes

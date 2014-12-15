@@ -31,7 +31,11 @@ use AppserverIo\MessageQueueClient\QueueSession;
 use AppserverIo\Psr\MessageQueueProtocol\Messages\IntegerMessage;
 
 /**
- * Annotated servlet handling GET requests.
+ * Annotated servlet handling GET/POST requests.
+ *
+ * The GET requests only append the servlet name, defined in the @Route annotation,
+ * to the response, whereas the POST requests send a message to the MQ, defined in
+ * the queueSender property of the servlet.
  *
  * @category   Appserver
  * @package    Apps
@@ -69,12 +73,17 @@ class AnnotatedServlet extends HttpServlet
      * The queue session to send a message with.
      *
      * @var \AppserverIo\MessageQueueClient\QueueSession
-     * @Resource(name="php:pms/example/queue/create_a_single_action_timer")
+     * @Resource(name="pms/createASingleActionTimer")
      */
     protected $queueSender;
 
     /**
-     * (non-PHPdoc)
+     * Initializes the servlet with the passed configuration.
+     *
+     * @param \AppserverIo\Psr\Servlet\ServletConfig $servletConfig The configuration to initialize the servlet with
+     *
+     * @throws \AppserverIo\Psr\Servlet\ServletException Is thrown if the configuration has errors
+     * @return void
      * @see \AppserverIo\Psr\Servlet\GenericServlet::init()
      */
     public function init(ServletConfig $servletConfig)
