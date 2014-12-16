@@ -23,10 +23,10 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
+use AppserverIo\Psr\Application\ApplicationInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
 use AppserverIo\Appserver\PersistenceContainer\TimerServiceContext;
-use AppserverIo\Psr\Application\ApplicationInterface;
 
 /**
  * A dummy singleton session bean implementation.
@@ -43,7 +43,7 @@ use AppserverIo\Psr\Application\ApplicationInterface;
  * @Singleton(name="ASingletonProcessor", mappedName="SingletonProcessor", description="A sample implementation for a singleton session bean")
  * @Startup
  */
-class ASingletonProcessor extends \Stackable implements TimedObjectInterface
+class ASingletonProcessor extends \Stackable implements ASingletonProcessorInterface, TimedObjectInterface
 {
 
     /**

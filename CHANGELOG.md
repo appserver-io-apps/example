@@ -1,3 +1,13 @@
+# Version 0.10.7
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Bugfix for example with interval timer
+
 # Version 0.10.6
 
 ## Bugfixes

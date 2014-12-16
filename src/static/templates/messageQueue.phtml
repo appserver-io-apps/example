@@ -87,10 +87,8 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
         </a>
 
         <br>
-
         <h1>Select file</h1>
-
-        <br>
+        <div class="alert alert-info">You can find two example files (example-persons.csv with 300 datasets + example-persons3000.csv with 300.000 datasets) under &lt;APPSERVER-ROOT&gt;/webapps/example/META-INF/data. Please be aware, that importing 300.000 datasets can still need a while ;)</div>
 
         <form class="form-center" role="form" action="index.do/messageQueue/upload" method="post" enctype="multipart/form-data">
             <input name="<?php echo RequestKeys::FILE_TO_UPLOAD ?>" type="file" class="form-control" placeholder="Filename" />

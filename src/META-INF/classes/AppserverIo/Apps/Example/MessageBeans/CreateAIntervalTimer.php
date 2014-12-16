@@ -58,13 +58,17 @@ class CreateAIntervalTimer extends AbstractReceiver
     public function onMessage(Message $message, $sessionId)
     {
 
-        // load the timer service
-        $timerServiceRegistry = $this->getApplication()->getManager(TimerServiceContext::IDENTIFIER);
-        $timerService = $timerServiceRegistry->locate(substr(strrchr(__CLASS__, '\\'), 1));
 
-        // our single action timer should be invoked 10 seconds from now, every 1 second
+        // load the timer service registry
+        $timerServiceRegistry = $this->getApplication()->search('TimerServiceContext');
+
+        // load the timer service for this class -> that allows us to invoke the
+        // CreateAIntervalTimer::timeout() every 10 secondes
+        $timerService = $timerServiceRegistry->locate('CreateAIntervalTimer');
+
+        // our single action timer should be invoked 10 seconds from now, every 10 seconds
         $initialExpiration = 10000000;
-        $intervalDuration = 1000000;
+        $intervalDuration = 10000000;
 
         // we create the interval timer
         $timerService->createIntervalTimer($initialExpiration, $intervalDuration, new String($message->getMessage()));

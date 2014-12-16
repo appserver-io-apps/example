@@ -41,7 +41,7 @@ use AppserverIo\Apps\Example\Services\AbstractProcessor;
  *
  * @Stateless
  */
-class SampleProcessor extends AbstractProcessor
+class SampleProcessor extends AbstractProcessor implements SampleProcessorInterface
 {
 
     /**
