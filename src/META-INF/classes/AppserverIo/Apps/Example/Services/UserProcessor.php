@@ -221,8 +221,8 @@ class UserProcessor extends AbstractProcessor implements UserProcessorInterface
             // create the created user instance
             return $user;
 
-        } catch (\Exception $e) {
-            error_log($e->__toString());
+        } catch (\Exception $e) { // log the exception
+            $this->getInitialContext()->getSystemLogger()->error($e->__toString());
         }
     }
 }

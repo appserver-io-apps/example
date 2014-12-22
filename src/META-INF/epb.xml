@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epb>
+    <enterprise-beans>
+        <session>
+            <description>A sample implementation for a singleton session bean</description>
+            <epb-name>ASingletonProcessor</epb-name>
+            <epb-class>AppserverIo\Apps\Example\Services\ASingletonProcessor</epb-class>
+            <session-type>Singleton</session-type>
+            <bean-interface>ASingletonProcessorInterface</bean-interface>
+            <bean-name>ASingletonProcessor</bean-name>
+            <mapped-name>global/SingletonProcessor</mapped-name>
+            <init-on-startup>true</init-on-startup>
+            <post-construct>
+                <lifecycle-callback-method>initialize</lifecycle-callback-method>
+            </post-construct>
+        </session>
+        <session>
+            <session-type>Stateless</session-type>
+            <epb-name>SampleProcessor</epb-name>
+            <epb-class>AppserverIo\Apps\Example\Services\SampleProcessor</epb-class>
+            <post-construct>
+                <lifecycle-callback-method>initialize</lifecycle-callback-method>
+            </post-construct>
+            <!-- pre-destroy>
+                <lifecycle-callback-method>destroy</lifecycle-callback-method>
+            </pre-destroy -->
+            <epb-ref>
+                <!-- We want to override the @EnterpriseBean annotation and use the remote interface -->
+                <epb-ref-name>AppserverIo\Apps\Example\Services\SampleProcessor::userProcessor</epb-ref-name>
+                <epb-ref-type>Session</epb-ref-type>
+                <epb-link>UserProcessor/remote</epb-link>
+                <!--  injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
+                    <injection-target-name>userProcessor</injection-target-name>
+                </injection-target -->
+            </epb-ref>
+        </session>
+        <session>
+            <session-type>Stateless</session-type>
+            <epb-name>SchemaProcessor</epb-name>
+            <epb-class>AppserverIo\Apps\Example\Services\SchemaProcessor</epb-class>
+            <post-construct>
+                <lifecycle-callback-method>initialize</lifecycle-callback-method>
+            </post-construct>
+        </session>
+        <session>
+            <session-type>Stateful</session-type>
+            <epb-name>UserProcessor</epb-name>
+            <epb-class>AppserverIo\Apps\Example\Services\UserProcessor</epb-class>
+            <pre-destroy>
+                <lifecycle-callback-method>destroy</lifecycle-callback-method>
+            </pre-destroy>
+        </session>
+        <message-driven>
+            <epb-name>CreateAIntervalTimer</epb-name>
+            <epb-class>AppserverIo\Apps\Example\MessageBeans\CreateAIntervalTimer</epb-class>
+        </message-driven>
+        <message-driven>
+            <epb-name>CreateASingleActionTimer</epb-name>
+            <epb-class>AppserverIo\Apps\Example\MessageBeans\CreateASingleActionTimer</epb-class>
+        </message-driven>
+        <message-driven>
+            <epb-name>ImportChunkReceiver</epb-name>
+            <epb-class>AppserverIo\Apps\Example\MessageBeans\ImportChunkReceiver</epb-class>
+        </message-driven>
+        <message-driven>
+            <epb-name>ImportReceiver</epb-name>
+            <epb-class>AppserverIo\Apps\Example\MessageBeans\ImportReceiver</epb-class>
+        </message-driven>
+    </enterprise-beans>
+</epb>
