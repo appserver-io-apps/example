@@ -21,18 +21,28 @@
             <post-construct>
                 <lifecycle-callback-method>initialize</lifecycle-callback-method>
             </post-construct>
-            <!-- pre-destroy>
+            <pre-destroy>
                 <lifecycle-callback-method>destroy</lifecycle-callback-method>
-            </pre-destroy -->
+            </pre-destroy>
             <epb-ref>
                 <!-- We want to override the @EnterpriseBean annotation and use the remote interface -->
-                <epb-ref-name>AppserverIo\Apps\Example\Services\SampleProcessor::userProcessor</epb-ref-name>
+                <epb-ref-name>UserProcessor</epb-ref-name>
                 <epb-ref-type>Session</epb-ref-type>
-                <epb-link>UserProcessor/remote</epb-link>
-                <!--  injection-target>
+                <!-- epb-link>UserProcessor</epb-link -->
+                <injection-target>
                     <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
                     <injection-target-name>userProcessor</injection-target-name>
-                </injection-target -->
+                </injection-target>
+            </epb-ref>
+            <epb-ref>
+                <!-- We want to override the @EnterpriseBean annotation and use the remote interface -->
+                <epb-ref-name>TimerServiceContext</epb-ref-name>
+                <epb-ref-type>Resource</epb-ref-type>
+                <!-- epb-link>UserProcessor</epb-link -->
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
+                    <injection-target-name>timerService</injection-target-name>
+                </injection-target>
             </epb-ref>
         </session>
         <session>
