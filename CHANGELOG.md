@@ -1,3 +1,13 @@
+# Version 0.10.8
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add META-INF/ebp.xml for show how Session/MessageDriven Beans can be configured by XML configuration
+
 # Version 0.10.7
 
 ## Bugfixes
