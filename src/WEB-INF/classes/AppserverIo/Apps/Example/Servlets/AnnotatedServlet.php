@@ -88,6 +88,11 @@ class AnnotatedServlet extends HttpServlet
      */
     public function init(ServletConfig $servletConfig)
     {
+
+        // call parent method
+        parent::init($servletConfig);
+
+        // initialize the duration with the value found in the annotation
         $this->duration = (integer) $servletConfig->getInitParameter(AnnotatedServlet::DURATION);
     }
 
