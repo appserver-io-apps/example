@@ -89,7 +89,7 @@ class Sample
     /**
      * Returns the value of the class member sampleId.
      *
-     * @return integer Holds the value of the class member sampleId
+     * @return integer|null Holds the value of the class member sampleId
      */
     public function getSampleId()
     {

@@ -76,6 +76,20 @@ class AbstractProcessor
     protected $application;
 
     /**
+     * Injects the application into all extending instances.
+     *
+     * ATTENTION: Will only be used if you activate it in the epb.xml file!
+     *
+     * @param \AppserverIo\Psr\Application\ApplicationInterface $application The application instance
+     *
+     * @return void
+     */
+    public function injectApplication($application)
+    {
+        $this->application = $application;
+    }
+
+    /**
      * Initializes the database connection parameters necessary
      * to connect to the database using Doctrine.
      *
