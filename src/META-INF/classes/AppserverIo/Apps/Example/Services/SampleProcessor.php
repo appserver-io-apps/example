@@ -87,6 +87,34 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
     }
 
     /**
+     * Injects the user processor into this instance.
+     *
+     * ATTENTION: Will only be used if you activate it in the epb.xml file!
+     *
+     * @param \AppserverIo\Apps\Example\Services\UserProcessor $userProcessor The user processor instance
+     *
+     * @return void
+     */
+    public function injectUserProcessor($userProcessor)
+    {
+        $this->userProcessor = $userProcessor;
+    }
+
+    /**
+     * Injects the timer service for this instance.
+     *
+     * ATTENTION: Will only be used if you activate it in the epb.xml file!
+     *
+     * @param \AppserverIo\Appserver\PersistenceContainer\TimerServiceContext $timerService The timer service instance
+     *
+     * @return void
+     */
+    public function injectTimerService($timerService)
+    {
+        $this->timerService = $timerService;
+    }
+
+    /**
      * Loads and returns the entity with the ID passed as parameter.
      *
      * @param integer $id The ID of the entity to load
