@@ -1,13 +1,3 @@
-# Version 0.10.9
-
-## Bugfixes
-
-* None
-
-## Features
-
-* Customize epb.xml for usage with 1.0.0-beta4
-
 # Version 0.10.8
 
 ## Bugfixes
@@ -16,6 +6,7 @@
 
 ## Features
 
+* Customize epb.xml for usage with 1.0.0-beta4
 * Add META-INF/ebp.xml for show how Session/MessageDriven Beans can be configured by XML configuration
 
 # Version 0.10.7
