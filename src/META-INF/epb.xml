@@ -2,57 +2,13 @@
 <epb>
     <enterprise-beans>
         <session>
-            <description>A sample implementation for a singleton session bean</description>
+            <session-type>Singleton</session-type>
             <epb-name>ASingletonProcessor</epb-name>
             <epb-class>AppserverIo\Apps\Example\Services\ASingletonProcessor</epb-class>
-            <session-type>Singleton</session-type>
-            <bean-interface>ASingletonProcessorInterface</bean-interface>
-            <bean-name>ASingletonProcessor</bean-name>
-            <mapped-name>global/SingletonProcessor</mapped-name>
             <init-on-startup>true</init-on-startup>
             <post-construct>
                 <lifecycle-callback-method>initialize</lifecycle-callback-method>
             </post-construct>
-        </session>
-        <session>
-            <session-type>Stateless</session-type>
-            <epb-name>SampleProcessor</epb-name>
-            <epb-class>AppserverIo\Apps\Example\Services\SampleProcessor</epb-class>
-            <post-construct>
-                <lifecycle-callback-method>initialize</lifecycle-callback-method>
-            </post-construct>
-            <pre-destroy>
-                <lifecycle-callback-method>destroy</lifecycle-callback-method>
-            </pre-destroy>
-            <!--
-            <epb-ref>
-                <epb-ref-name>ApplicationInterface</epb-ref-name>
-                <epb-ref-type>Resource</epb-ref-type>
-                <epb-link>ApplicationInterface</epb-link>
-                <injection-target>
-                    <injection-target-class>AppserverIo\Apps\Example\Services\AbstractProcessor</injection-target-class>
-                    <injection-target-method>injectApplication</injection-target-method>
-                </injection-target>
-            </epb-ref>
-            <epb-ref>
-                <epb-ref-name>UserProcessor</epb-ref-name>
-                <epb-ref-type>Session</epb-ref-type>
-                <epb-link>UserProcessor</epb-link>
-                <injection-target>
-                    <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
-                    <injection-target-method>injectUserProcessor</injection-target-method>
-                </injection-target>
-            </epb-ref>
-            <epb-ref>
-                <epb-ref-name>TimerServiceContext</epb-ref-name>
-                <epb-ref-type>Resource</epb-ref-type>
-                <epb-link>TimerServiceContext</epb-link>
-                <injection-target>
-                    <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
-                    <injection-target-method>injectTimerService</injection-target-method>
-                </injection-target>
-            </epb-ref>
-            -->
         </session>
         <session>
             <session-type>Stateless</session-type>
@@ -69,6 +25,52 @@
             <pre-destroy>
                 <lifecycle-callback-method>destroy</lifecycle-callback-method>
             </pre-destroy>
+        </session>
+        <session>
+            <session-type>Stateless</session-type>
+            <epb-name>SampleProcessor</epb-name>
+            <epb-class>AppserverIo\Apps\Example\Services\SampleProcessor</epb-class>
+            <post-construct>
+                <lifecycle-callback-method>initialize</lifecycle-callback-method>
+            </post-construct>
+            <pre-destroy>
+                <lifecycle-callback-method>destroy</lifecycle-callback-method>
+            </pre-destroy>
+            <!--
+            <epb-ref>
+                <epb-ref-name>UserProcessor</epb-ref-name>
+                <lookup-name>php:global/example/UserProcessor</lookup-name>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
+                    <injection-target-property>userProcessor</injection-target-property>
+                </injection-target>
+            </epb-ref>
+            <epb-ref>
+                <epb-ref-name>UserProcessor</epb-ref-name>
+                <remote>UserProcessorRemote</remote>
+                <epb-link>UserProcessor</epb-link>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
+                    <injection-target-property>userProcessor</injection-target-property>
+                </injection-target>
+            </epb-ref>
+            <res-ref>
+                <description>Reference to the application</description>
+                <res-ref-name>ApplicationInterface</epb-ref-name>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Services\AbstractProcessor</injection-target-class>
+                    <injection-target-method>injectApplication</injection-target-method>
+                </injection-target>
+            </res-ref>
+            <res-ref>
+                <description>Reference to a timer service</description>
+                <res-ref-name>TimerServiceContext</res-ref-name>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
+                    <injection-target-method>injectTimerService</injection-target-method>
+                </injection-target>
+            </res-ref>
+            -->
         </session>
         <message-driven>
             <epb-name>CreateAIntervalTimer</epb-name>
