@@ -1,3 +1,13 @@
+# Version 0.10.9
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Customize epb.xml for usage with 1.0.0-beta4
+
 # Version 0.10.8
 
 ## Bugfixes
