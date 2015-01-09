@@ -1,3 +1,13 @@
+# Version 0.10.9
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Introduced the new base modifier for virtual host independent base URL generation
+
 # Version 0.10.8
 
 ## Bugfixes

@@ -308,17 +308,10 @@ abstract class ExampleBaseAction extends DispatchAction
     /**
      * Returns base URL for the html base tag.
      *
-     * @return string The base URL depending on the vhost
+     * @return string The base URL
      */
     public function getBaseUrl()
     {
-
-        // if we ARE in a virtual host, return the base URL
-        if ($this->getServletRequest()->getContext()->isVhostOf($this->getServletRequest()->getServerName())) {
-            return ExampleBaseAction::BASE_URL;
-        }
-
-        // if not, prepend it with the context path
-        return $this->getServletRequest()->getContextPath() . ExampleBaseAction::BASE_URL;
+        return $this->getServletRequest()->getBaseModifier() . ExampleBaseAction::BASE_URL;
     }
 }
