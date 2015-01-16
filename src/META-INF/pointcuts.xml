@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pointcuts>
+<pointcuts xmlns="http://www.appserver.io/appserver">
     <pointcut>
         <pointcut-name>allDeleteActions</pointcut-name>
         <pointcut-pattern>call(\AppserverIo\Apps\Example\Actions\*->deleteAction())</pointcut-pattern>
@@ -9,8 +9,8 @@
         <advice-aspect>\AppserverIo\Apps\Example\Aspects\LoggerAspect</advice-aspect>
         <advice-name>logInfoAdvice</advice-name>
         <advice-type>Before</advice-type>
-        <pointcuts>
-            <pointcut>allDeleteActions</pointcut>
-        </pointcuts>
+        <advice-pointcuts>
+            <pointcut-name>allDeleteActions</pointcut-name>
+        </advice-pointcuts>
     </advice>
 </pointcuts>

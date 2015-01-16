@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<provision>
-	
-	<datasource name="appserver.io-example-application" />
-	
-	<installation>
-		<steps>
-			<step type="AppserverIo\Appserver\Core\Provisioning\CreateDatabaseStep">
-			    <params>
-			        <param name="pathToEntities" type="string">common/classes/AppserverIo/Apps/Example/Entities</param>
-			    </params>
-			</step>
-		</steps>
-	</installation>
-	
+<provision xmlns="http://www.appserver.io/appserver">
+
+    <datasource name="appserver.io-example-application"/>
+
+    <installation>
+        <steps>
+            <step type="AppserverIo\Appserver\Core\Provisioning\CreateDatabaseStep">
+                <params>
+                    <param name="pathToEntities" type="string">common/classes/AppserverIo/Apps/Example/Entities</param>
+                </params>
+            </step>
+        </steps>
+    </installation>
+
 </provision>

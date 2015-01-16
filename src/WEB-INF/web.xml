@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4">
+<web-app xmlns="http://www.appserver.io/appserver">
 
     <display-name>appserver.io example application</display-name>
     <description>This is the example application for the appserver.io servlet engine.</description>
@@ -98,9 +98,9 @@
     <security>
         <url-pattern>/index.do/basicAuthentication*</url-pattern>
         <auth>
-            <auth_type>Basic</auth_type>
+            <auth-type>Basic</auth-type>
             <realm>test</realm>
-            <adapter_type>htpasswd</adapter_type>
+            <adapter-type>htpasswd</adapter-type>
             <options>
                 <file>WEB-INF/htpasswd</file>
             </options>
@@ -110,9 +110,9 @@
     <security>
         <url-pattern>/index.do/digestAuthentication*</url-pattern>
         <auth>
-            <auth_type>Digest</auth_type>
+            <auth-type>Digest</auth-type>
             <realm>Digest-Example-Realm</realm>
-            <adapter_type>htdigest</adapter_type>
+            <adapter-type>htdigest</adapter-type>
             <options>
                 <file>WEB-INF/htdigest</file>
             </options>
