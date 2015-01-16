@@ -1,3 +1,13 @@
+# Version 0.10.10
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Updated configuration files to reflect latest changes in validation and configuration
+
 # Version 0.10.9
 
 ## Bugfixes

@@ -1,9 +1,7 @@
-<datasources>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources xmlns="http://www.appserver.io/appserver">
     <!--
-    <datasource type="AppserverIo\Appserver\PersistenceContainer\Application">
-        <name>AppserverIo\Apps\Example</name>
-        <pathToEntities>META-INF/classes/TechDivision/Example/Entities</pathToEntities>
+    <datasource name="appserver.io-example-application">
         <database>
             <driver>pdo_mysql</driver>
             <user>appserver</user>
