@@ -85,7 +85,6 @@ class LoginAction extends ExampleBaseAction
     {
 
         try {
-
             // check if the necessary params has been specified and are valid
             if (($username = $servletRequest->getParameter(RequestKeys::USERNAME)) === null) {
                 throw new \Exception(sprintf('Please enter a valid %s', RequestKeys::USERNAME));
@@ -106,9 +105,11 @@ class LoginAction extends ExampleBaseAction
             // if successfully then add the username to the session and redirect to the overview
             $session->putData(SessionKeys::USERNAME, $username);
 
-        } catch (LoginException $e) { // invalid login credentials
+        } catch (LoginException $e) {
+            // invalid login credentials
             $this->setAttribute(ContextKeys::ERROR_MESSAGES, array("Username or Password invalid"));
-        } catch (\Exception $e) { // if not add an error message
+        } catch (\Exception $e) {
+            // if not add an error message
             $this->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
         }
 

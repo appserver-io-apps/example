@@ -92,7 +92,6 @@ class ImportReceiver extends AbstractReceiver
 
         // send chunk message
         foreach ($importData as $data) {
-
             // increase counter
             $i ++;
 
@@ -101,7 +100,6 @@ class ImportReceiver extends AbstractReceiver
 
             // check if chunk size is reached
             if ($i == $chunkSize) {
-
                 // raise the counter for the chunks
                 $currentChunkIndex ++;
 

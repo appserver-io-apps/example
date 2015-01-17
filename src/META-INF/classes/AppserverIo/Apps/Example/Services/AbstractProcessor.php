@@ -101,10 +101,8 @@ class AbstractProcessor
 
         // iterate over the found database sources
         foreach ($this->getDatasources() as $datasourceNode) {
-
             // if the datasource is related to the session bean
             if ($datasourceNode->getName() == $this->getDatasourceName()) {
-
                 // initialize the database node
                 $databaseNode = $datasourceNode->getDatabase();
 
