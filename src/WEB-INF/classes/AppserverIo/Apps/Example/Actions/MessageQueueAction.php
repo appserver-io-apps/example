@@ -150,7 +150,6 @@ class MessageQueueAction extends ExampleBaseAction
 
         // check if we should watch the directory for periodic import
         if ($servletRequest->getParameter(RequestKeys::WATCH_DIRECTORY, FILTER_VALIDATE_BOOLEAN)) {
-
             // load the application name
             $applicationName = $this->getServletRequest()->getContext()->getName();
 

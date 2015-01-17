@@ -142,7 +142,6 @@ class UserProcessor extends AbstractProcessor implements UserProcessorInterface
 
         // if no user has been loaded, try to load the user
         if ($this->user == null) {
-
             // load the entity manager and the user repository
             $entityManager = $this->getEntityManager();
             $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\User');
@@ -155,8 +154,8 @@ class UserProcessor extends AbstractProcessor implements UserProcessorInterface
                 sprintf('Successfully reloaded data from database in stateful session bean %s', __CLASS__)
             );
 
-        } else { // log a message that the data has already been loaded
-
+        } else {
+            // log a message that the data has already been loaded
             $this->getInitialContext()->getSystemLogger()->info(
                 sprintf('Successfully loaded data from stateful session bean instance %s', __CLASS__)
             );
@@ -196,7 +195,6 @@ class UserProcessor extends AbstractProcessor implements UserProcessorInterface
     {
 
         try {
-
             // load the entity manager
             $entityManager = $this->getEntityManager();
 
@@ -221,7 +219,8 @@ class UserProcessor extends AbstractProcessor implements UserProcessorInterface
             // create the created user instance
             return $user;
 
-        } catch (\Exception $e) { // log the exception
+        } catch (\Exception $e) {
+            // log the exception
             $this->getInitialContext()->getSystemLogger()->error($e->__toString());
         }
     }

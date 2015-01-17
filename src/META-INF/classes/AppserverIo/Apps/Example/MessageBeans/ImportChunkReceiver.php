@@ -79,7 +79,6 @@ class ImportChunkReceiver extends AbstractReceiver
 
         // import the data found in the file
         foreach ($chunkData as $data) {
-
             // explode the name parts and append the data in the database
             list ($firstname, $lastname) = explode(',', $data);
 

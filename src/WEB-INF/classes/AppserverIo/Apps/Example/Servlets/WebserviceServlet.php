@@ -73,7 +73,6 @@ class WebserviceServlet extends HttpServlet
     {
 
         try {
-
             // check the action that we've to invoke
             if ($servletRequest->getParameter(WebserviceServlet::PARAMETER_ACTION)) {
                 $action = $servletRequest->getParameter(WebserviceServlet::PARAMETER_ACTION);
@@ -90,8 +89,7 @@ class WebserviceServlet extends HttpServlet
             // append the data to the response
             $servletResponse->appendBodyStream($response);
 
-        } catch (\Exception $e) { // catch all exceptions
-
+        } catch (\Exception $e) {
             // handle the exception
             $servletResponse->appendBodyStream($e->__toString());
             $servletResponse->setStatusCode(500);
@@ -112,7 +110,6 @@ class WebserviceServlet extends HttpServlet
     {
 
         try {
-
             // initialize the SOAP server that handles the request
             $soapServer = new \SoapServer(null, array('uri' => 'http://test-uri/'));
             $soapServer->setObject($this);
@@ -127,7 +124,6 @@ class WebserviceServlet extends HttpServlet
             $servletResponse->addHeader(HttpProtocol::HEADER_CONNECTION, 'close');
 
         } catch (\Exception $e) {
-
             // handle the exception
             $servletResponse->appendBodyStream($e->__toString());
             $servletResponse->setStatusCode(500);
