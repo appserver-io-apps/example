@@ -1,3 +1,13 @@
+# Version 0.10.11
+
+## Bugfixes
+
+* Re-add phpinfo.php because of JMeter PHP-FPM tests
+
+## Features
+
+* None
+
 # Version 0.10.10
 
 ## Bugfixes
