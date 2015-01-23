@@ -1,3 +1,13 @@
+# Version 0.11.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactoring for usage with 1.0.0-rc1
+
 # Version 0.10.11
 
 ## Bugfixes
