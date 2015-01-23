@@ -7,7 +7,7 @@
 		"components/font-awesome" : "*",
 		"components/bootstrap" : "3.1.1",
 		"appserver-io/routlt" : "0.2.*",
-		"appserver-io/messagequeueclient" : "0.6.*"
+		"appserver-io/messaging" : "0.3.*"
 	},
 	"require-dev" : {
 		"appserver-io/phar" : "0.1.*",

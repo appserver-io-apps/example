@@ -28,9 +28,9 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
 use AppserverIo\Apps\Example\Entities\Sample;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
-use AppserverIo\MessageQueueClient\MessageQueue;
-use AppserverIo\MessageQueueClient\QueueConnectionFactory;
-use AppserverIo\Psr\MessageQueueProtocol\Messages\StringMessage;
+use AppserverIo\Messaging\MessageQueue;
+use AppserverIo\Messaging\StringMessage;
+use AppserverIo\Messaging\QueueConnectionFactory;
 
 /**
  * Example servlet that imports .csv files by uploading them and sends a message to the

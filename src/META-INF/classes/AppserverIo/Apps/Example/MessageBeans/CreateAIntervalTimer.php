@@ -24,9 +24,9 @@
 namespace AppserverIo\Apps\Example\MessageBeans;
 
 use AppserverIo\Lang\String;
+use AppserverIo\Psr\Pms\Message;
+use AppserverIo\Messaging\AbstractMessageListener;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
-use AppserverIo\Psr\MessageQueueProtocol\Message;
-use AppserverIo\Appserver\MessageQueue\Receiver\AbstractReceiver;
 use AppserverIo\Appserver\PersistenceContainer\TimerServiceContext;
 
 /**
@@ -43,7 +43,7 @@ use AppserverIo\Appserver\PersistenceContainer\TimerServiceContext;
  *
  * @MessageDriven
  */
-class CreateAIntervalTimer extends AbstractReceiver
+class CreateAIntervalTimer extends AbstractMessageListener
 {
 
     /**

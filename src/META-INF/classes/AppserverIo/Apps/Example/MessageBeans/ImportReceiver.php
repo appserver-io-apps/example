@@ -23,12 +23,12 @@
 
 namespace AppserverIo\Apps\Example\MessageBeans;
 
-use AppserverIo\MessageQueueClient\MessageQueue;
-use AppserverIo\MessageQueueClient\QueueConnectionFactory;
-use AppserverIo\Psr\MessageQueueProtocol\Message;
-use AppserverIo\Psr\MessageQueueProtocol\Utils\PriorityMedium;
-use AppserverIo\Psr\MessageQueueProtocol\Messages\ArrayMessage;
-use AppserverIo\Appserver\MessageQueue\Receiver\AbstractReceiver;
+use AppserverIo\Psr\Pms\Message;
+use AppserverIo\Messaging\MessageQueue;
+use AppserverIo\Messaging\ArrayMessage;
+use AppserverIo\Messaging\Utils\PriorityMedium;
+use AppserverIo\Messaging\QueueConnectionFactory;
+use AppserverIo\Messaging\AbstractMessageListener;
 
 /**
  * This is the implementation of a import message receiver.
@@ -44,7 +44,7 @@ use AppserverIo\Appserver\MessageQueue\Receiver\AbstractReceiver;
  *
  * @MessageDriven
  */
-class ImportReceiver extends AbstractReceiver
+class ImportReceiver extends AbstractMessageListener
 {
 
     /**

@@ -23,12 +23,11 @@
 
 namespace AppserverIo\Apps\Example\Servlets;
 
+use AppserverIo\Messaging\IntegerMessage;
 use AppserverIo\Psr\Servlet\ServletConfig;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
-use AppserverIo\MessageQueueClient\QueueSession;
-use AppserverIo\Psr\MessageQueueProtocol\Messages\IntegerMessage;
 
 /**
  * Annotated servlet handling GET/POST requests.
@@ -72,7 +71,7 @@ class AnnotatedServlet extends HttpServlet
     /**
      * The queue session to send a message with.
      *
-     * @var \AppserverIo\MessageQueueClient\QueueSession
+     * @var \AppserverIo\Messaging\QueueSession
      * @Resource(name="pms/createASingleActionTimer")
      */
     protected $queueSender;
