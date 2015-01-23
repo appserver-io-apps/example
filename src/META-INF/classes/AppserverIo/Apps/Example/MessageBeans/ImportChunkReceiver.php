@@ -23,10 +23,10 @@
 
 namespace AppserverIo\Apps\Example\MessageBeans;
 
-use AppserverIo\Appserver\Naming\InitialContext;
+use AppserverIo\Psr\Pms\Message;
 use AppserverIo\Apps\Example\Entities\Sample;
-use AppserverIo\Psr\MessageQueueProtocol\Message;
-use AppserverIo\Appserver\MessageQueue\Receiver\AbstractReceiver;
+use AppserverIo\Appserver\Naming\InitialContext;
+use AppserverIo\Messaging\AbstractMessageListener;
 
 /**
  * An message receiver that imports data chunks into a database.
@@ -42,7 +42,7 @@ use AppserverIo\Appserver\MessageQueue\Receiver\AbstractReceiver;
  *
  * @MessageDriven
  */
-class ImportChunkReceiver extends AbstractReceiver
+class ImportChunkReceiver extends AbstractMessageListener
 {
 
     /**

@@ -23,8 +23,8 @@
 
 namespace AppserverIo\Apps\Example\MessageBeans;
 
-use AppserverIo\Psr\MessageQueueProtocol\Message;
-use AppserverIo\Appserver\MessageQueue\Receiver\AbstractReceiver;
+use AppserverIo\Psr\Pms\Message;
+use AppserverIo\Messaging\AbstractMessageListener;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
 
@@ -43,7 +43,7 @@ use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
  *
  * @MessageDriven
  */
-class CreateASingleActionTimer extends AbstractReceiver implements TimedObjectInterface
+class CreateASingleActionTimer extends AbstractMessageListener implements TimedObjectInterface
 {
 
     /**
