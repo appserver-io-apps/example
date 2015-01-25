@@ -143,15 +143,19 @@ class IndexAction extends ExampleBaseAction
 
         // check if the necessary params has been specified and are valid
         $name = $servletRequest->getParameter(RequestKeys::NAME);
-        if ($name == null) {
-            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::NAME));
-        }
 
-        // create a new entity and persist it
-        $entity = new Sample();
-        $entity->setSampleId((integer) $sampleId);
-        $entity->setName($name);
-        $this->getProxy(ProxyKeys::SAMPLE_PROCESSOR)->persist($entity);
+        // check if the user has a name specified
+        if (empty($name)) {
+            // if no name has been specified, add an error message
+            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please add a name!'));
+
+        } else {
+            // create a new entity and persist it
+            $entity = new Sample();
+            $entity->setSampleId((integer) $sampleId);
+            $entity->setName($name);
+            $this->getProxy(ProxyKeys::SAMPLE_PROCESSOR)->persist($entity);
+        }
 
         // reload all entities and render the dialog
         $this->indexAction($servletRequest, $servletResponse);

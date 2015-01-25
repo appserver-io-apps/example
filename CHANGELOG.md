@@ -1,3 +1,13 @@
+# Version 0.11.1
+
+## Bugfixes
+
+* Fixed appserver-io/appserver#401
+
+## Features
+
+* None
+
 # Version 0.11.0
 
 ## Bugfixes
