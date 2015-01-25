@@ -141,20 +141,17 @@ class IndexAction extends ExampleBaseAction
         // check if the necessary params has been specified and are valid
         $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
 
-        // check if the necessary params has been specified and are valid
-        $name = $servletRequest->getParameter(RequestKeys::NAME);
-
         // check if the user has a name specified
-        if (empty($name)) {
-            // if no name has been specified, add an error message
-            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please add a name!'));
-
-        } else {
+        if ($name = trim($servletRequest->getParameter(RequestKeys::NAME))) {
             // create a new entity and persist it
             $entity = new Sample();
             $entity->setSampleId((integer) $sampleId);
             $entity->setName($name);
             $this->getProxy(ProxyKeys::SAMPLE_PROCESSOR)->persist($entity);
+
+        } else {
+            // if no name has been specified, add an error message
+            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please add a name!'));
         }
 
         // reload all entities and render the dialog

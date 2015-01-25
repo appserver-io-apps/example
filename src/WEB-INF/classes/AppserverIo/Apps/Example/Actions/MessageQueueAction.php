@@ -136,35 +136,39 @@ class MessageQueueAction extends ExampleBaseAction
     public function uploadAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
     {
 
-        // load the uploaded file information
-        $fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD);
+        // check if a file has been selected
+        if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
+            // save file to appservers upload tmp folder with tmpname
+            $fileToUpload->init();
+            $fileToUpload->write(
+                tempnam(ini_get('upload_tmp_dir'), 'example_upload_') . '.' . pathinfo($fileToUpload->getFilename(), PATHINFO_EXTENSION)
+            );
 
-        // sample for saving file to appservers upload tmp folder with tmpname
-        $fileToUpload->init();
-        $fileToUpload->write(
-            tempnam(ini_get('upload_tmp_dir'), 'example_upload_') . '.' . pathinfo($fileToUpload->getFilename(), PATHINFO_EXTENSION)
-        );
+            // check if we should watch the directory for periodic import
+            if ($servletRequest->getParameter(RequestKeys::WATCH_DIRECTORY, FILTER_VALIDATE_BOOLEAN)) {
+                // load the application name
+                $applicationName = $this->getServletRequest()->getContext()->getName();
+
+                // initialize the connection and the session
+                $queue = MessageQueue::createQueue('pms/createAIntervalTimer');
+                $connection = QueueConnectionFactory::createQueueConnection($applicationName);
+                $session = $connection->createQueueSession();
+                $sender = $session->createSender($queue);
+
+                // initialize the message with the name of the directory we want to watch
+                $message = new StringMessage(ini_get('upload_tmp_dir'));
+
+                // create a new message and send it
+                $sender->send($message, false);
+            }
+
+        } else {
+            // if no file has been selected, add an error message
+            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please select a file to upload!'));
+        }
 
         // after the successfull upload, render the template again
         $this->indexAction($servletRequest, $servletResponse);
-
-        // check if we should watch the directory for periodic import
-        if ($servletRequest->getParameter(RequestKeys::WATCH_DIRECTORY, FILTER_VALIDATE_BOOLEAN)) {
-            // load the application name
-            $applicationName = $this->getServletRequest()->getContext()->getName();
-
-            // initialize the connection and the session
-            $queue = MessageQueue::createQueue('pms/createAIntervalTimer');
-            $connection = QueueConnectionFactory::createQueueConnection($applicationName);
-            $session = $connection->createQueueSession();
-            $sender = $session->createSender($queue);
-
-            // initialize the message with the name of the directory we want to watch
-            $message = new StringMessage(ini_get('upload_tmp_dir'));
-
-            // create a new message and send it
-            $sender->send($message, false);
-        }
     }
 
     /**

@@ -93,7 +93,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
         <br>
 
         <form class="form-center" role="form" action="index.do/upload/upload" method="post" enctype="multipart/form-data">
-            <input name="<?php echo RequestKeys::FILE_TO_UPLOAD ?>" type="file" class="form-control" placeholder="Filename">
+            <input name="<?php echo RequestKeys::FILE_TO_UPLOAD ?>" type="file" class="form-control" required="" placeholder="Filename">
             <br>
             <button class="btn btn-lg btn-info btn-block" type="submit">Upload file</button>
         </form>

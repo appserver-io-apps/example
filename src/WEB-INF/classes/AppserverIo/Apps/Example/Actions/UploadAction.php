@@ -76,10 +76,16 @@ class UploadAction extends ExampleBaseAction
     public function uploadAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
     {
 
-        // sample for saving file to appservers upload tmp folder with tmpname
-        $fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD);
-        $fileToUpload->init();
-        $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
+        // check if a file has been selected
+        if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
+            // save file to appservers upload tmp folder with tmpname
+            $fileToUpload->init();
+            $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
+
+        } else {
+            // if no file has been selected, add an error message
+            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please select a file to upload!'));
+        }
 
         // after the successfull upload, render the template again
         $this->indexAction($servletRequest, $servletResponse);

@@ -100,7 +100,7 @@ if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
         <form action="index.do/index/persist" method="post" class="form-inline" role="form">
             <div class="form-group">
                 <input name="<?php echo RequestKeys::SAMPLE_ID ?>" type="hidden" value="<?php echo $sampleId ?>"/>
-                <input name="<?php echo RequestKeys::NAME ?>" type="text" placeholder="Type your name..." class="form-control" value="<?php echo $name ?>"/>
+                <input name="<?php echo RequestKeys::NAME ?>" type="text" required="" placeholder="Type your name..." class="form-control" value="<?php echo $name ?>"/>
                 <button type="submit" class="btn btn-defalt">Submit</button>
             </div>
         </form>
