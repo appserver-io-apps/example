@@ -1,3 +1,13 @@
+# Version 0.11.2
+
+## Bugfixes
+
+* Fixed DbC errors
+
+## Features
+
+* None
+
 # Version 0.11.1
 
 ## Bugfixes
