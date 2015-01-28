@@ -11,14 +11,11 @@
  *
  * PHP version 5
  *
- * @category   Appserver
- * @package    Apps
- * @subpackage Example
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io-apps/example
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Apps\Example\Actions;
@@ -26,9 +23,8 @@ namespace AppserverIo\Apps\Example\Actions;
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Appserver\Naming\InitialContext;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
-use AppserverIo\Psr\Servlet\Http\HttpSession;
-use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
-use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
+use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
+use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 use AppserverIo\Apps\Example\Utils\SessionKeys;
 use AppserverIo\Apps\Example\Exceptions\LoginException;
 
@@ -36,13 +32,11 @@ use AppserverIo\Apps\Example\Exceptions\LoginException;
  * Abstract example implementation that provides some kind of basic MVC functionality
  * to handle requests by subclasses action methods.
  *
- * @category   Appserver
- * @package    TechDivision_ApplicationServerExample
- * @subpackage Actions
- * @author     Tim Wagner <tw@techdivision.com>
- * @copyright  2014 TechDivision GmbH <info@techdivision.com>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 abstract class ExampleBaseAction extends DispatchAction
 {
@@ -57,14 +51,14 @@ abstract class ExampleBaseAction extends DispatchAction
     /**
      * The servlet request instance.
      *
-     * @var \AppserverIo\Psr\Servlet\Http\HttpServletRequest
+     * @var \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface
      */
     protected $servletRequest;
 
     /**
      * The servlet response instance.
      *
-     * @var \AppserverIo\Psr\Servlet\Http\HttpServletResponse
+     * @var \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface
      */
     protected $servletResponse;
 
@@ -74,12 +68,12 @@ abstract class ExampleBaseAction extends DispatchAction
      * The method that should be invoked has to be specified by a HTTPServletRequest parameter
      * which name is specified in the configuration file as parameter for the ActionMapping.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      */
-    public function perform(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // set servlet request/response
@@ -93,11 +87,11 @@ abstract class ExampleBaseAction extends DispatchAction
     /**
      * Sets the servlet request instance.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest $servletRequest The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest The request instance
      *
      * @return void
      */
-    public function setServletRequest(HttpServletRequest $servletRequest)
+    public function setServletRequest(HttpServletRequestInterface $servletRequest)
     {
         $this->servletRequest = $servletRequest;
     }
@@ -105,11 +99,11 @@ abstract class ExampleBaseAction extends DispatchAction
     /**
      * Sets the servlet response instance.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The request instance
      *
      * @return void
      */
-    public function setServletResponse(HttpServletResponse $servletResponse)
+    public function setServletResponse(HttpServletResponseInterface $servletResponse)
     {
         $this->servletResponse = $servletResponse;
     }
@@ -117,7 +111,7 @@ abstract class ExampleBaseAction extends DispatchAction
     /**
      * Returns the servlet response instance.
      *
-     * @return \AppserverIo\Psr\Servlet\Http\HttpServletRequest The request instance
+     * @return \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface The request instance
      */
     public function getServletRequest()
     {
@@ -127,7 +121,7 @@ abstract class ExampleBaseAction extends DispatchAction
     /**
      * Returns the servlet request instance.
      *
-     * @return \AppserverIo\Psr\Servlet\Http\HttpServletResponse The response instance
+     * @return \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface The response instance
      */
     public function getServletResponse()
     {
@@ -163,12 +157,12 @@ abstract class ExampleBaseAction extends DispatchAction
      * Processes the template and returns the content.
      *
      * @param string                                            $template        Relative path to the template file
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string The templates content
      */
-    public function processTemplate($template, HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function processTemplate($template, HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // load the path to the web application
@@ -208,7 +202,7 @@ abstract class ExampleBaseAction extends DispatchAction
      *
      * @param boolean $create TRUE if a session has to be created if we can't find any
      *
-     * @return \AppserverIo\Psr\Servlet\Http\HttpSession|null The requested session instance
+     * @return \AppserverIo\Psr\Servlet\Http\HttpSessionInterface|null The requested session instance
      * @throws \Exception Is thrown if we can't find a request instance
      */
     public function getLoginSession($create = false)

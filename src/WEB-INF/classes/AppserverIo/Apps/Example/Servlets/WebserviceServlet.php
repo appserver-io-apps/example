@@ -11,35 +11,29 @@
  *
  * PHP version 5
  *
- * @category   Appserver
- * @package    Apps
- * @subpackage Example
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io-apps/example
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Apps\Example\Servlets;
 
 use AppserverIo\Http\HttpProtocol;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
-use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
-use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
+use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
+use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
 /**
  * Provides functionality to handle all SOAP requests with test cases for calling
  * methods that result in a fatal error, a \SoapFault and a \Exception.
  *
- * @category   Appserver
- * @package    Apps
- * @subpackage Example
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io-apps/example
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 class WebserviceServlet extends HttpServlet
 {
@@ -62,14 +56,14 @@ class WebserviceServlet extends HttpServlet
      * This method handles a GET request, that will return the WSDL output of the extended mock
      * webservice implementation.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      * @throws \AppserverIo\Psr\Servlet\ServletException Is thrown if the request method is not implemented
      * @see \AppserverIo\Psr\Servlet\Http\HttpServlet::doGet()
      */
-    public function doGet(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function doGet(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         try {
@@ -99,14 +93,14 @@ class WebserviceServlet extends HttpServlet
     /**
      * This method handles a POST request, that will handle the incoming SOAP call.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      * @throws \AppserverIo\Psr\Servlet\ServletException Is thrown if the request method is not implemented
      * @see \AppserverIo\Psr\Servlet\Http\HttpServlet::doPost()
      */
-    public function doPost(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function doPost(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         try {

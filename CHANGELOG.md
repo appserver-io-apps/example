@@ -1,3 +1,14 @@
+# Version 0.12.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactoring for usage with latest Inferface naming conventions of appserver-io/appserver 1.0.0-rc1
+* Updating DocBlocks for phpDocumentor 2 standard
+
 # Version 0.11.2
 
 ## Bugfixes
