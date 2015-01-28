@@ -11,20 +11,17 @@
  *
  * PHP version 5
  *
- * @category   Appserver
- * @package    Apps
- * @subpackage Example
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io-apps/example
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Apps\Example\MessageBeans;
 
 use AppserverIo\Lang\String;
-use AppserverIo\Psr\Pms\Message;
+use AppserverIo\Psr\Pms\MessageInterface;
 use AppserverIo\Messaging\AbstractMessageListener;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
 use AppserverIo\Appserver\PersistenceContainer\TimerServiceContext;
@@ -32,14 +29,11 @@ use AppserverIo\Appserver\PersistenceContainer\TimerServiceContext;
 /**
  * This is the implementation of a message bean that simply creates and starts an interval timer.
  *
- * @category   Appserver
- * @package    Apps
- * @subpackage Example
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io-apps/example
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  *
  * @MessageDriven
  */
@@ -49,13 +43,13 @@ class CreateAIntervalTimer extends AbstractMessageListener
     /**
      * Will be invoked when a new message for this message bean will be available.
      *
-     * @param \AppserverIo\Psr\Pms\Message $message   A message this message bean is listen for
-     * @param string                       $sessionId The session ID
+     * @param \AppserverIo\Psr\Pms\MessageInterface $message   A message this message bean is listen for
+     * @param string                                $sessionId The session ID
      *
      * @return void
-     * @see \AppserverIo\Psr\Pms\MessageListener::onMessage()
+     * @see \AppserverIo\Psr\Pms\MessageListenerInterface::onMessage()
      */
-    public function onMessage(Message $message, $sessionId)
+    public function onMessage(MessageInterface $message, $sessionId)
     {
 
 

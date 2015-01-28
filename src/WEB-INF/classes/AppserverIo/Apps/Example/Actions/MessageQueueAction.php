@@ -11,38 +11,33 @@
  *
  * PHP version 5
  *
- * @category   Appserver
- * @package    Apps
- * @subpackage Example
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io-apps/example
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
-use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
 use AppserverIo\Apps\Example\Entities\Sample;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Messaging\MessageQueue;
 use AppserverIo\Messaging\StringMessage;
 use AppserverIo\Messaging\QueueConnectionFactory;
+use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
+use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
 /**
  * Example servlet that imports .csv files by uploading them and sends a message to the
  * message queue to start the import.
  *
- * @category   Appserver
- * @package    TechDivision_ApplicationServerExample
- * @subpackage Actions
- * @author     Tim Wagner <tw@techdivision.com>
- * @copyright  2014 TechDivision GmbH <info@techdivision.com>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 class MessageQueueAction extends ExampleBaseAction
 {
@@ -60,12 +55,12 @@ class MessageQueueAction extends ExampleBaseAction
      * Loads all .csv file uploads and attaches it to the servlet context ready to be rendered
      * by the template.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      */
-    public function indexAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // initialize an array object to load file uploads
@@ -92,13 +87,13 @@ class MessageQueueAction extends ExampleBaseAction
      * Loads the sample entity with the sample ID found in the request and attaches
      * it to the servlet context ready to be rendered by the template.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
-    public function importAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function importAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // load the application name
@@ -127,13 +122,13 @@ class MessageQueueAction extends ExampleBaseAction
      * Handles a .csv file upload by storing the uploaded file in the directory specified
      * by the php.ini configuration upload_tmp_dir.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      * @see IndexServlet::indexAction()
      */
-    public function uploadAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function uploadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // check if a file has been selected
@@ -174,13 +169,13 @@ class MessageQueueAction extends ExampleBaseAction
     /**
      * Deletes the uploaded .csv file from the directory specified by the php.ini configuration upload_tmp_dir.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
-    public function deleteAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // load the params with the entity data

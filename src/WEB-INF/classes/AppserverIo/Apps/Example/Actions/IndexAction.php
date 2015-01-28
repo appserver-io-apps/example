@@ -11,24 +11,21 @@
  *
  * PHP version 5
  *
- * @category   Appserver
- * @package    Apps
- * @subpackage Example
- * @author     Tim Wagner <tw@appserver.io>
- * @copyright  2014 TechDivision GmbH <info@appserver.io>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       https://github.com/appserver-io-apps/example
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Psr\Servlet\Http\HttpServletRequest;
-use AppserverIo\Psr\Servlet\Http\HttpServletResponse;
 use AppserverIo\Apps\Example\Entities\Sample;
 use AppserverIo\Apps\Example\Utils\ProxyKeys;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
+use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
+use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
 /**
  * Example action implementation that loads data over a persistence container proxy
@@ -37,13 +34,11 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
  * Additional it provides functionality to edit, delete und persist the data after
  * changing it.
  *
- * @category   Appserver
- * @package    TechDivision_ApplicationServerExample
- * @subpackage Actions
- * @author     Tim Wagner <tw@techdivision.com>
- * @copyright  2014 TechDivision GmbH <info@techdivision.com>
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.appserver.io
+ * @author    Tim Wagner <tw@appserver.io>
+ * @copyright 2015 TechDivision GmbH <info@appserver.io>
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 class IndexAction extends ExampleBaseAction
 {
@@ -61,12 +56,12 @@ class IndexAction extends ExampleBaseAction
      * Loads all sample data and attaches it to the servlet context ready to be rendered
      * by the template.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      */
-    public function indexAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
         $overviewData = $this->getProxy(ProxyKeys::SAMPLE_PROCESSOR)->findAll();
         $this->setAttribute(ContextKeys::OVERVIEW_DATA, $overviewData);
@@ -77,13 +72,13 @@ class IndexAction extends ExampleBaseAction
      * Loads the sample entity with the sample ID found in the request and attaches
      * it to the servlet context ready to be rendered by the template.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
-    public function loadAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function loadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // check if the necessary params has been specified and are valid
@@ -104,13 +99,13 @@ class IndexAction extends ExampleBaseAction
      * Deletes the sample entity with the sample ID found in the request and
      * reloads all other entities from the database.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
-    public function deleteAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // check if the necessary params has been specified and are valid
@@ -129,13 +124,13 @@ class IndexAction extends ExampleBaseAction
     /**
      * Persists the entity data found in the request.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequest  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponse $servletResponse The response instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
-    public function persistAction(HttpServletRequest $servletRequest, HttpServletResponse $servletResponse)
+    public function persistAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // check if the necessary params has been specified and are valid
