@@ -49,7 +49,7 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
      * The user processor instance.
      *
      * @var \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface
-     * @Resource(name="TimerServiceContext")
+     * @Resource(name="TimerServiceContextInterface")
      */
     protected $timerService;
 

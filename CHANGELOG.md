@@ -1,3 +1,13 @@
+# Version 0.12.1
+
+## Bugfixes
+
+* Wrong usage of the TimerServiceContext interface
+
+## Features
+
+* None
+
 # Version 0.12.0
 
 ## Bugfixes
