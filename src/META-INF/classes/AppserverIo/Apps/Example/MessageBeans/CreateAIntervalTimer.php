@@ -24,7 +24,6 @@ use AppserverIo\Lang\String;
 use AppserverIo\Psr\Pms\MessageInterface;
 use AppserverIo\Messaging\AbstractMessageListener;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
-use AppserverIo\Appserver\PersistenceContainer\TimerServiceContext;
 
 /**
  * This is the implementation of a message bean that simply creates and starts an interval timer.
@@ -54,7 +53,7 @@ class CreateAIntervalTimer extends AbstractMessageListener
 
 
         // load the timer service registry
-        $timerServiceRegistry = $this->getApplication()->search('TimerServiceContext');
+        $timerServiceRegistry = $this->getApplication()->search('TimerServiceContextInterface');
 
         // load the timer service for this class -> that allows us to invoke the
         // CreateAIntervalTimer::timeout() every 10 secondes

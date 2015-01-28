@@ -48,7 +48,7 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
     /**
      * The user processor instance.
      *
-     * @var \AppserverIo\Appserver\PersistenceContainer\TimerServiceContext
+     * @var \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface
      * @Resource(name="TimerServiceContext")
      */
     protected $timerService;
@@ -98,7 +98,7 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
      *
      * ATTENTION: Will only be used if you activate it in the epb.xml file!
      *
-     * @param \AppserverIo\Appserver\PersistenceContainer\TimerServiceContext $timerService The timer service instance
+     * @param \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface $timerService The timer service instance
      *
      * @return void
      */
