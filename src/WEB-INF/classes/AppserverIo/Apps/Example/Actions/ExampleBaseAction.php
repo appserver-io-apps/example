@@ -22,7 +22,6 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Appserver\Naming\InitialContext;
-use AppserverIo\Psr\Servlet\Http\HttpServlet;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 use AppserverIo\Apps\Example\Utils\SessionKeys;
@@ -161,6 +160,8 @@ abstract class ExampleBaseAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string The templates content
+     *
+     * @throws \Exception
      */
     public function processTemplate($template, HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {

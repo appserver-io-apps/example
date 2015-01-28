@@ -6,12 +6,17 @@
 		"components/jquery" : "*",
 		"components/font-awesome" : "*",
 		"components/bootstrap" : "3.1.1",
-		"appserver-io/routlt" : "0.2.*",
-		"appserver-io/messaging" : "0.3.*"
+		"appserver-io/routlt" : "0.3.*"
 	},
 	"require-dev" : {
 		"appserver-io/phar" : "0.1.*",
-		"appserver-io/build" : "0.2.*"
+		"appserver-io/build" : "0.2.*",
+        "appserver-io/messaging" : "0.4.*",
+        "appserver-io/lang" : "0.1.*",
+        "appserver-io/doppelgaenger" : "0.4.*",
+        "appserver-io-psr/epb" : "0.4.*",
+        "appserver-io-psr/servlet" : "0.8.*",
+        "doctrine/common" : "~2.2"
 	},
 	"config" : {
 		"vendor-dir" : "src/vendor",
@@ -34,6 +39,9 @@
 		}, {
 			"name" : "Johann Zelger",
 			"email" : "jz@appserver.io"
-		}
+		}, {
+            "name" : "Bernhard Wick",
+            "email" : "bw@appserver.io"
+        }
 	]
 }

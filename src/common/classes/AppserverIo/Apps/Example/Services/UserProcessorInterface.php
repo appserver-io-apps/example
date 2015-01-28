@@ -68,14 +68,14 @@ interface UserProcessorInterface
     /**
      * Checks if a default user exists, if not it creates one and returns the entity.
      *
-     * @return AppserverIo\Apps\Example\Entities\User The default user instance
+     * @return \AppserverIo\Apps\Example\Entities\User The default user instance
      */
     public function checkForDefaultCredentials();
 
     /**
      * Creates the default credentials to login.
      *
-     * @return AppserverIo\Apps\Example\Entities\User The default user instance
+     * @return \AppserverIo\Apps\Example\Entities\User The default user instance
      */
     public function createDefaultCredentials();
 }

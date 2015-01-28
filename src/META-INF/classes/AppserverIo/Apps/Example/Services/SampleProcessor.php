@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Apps\Example\Entities\Sample;
-use AppserverIo\Apps\Example\Services\AbstractProcessor;
 
 /**
  * A singleton session bean implementation that handles the

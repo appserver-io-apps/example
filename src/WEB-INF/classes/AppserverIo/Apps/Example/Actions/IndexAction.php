@@ -76,6 +76,8 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
+     *
+     * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
     public function loadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
@@ -103,6 +105,8 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return void
+     *
+     * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)

@@ -53,8 +53,6 @@ abstract class BaseHandler extends AbstractHandler
 
     /**
      * Initializes the message handler with the container.
-     *
-     * @return void
      */
     public function __construct()
     {

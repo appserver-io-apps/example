@@ -116,6 +116,6 @@ class AnnotatedServlet extends HttpServlet
      */
     public function doPost(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $this->queueSender->send(new IntegerMessage($this->duration));
+        $this->queueSender->send(new IntegerMessage($this->duration), false);
     }
 }

@@ -17,6 +17,7 @@
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
+
 namespace AppserverIo\Apps\Example\Entities;
 
 /**
