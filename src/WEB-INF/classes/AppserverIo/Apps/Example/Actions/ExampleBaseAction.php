@@ -156,7 +156,7 @@ abstract class ExampleBaseAction extends DispatchAction
     /**
      * Processes the template and returns the content.
      *
-     * @param string                                            $template        Relative path to the template file
+     * @param string                                                     $template        Relative path to the template file
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
