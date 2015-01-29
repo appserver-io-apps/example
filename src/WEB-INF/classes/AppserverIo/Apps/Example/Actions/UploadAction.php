@@ -20,6 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
+use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -73,7 +74,7 @@ class UploadAction extends ExampleBaseAction
 
         // check if a file has been selected
         if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
-            // save file to appservers upload tmp folder with tmpname
+            // save file to appserver's upload tmp folder with tmpname
             $fileToUpload->init();
             $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
 

@@ -20,7 +20,6 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Apps\Example\Entities\Sample;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Messaging\MessageQueue;
@@ -162,7 +161,7 @@ class MessageQueueAction extends ExampleBaseAction
             $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please select a file to upload!'));
         }
 
-        // after the successfull upload, render the template again
+        // after the successful upload, render the template again
         $this->indexAction($servletRequest, $servletResponse);
     }
 

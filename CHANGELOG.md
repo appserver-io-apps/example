@@ -1,13 +1,24 @@
+# Version 0.12.1
+
+## Bugfixes
+
+* Wrong usage of the TimerServiceContext interface
+
+## Features
+
+* None
+
 # Version 0.12.0
 
 ## Bugfixes
 
-* None
+* Some minor bugfixes
 
 ## Features
 
-* Refactoring for usage with latest Inferface naming conventions of appserver-io/appserver 1.0.0-rc1
+* Refactoring for usage with latest interface naming conventions of appserver-io/appserver 1.0.0-rc1
 * Updating DocBlocks for phpDocumentor 2 standard
+* Updated dependencies
 
 # Version 0.11.2
 

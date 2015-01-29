@@ -34,8 +34,6 @@ class SessionKeys
 
     /**
      * Private to constructor to avoid instancing this class.
-     *
-     * @return void
      */
     private function __construct()
     {

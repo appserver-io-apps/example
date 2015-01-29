@@ -60,8 +60,6 @@ class Sample
 
     /**
      * Initializes the collection with the users.
-     *
-     * @return void
      */
     public function __construct()
     {

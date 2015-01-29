@@ -108,7 +108,7 @@ class User
     protected $syncedAt;
 
     /**
-     * @var AppserverIo\Apps\Example\Entities\Sample
+     * @var \AppserverIo\Apps\Example\Entities\Sample
      *
      * @ManyToOne(targetEntity="Sample", inversedBy="users", cascade={"all"}, fetch="EAGER")
      * @JoinColumn(name="sampleIdFk", referencedColumnName="sampleId")

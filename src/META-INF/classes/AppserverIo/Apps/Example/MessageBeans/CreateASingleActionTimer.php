@@ -53,7 +53,7 @@ class CreateASingleActionTimer extends AbstractMessageListener implements TimedO
     {
 
         // load the timer service registry
-        $timerServiceRegistry = $this->getApplication()->search('TimerServiceContext');
+        $timerServiceRegistry = $this->getApplication()->search('TimerServiceContextInterface');
 
         // load the timer service for this class -> that allows us to invoke the
         // CreateASingleActionTimer::timeout() method in the specified number of

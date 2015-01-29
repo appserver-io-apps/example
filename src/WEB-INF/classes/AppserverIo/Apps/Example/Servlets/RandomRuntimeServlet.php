@@ -53,6 +53,6 @@ class RandomRuntimeServlet extends HttpServlet
         usleep($sleepFor = rand(10000, 1000000));
 
         // append the processing time
-        $servletResponse->appendBodyStream('Sleept for: ' . $sleepFor);
+        $servletResponse->appendBodyStream('Slept for: ' . $sleepFor);
     }
 }

@@ -64,7 +64,7 @@
             </res-ref>
             <res-ref>
                 <description>Reference to a timer service</description>
-                <res-ref-name>TimerServiceContext</res-ref-name>
+                <res-ref-name>TimerServiceContextInterface</res-ref-name>
                 <injection-target>
                     <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
                     <injection-target-method>injectTimerService</injection-target-method>
