@@ -1,3 +1,13 @@
+# Version 0.12.2
+
+## Bugfixes
+
+* Switch to latest appserver-io/doppelgaenger 0.5.* version
+
+## Features
+
+* None
+
 # Version 0.12.1
 
 ## Bugfixes
