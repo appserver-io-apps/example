@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Aspects;
 
-use AppserverIo\Doppelgaenger\Entities\MethodInvocation;
+use AppserverIo\Doppelgaenger\Interfaces\MethodInvocationInterface;
 
 /**
  * Aspect which allows for logging within the app's classes.
@@ -50,13 +50,13 @@ class LoggerAspect
     /**
      * Advice used to log the call to any advised method
      *
-     * @param \AppserverIo\Doppelgaenger\Entities\MethodInvocation $methodInvocation Initially invoked method
+     * @param \AppserverIo\Doppelgaenger\Interfaces\MethodInvocationInterface $methodInvocation Initially invoked method
      *
      * @return null
      *
      * @Before("pointcut(allIndexActions())")
      */
-    public function logInfoAdvice(MethodInvocation $methodInvocation)
+    public function logInfoAdvice(MethodInvocationInterface $methodInvocation)
     {
         $methodInvocation->getContext()
             ->getServletRequest()
