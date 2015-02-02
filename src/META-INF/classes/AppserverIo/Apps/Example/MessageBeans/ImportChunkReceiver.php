@@ -58,8 +58,6 @@ class ImportChunkReceiver extends AbstractMessageListener
     public function onMessage(MessageInterface $message, $sessionId)
     {
 
-        error_log(print_r($sessionId, true));
-
         // log a message that the message we now process the passed chunk
         $this->getApplication()->getInitialContext()->getSystemLogger()->info('Process chunked data message');
 
