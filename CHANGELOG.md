@@ -1,3 +1,13 @@
+# Version 0.12.3
+
+## Bugfixes
+
+* Removed a forgotten error_log() from \AppserverIo\Apps\Example\MessageBeans\ImportChunkReceiver class
+
+## Features
+
+* None
+
 # Version 0.12.2
 
 ## Bugfixes
