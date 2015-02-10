@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Aspects;
 
-use AppserverIo\Doppelgaenger\Interfaces\MethodInvocationInterface;
+use AppserverIo\Psr\MetaobjectProtocol\Aop\MethodInvocationInterface;
 
 /**
  * Aspect which allows for logging within the app's classes.
@@ -50,7 +50,7 @@ class LoggerAspect
     /**
      * Advice used to log the call to any advised method
      *
-     * @param \AppserverIo\Doppelgaenger\Interfaces\MethodInvocationInterface $methodInvocation Initially invoked method
+     * @param \AppserverIo\Psr\MetaobjectProtocol\Aop\MethodInvocationInterface $methodInvocation Initially invoked method
      *
      * @return null
      *
