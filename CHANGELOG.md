@@ -1,3 +1,13 @@
+# Version 0.12.4
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Upgraded AOP usage to the new appserver-io-psr/mop dependency
+
 # Version 0.12.3
 
 ## Bugfixes
