@@ -1,3 +1,13 @@
+# Version 0.12.5
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Upgrade after moving InitialContext to appserver-io-psr/naming package
+
 # Version 0.12.4
 
 ## Bugfixes
