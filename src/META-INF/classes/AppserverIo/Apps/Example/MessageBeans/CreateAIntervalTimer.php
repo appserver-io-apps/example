@@ -57,7 +57,7 @@ class CreateAIntervalTimer extends AbstractMessageListener
 
         // load the timer service for this class -> that allows us to invoke the
         // CreateAIntervalTimer::timeout() every 10 secondes
-        $timerService = $timerServiceRegistry->locate('CreateAIntervalTimer');
+        $timerService = $timerServiceRegistry->lookup('CreateAIntervalTimer');
 
         // our single action timer should be invoked 10 seconds from now, every 10 seconds
         $initialExpiration = 10000000;

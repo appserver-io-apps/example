@@ -58,7 +58,7 @@ class CreateASingleActionTimer extends AbstractMessageListener implements TimedO
         // load the timer service for this class -> that allows us to invoke the
         // CreateASingleActionTimer::timeout() method in the specified number of
         // milliseconds!
-        $timerService = $timerServiceRegistry->locate('CreateASingleActionTimer');
+        $timerService = $timerServiceRegistry->lookup('CreateASingleActionTimer');
 
         // our single action timer should be invoked 60 seconds from now
         $duration = $message->getMessage();
