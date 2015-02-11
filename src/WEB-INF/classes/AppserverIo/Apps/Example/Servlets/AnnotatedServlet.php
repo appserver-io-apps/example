@@ -71,6 +71,14 @@ class AnnotatedServlet extends HttpServlet
     protected $queueSender;
 
     /**
+     * The system logger implementation.
+     *
+     * @var \AppserverIo\Logger\Logger
+     * @Resource(lookup="php:global/log/System")
+     */
+    protected $systemLogger;
+
+    /**
      * Initializes the servlet with the passed configuration.
      *
      * @param \AppserverIo\Psr\Servlet\ServletConfigInterface $servletConfig The configuration to initialize the servlet with
@@ -101,6 +109,11 @@ class AnnotatedServlet extends HttpServlet
      */
     public function doGet(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
+
+        // log a dummy message (to show that logger injection works)
+        $this->systemLogger->error("Test");
+
+        // add the servlet name to the response
         $servletResponse->appendBodyStream($this->getServletConfig()->getServletName());
     }
 

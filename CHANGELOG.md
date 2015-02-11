@@ -1,3 +1,13 @@
+# Version 0.12.6
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add example for logger injection
+
 # Version 0.12.5
 
 ## Bugfixes
