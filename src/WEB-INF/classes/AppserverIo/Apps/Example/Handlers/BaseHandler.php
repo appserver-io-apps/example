@@ -21,7 +21,7 @@
 namespace AppserverIo\Apps\Example\Handlers;
 
 use Ratchet\ConnectionInterface;
-use AppserverIo\Appserver\Naming\InitialContext;
+use AppserverIo\Psr\Naming\InitialContext;
 use AppserverIo\Appserver\WebSocketServer\Handlers\AbstractHandler;
 
 /**

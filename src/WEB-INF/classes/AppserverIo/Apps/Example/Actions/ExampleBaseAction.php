@@ -21,7 +21,7 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Appserver\Naming\InitialContext;
+use AppserverIo\Psr\Naming\InitialContext;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 use AppserverIo\Apps\Example\Utils\SessionKeys;
