@@ -1,13 +1,3 @@
-# Version 0.12.7
-
-## Bugfixes
-
-* None
-
-## Features
-
-* Extend example for SSB with counter
-
 # Version 0.12.6
 
 ## Bugfixes
@@ -16,6 +6,7 @@
 
 ## Features
 
+* Extend example for SSB with counter
 * Add example for logger injection
 
 # Version 0.12.5
