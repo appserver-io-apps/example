@@ -1,3 +1,13 @@
+# Version 0.12.7
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Extend example for SSB with counter
+
 # Version 0.12.6
 
 ## Bugfixes

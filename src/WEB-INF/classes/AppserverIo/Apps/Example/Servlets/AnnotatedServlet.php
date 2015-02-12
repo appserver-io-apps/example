@@ -63,6 +63,14 @@ class AnnotatedServlet extends HttpServlet
     protected $duration = 0;
 
     /**
+     * The singleton session bean instance.
+     *
+     * @var \AppserverIo\Apps\Example\Services\ASingletonProcessor
+     * @EnterpriseBean
+     */
+    protected $aSingletonProcessor;
+
+    /**
      * The queue session to send a message with.
      *
      * @var \AppserverIo\Messaging\QueueSession
@@ -111,7 +119,13 @@ class AnnotatedServlet extends HttpServlet
     {
 
         // log a dummy message (to show that logger injection works)
-        $this->systemLogger->error("Test");
+        $this->systemLogger->error(
+            sprintf(
+                'Invoked counter of SSB to %d (%s)',
+                $this->aSingletonProcessor->raiseCounter(),
+                $this->getServletConfig()->getServletName()
+            )
+        );
 
         // add the servlet name to the response
         $servletResponse->appendBodyStream($this->getServletConfig()->getServletName());
