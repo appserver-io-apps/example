@@ -48,6 +48,13 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     protected $application;
 
     /**
+     * A counter how often the instance has been invoked.
+     *
+     * @var integer
+     */
+    protected $counter = 0;
+
+    /**
      * Example method that should be invoked after constructor.
      *
      * @return void
@@ -55,8 +62,13 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      */
     public function initialize()
     {
+
+        // initialize the counter
+        $this->counter = 0;
+
+        // log a message for the @PostConstruct method invokation
         $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
+            sprintf('%s has successfully been invoked by @PostConstruct annotation %d times', __METHOD__, $this->raiseCounter())
         );
     }
 
@@ -81,6 +93,16 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     }
 
     /**
+     * Raises the invokation counter by one.
+     *
+     * @return integer Raises and returns the counter
+     */
+    public function raiseCounter()
+    {
+        return $this->counter++;
+    }
+
+    /**
      * A dummy method invoked by the container upon timer schedule.
      *
      * @param TimerInterface $timer The timer instance
@@ -91,7 +113,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     public function invokedByTimer(TimerInterface $timer)
     {
         $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @Schedule annotation', __METHOD__)
+            sprintf('%s has successfully been invoked by @Schedule annotation %d times', __METHOD__, $this->raiseCounter())
         );
     }
 
@@ -105,7 +127,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     public function timeout(TimerInterface $timer)
     {
         $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been by interface', __METHOD__)
+            sprintf('%s has successfully been invoked by interface %d times', __METHOD__, $this->raiseCounter())
         );
     }
 }
