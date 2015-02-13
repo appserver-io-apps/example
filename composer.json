@@ -1,21 +1,21 @@
 {
 	"name" : "appserver-io-apps/example",
 	"description" : "The example application for the ApplicationServer",
-	"version" : "0.9.0",
+	"version" : "1.0.0",
 	"require" : {
 		"components/jquery" : "*",
 		"components/font-awesome" : "*",
 		"components/bootstrap" : "3.1.1",
-		"appserver-io/routlt" : "0.3.*"
+		"appserver-io/routlt" : "~1.0"
 	},
 	"require-dev" : {
-		"appserver-io/phar" : "0.1.*",
-		"appserver-io/build" : "0.2.*",
-		"appserver-io/messaging" : "0.4.*",
-		"appserver-io/lang" : "0.1.*",
-		"appserver-io-psr/mop" : "0.1.*",
-		"appserver-io-psr/epb" : "0.4.*",
-		"appserver-io-psr/servlet" : "0.8.*",
+		"appserver-io/phar" : "~1.0",
+		"appserver-io/build" : "~1.0",
+		"appserver-io/messaging" : "~1.0",
+		"appserver-io/lang" : "~1.0",
+		"appserver-io-psr/mop" : "~1.0",
+		"appserver-io-psr/epb" : "~1.0",
+		"appserver-io-psr/servlet" : "~1.0",
 		"doctrine/common" : "~2.2"
 	},
 	"config" : {
