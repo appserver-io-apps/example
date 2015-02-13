@@ -1,3 +1,13 @@
+# Version 1.0.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Remove WebSocket example because WebSocket server components are not part of 1.0.0 standard distribution
+
 # Version 1.0.0
 
 ## Bugfixes
