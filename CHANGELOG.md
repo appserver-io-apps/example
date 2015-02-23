@@ -1,3 +1,13 @@
+# Version 1.0.2
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Remove WebSocket example to improve performance on Windows, because socket check is very slow
+
 # Version 1.0.1
 
 ## Bugfixes
