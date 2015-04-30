@@ -108,8 +108,16 @@ class AbstractProcessor
                 );
 
                 // initialize the path to the database when we use sqlite for example
-                if ($path = $databaseNode->getPath()->getNodeValue()->__toString()) {
-                    $connectionParameters['path'] = $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . $path;
+                if ($databaseNode->getPath()) {
+                    if ($path = $databaseNode->getPath()->getNodeValue()->__toString()) {
+                        $connectionParameters['path'] = $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . $path;
+                    }
+                }
+
+                // add database name if using another PDO driver than sqlite
+                if ($databaseNode->getDatabaseName()) {
+                    $databaseName = $databaseNode->getDatabaseName()->getNodeValue()->__toString();
+                    $connectionParameters['dbname'] = $databaseName;
                 }
 
                 // set the connection parameters
