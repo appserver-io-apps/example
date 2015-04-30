@@ -56,7 +56,7 @@
             </epb-ref>
             <res-ref>
                 <description>Reference to the application</description>
-                <res-ref-name>ApplicationInterface</epb-ref-name>
+                <res-ref-name>ApplicationInterface</res-ref-name>
                 <injection-target>
                     <injection-target-class>AppserverIo\Apps\Example\Services\AbstractProcessor</injection-target-class>
                     <injection-target-method>injectApplication</injection-target-method>
