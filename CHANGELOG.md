@@ -1,3 +1,13 @@
+# Version 1.1.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to new appserver.io v1.1.0 provisioning functionality
+
 # Version 1.0.2
 
 ## Bugfixes
