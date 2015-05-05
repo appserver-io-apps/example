@@ -5,7 +5,7 @@
 
     <installation>
         <steps>
-            <step type="AppserverIo\Appserver\Core\Provisioning\CreateDatabaseStep">
+            <step type="AppserverIo\Appserver\Provisioning\Steps\CreateDatabaseStep">
                 <params>
                     <param name="pathToEntities" type="string">common/classes/AppserverIo/Apps/Example/Entities</param>
                 </params>
