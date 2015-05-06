@@ -10,22 +10,20 @@
     <tstamp>
         <format property="time.stamp" pattern="yyyy-MM-dd_HHmmss"/>
     </tstamp>
-	
+
     <!-- initialize file based properties -->
     <property file="${basedir}/build.properties"/>
     <property file="${basedir}/build.default.properties"/>
     <property file="${basedir}/build.${os.family}.properties"/>
-    
+
     <!-- initialize the library specific properties -->
     <property name="codepool" value="vendor"/>
-    
+
     <!-- initialize the directory where we can find the real build files -->
     <property name="vendor.dir" value ="${basedir}/src/${codepool}" />
     <property name="build.dir" value="${vendor.dir}/appserver-io/build" />
     <property name="php-target.dir" value="${basedir}/target"/>
-    <property name="hub.address" value="appserver.io"/>
-    <property name="hub.snapshot-path" value="/var/www/apps.appserver.io/${appserver.webapp.name}/"/>
-    
+
     <!-- ==================================================================== -->
     <!-- Import the common build configuration file                           -->
     <!-- ==================================================================== -->
@@ -39,7 +37,7 @@
             <available file="${build.dir}" type="dir"/>
         </condition>
     </target>
-    
+
     <!-- ==================================================================== -->
     <!-- Installs all dependencies defined in composer.json                   -->
     <!-- ==================================================================== -->
@@ -91,13 +89,18 @@
     </target>
 
     <!-- ==================================================================== -->
-    <!-- Moves any built package to the download directory of the server.     -->
+    <!-- Copies any built package to the snapshot hosting server.             -->
     <!-- ==================================================================== -->
-    <target name="move-to-hub" description="Moves any built package to the download directory of the server.">
-        <!-- copy it once first -->
-        <copy file="${php-target.dir}/${package.filename}" tofile="${hub.snapshot-path}${package.filename}"/>
-        <!-- now move the file -->
-        <move file="${php-target.dir}/${package.filename}" tofile="${hub.snapshot-path}${appserver.webapp.name}-latest.phar"/>
+    <target name="copy-to-hub" description="Uploads any built package to the file-server.">
+        <echo message="Now try to upload all builds to file-server"/>
+        <exec executable="sh" failonerror="true">
+            <arg value="-c" />
+            <arg value="scp -o StrictHostKeyChecking=no -i ${user.home}/.ssh/id_rsa ${php-target.dir}/${package.filename} ${build.server.user}@${build.server.host}:${build.server.upload-path}" />
+        </exec>
+        <exec executable="sh" failonerror="true">
+            <arg value="-c" />
+            <arg value="scp -o StrictHostKeyChecking=no -i ${user.home}/.ssh/id_rsa ${php-target.dir}/${package.filename} ${build.server.user}@${build.server.host}:${build.server.upload-path}/${appserver.webapp.name}-latest.phar" />
+        </exec>
     </target>
 
     <!-- ==================================================================== -->
@@ -106,7 +109,7 @@
     <target name="deploy" depends="copy" description="Copies the sources to the deploy directory.">
         <!-- copy the sources to the deploy directory -->
         <echo message="Copy sources to ${deploy.dir} ..."/>
-    	<copy todir="${appserver.webapps.dir}" preservelastmodified="true" overwrite="true">
+        <copy todir="${appserver.webapps.dir}" preservelastmodified="true" overwrite="true">
             <fileset dir="${php-target.dir}">
                 <include name="**/*"/>
             </fileset>
@@ -114,9 +117,9 @@
     </target>
 
     <!-- ==================================================================== -->
-    <!-- Creates a PHAR file for deployment     					  		  -->
+    <!-- Creates a PHAR file for deployment                                   -->
     <!-- ==================================================================== -->
-	<target name="create-phar" depends="copy" description="Creates a PHAR file for deployment.">
+    <target name="create-phar" depends="copy" description="Creates a PHAR file for deployment.">
         <!-- create the PHAR archive itself from the backup sources -->
         <exec dir="${php-target.dir}" executable="${vendor.dir}/bin/phar">
             <arg line="-c create -n ${php-target.dir}/${package.filename} -d ${php-target.dir}/${appserver.webapp.name}"/>
