@@ -1,3 +1,13 @@
+# Version 1.0.3
+
+## Bugfixes
+
+* Fixed [#39](https://github.com/appserver-io-apps/example/issues/39) - MySQL not working as datasource
+
+## Features
+
+* None
+
 # Version 1.0.2
 
 ## Bugfixes
