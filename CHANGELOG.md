@@ -1,3 +1,13 @@
+# Version 1.1.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Merge with features from 1.0 branch
+
 # Version 1.1.0
 
 ## Bugfixes
@@ -8,6 +18,16 @@
 
 * Switch to new appserver.io v1.1.0 provisioning functionality
 * Switch to latest components/bootstrap version 3.3.4
+
+# Version 1.0.3
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Fix to close Doctrine connections when synchronizing SFSB + SLSB
 
 # Version 1.0.2
 
