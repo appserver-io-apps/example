@@ -156,7 +156,6 @@ class AbstractProcessor
 
         // query wheter we've an entity manager instance
         if ($entityManager = $this->getEntityManager()) {
-
             // if yes, close the connection
             $entityManager->getConnection()->close();
 
@@ -175,6 +174,7 @@ class AbstractProcessor
      * callback that gives you more specific possiblity to investigate on that
      * event.
      *
+     * @return void
      */
     public function __sleep()
     {
