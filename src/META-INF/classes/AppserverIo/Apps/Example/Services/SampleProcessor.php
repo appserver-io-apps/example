@@ -67,19 +67,6 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
     }
 
     /**
-     * Example method that should be invoked after constructor.
-     *
-     * @return void
-     * @PreDestroy
-     */
-    public function destroy()
-    {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PreDestroy annotation', __METHOD__)
-        );
-    }
-
-    /**
      * Injects the user processor into this instance.
      *
      * ATTENTION: Will only be used if you activate it in the epb.xml file!
@@ -153,22 +140,29 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
      */
     public function delete($id)
     {
+
+        // delete the entity with the passed ID
         $entityManager = $this->getEntityManager();
         $entityManager->remove($entityManager->merge($this->load($id)));
         $entityManager->flush();
+
+        // load and return all data
         return $this->findAll();
     }
 
     /**
      * Returns an array with all existing entities.
      *
+     * @param integer $limit  The maxium number of rows to return
+     * @param integer $offset The row to start with
+     *
      * @return array An array with all existing entities
      */
-    public function findAll()
+    public function findAll($limit = 100, $offset = 0)
     {
         // load all entities
         $entityManager = $this->getEntityManager();
         $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Sample');
-        return $repository->findAll();
+        return $repository->findBy(array(), array(), $limit, $offset);
     }
 }
