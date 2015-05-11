@@ -20,11 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Doctrine\Common\Persistence\ObjectManager;
-use AppserverIo\Apps\Example\Entities\User;
 use AppserverIo\Psr\Application\ApplicationInterface;
 
 /**
@@ -55,11 +52,11 @@ class AbstractProcessor
     protected $pathToEntities = 'META-INF/classes/TechDivision/Example/Entities';
 
     /**
-     * The array with the Doctrine connection parameters.
+     * The Doctrine EntityManager instance.
      *
-     * @var array
+     * @var \Doctrine\ORM\EntityManager
      */
-    protected $connectionParameters;
+    protected $entityManager;
 
     /**
      * The application instance that provides the entity manager.
@@ -90,8 +87,19 @@ class AbstractProcessor
      * @return void
      * @PostConstruct
      */
-    public function initConnectionParameters()
+    public function init()
     {
+
+        // prepare the path to the entities
+        $absolutePaths = array();
+        if ($relativePaths = $this->getPathToEntities()) {
+            foreach (explode(PATH_SEPARATOR, $relativePaths) as $relativePath) {
+                $absolutePaths[] = $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . $relativePath;
+            }
+        }
+
+        // create the database configuration and initialize the entity manager
+        $metadataConfiguration = Setup::createAnnotationMetadataConfiguration($absolutePaths, true);
 
         // iterate over the found database sources
         foreach ($this->getDatasources() as $datasourceNode) {
@@ -120,10 +128,57 @@ class AbstractProcessor
                     $connectionParameters['dbname'] = $databaseName;
                 }
 
-                // set the connection parameters
-                $this->setConnectionParameters($connectionParameters);
+                // add database host if using another PDO driver than sqlite
+                if ($databaseNode->getDatabaseHost()) {
+                    $databaseHost = $databaseNode->getDatabaseHost()->getNodeValue()->__toString();
+                    $connectionParameters['host'] = $databaseHost;
+                }
+
+                // initialize and set the EntityManager instance
+                $this->entityManager = EntityManager::create($connectionParameters, $metadataConfiguration);
+
+                // stop foreach loop when we've created the EntityManager instance
+                return;
             }
         }
+    }
+
+    /**
+     * Disconnects the Doctrine EntityManager, because the connection (a resource)
+     * can't be serialized between thread (request) instances.
+     *
+     * @param string $origin The name of the origin that invokes this method
+     *
+     * @return void
+     */
+    public function destroy($origin = '@PreDestroy annotation')
+    {
+
+        // query wheter we've an entity manager instance
+        if ($entityManager = $this->getEntityManager()) {
+            // if yes, close the connection
+            $entityManager->getConnection()->close();
+
+            // log a message that this method has been invoked
+            $this->getInitialContext()->getSystemLogger()->info(
+                sprintf('%s has successfully been invoked by the %s', __METHOD__, $origin)
+            );
+        }
+    }
+
+    /**
+     * When we've a SFSB, this method will be invoked before re-attaching
+     * it to the container.
+     *
+     * As this is a magic method, in future versions there will be a lifecycle
+     * callback that gives you more specific possiblity to investigate on that
+     * event.
+     *
+     * @return void
+     */
+    public function __sleep()
+    {
+        $this->destroy('__sleep method');
     }
 
     /**
@@ -157,26 +212,13 @@ class AbstractProcessor
     }
 
     /**
-     * The database connection parameters used to connect to Doctrine.
+     * Return's the initialized Doctrine entity manager.
      *
-     * @param array $connectionParameters The Doctrine database connection parameters
-     *
-     * @return void
-     *
+     * @return \Doctrine\ORM\EntityManager The initialized Doctrine entity manager
      */
-    public function setConnectionParameters(array $connectionParameters = array())
+    public function getEntityManager()
     {
-        $this->connectionParameters = $connectionParameters;
-    }
-
-    /**
-     * Returns the database connection parameters used to connect to Doctrine.
-     *
-     * @return array The Doctrine database connection parameters
-     */
-    public function getConnectionParameters()
-    {
-        return $this->connectionParameters;
+        return $this->entityManager;
     }
 
     /**
@@ -207,26 +249,5 @@ class AbstractProcessor
     public function getDatasources()
     {
         return $this->getSystemConfiguration()->getDatasources();
-    }
-
-    /**
-     * Return's the initialized Doctrine entity manager.
-     *
-     * @return \Doctrine\ORM\EntityManager The initialized Doctrine entity manager
-     */
-    public function getEntityManager()
-    {
-
-        // prepare the path to the entities
-        $absolutePaths = array();
-        if ($relativePaths = $this->getPathToEntities()) {
-            foreach (explode(PATH_SEPARATOR, $relativePaths) as $relativePath) {
-                $absolutePaths[] = $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . $relativePath;
-            }
-        }
-
-        // create the database configuration and initialize the entity manager
-        $metadataConfiguration = Setup::createAnnotationMetadataConfiguration($absolutePaths, true);
-        return EntityManager::create($this->getConnectionParameters(), $metadataConfiguration);
     }
 }

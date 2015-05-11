@@ -24,12 +24,13 @@
         <database>
             <driver>pdo_mysql</driver>
             <user>appserver</user>
-            <password>appserver</password>
+            <password>appserver.i0</password>
             <databaseName>appserver_ApplicationServer</databaseName>
+            <databaseHost>127.0.0.1</databaseHost>
         </database>
     </datasource>
     -->
-    
+
     <datasource name="appserver.io-example-application">
         <database>
             <driver>pdo_sqlite</driver>
@@ -39,5 +40,5 @@
             <memory>false</memory>
         </database>
     </datasource>
-    
+
 </datasources>
