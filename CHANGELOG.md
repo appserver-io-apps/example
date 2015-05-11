@@ -1,13 +1,3 @@
-# Version 1.0.4
-
-## Bugfixes
-
-* Fix to close Doctrine connections when synchronizing SFSB + SLSB
-
-## Features
-
-*  None
-
 # Version 1.0.3
 
 ## Bugfixes
