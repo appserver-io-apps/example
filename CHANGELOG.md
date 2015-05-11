@@ -19,15 +19,25 @@
 * Switch to new appserver.io v1.1.0 provisioning functionality
 * Switch to latest components/bootstrap version 3.3.4
 
+# Version 1.0.4
+
+## Bugfixes
+
+* Fix to close Doctrine connections when synchronizing SFSB + SLSB
+
+## Features
+
+*  None
+
 # Version 1.0.3
 
 ## Bugfixes
 
-* None
+* Fixed [#39](https://github.com/appserver-io-apps/example/issues/39) - MySQL not working as datasource
 
 ## Features
 
-* Fix to close Doctrine connections when synchronizing SFSB + SLSB
+* None
 
 # Version 1.0.2
 
