@@ -23,11 +23,12 @@
 
 ## Bugfixes
 
-* None
+* Fix to close Doctrine connections when synchronizing SFSB + SLSB
+* Fixed [#39](https://github.com/appserver-io-apps/example/issues/39) - MySQL not working as datasource
 
 ## Features
 
-* Fix to close Doctrine connections when synchronizing SFSB + SLSB
+* None
 
 # Version 1.0.2
 
