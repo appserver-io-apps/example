@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\SampleProcessor
+ * AppserverIo\Apps\Example\Services\ProductProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Apps\Example\Entities\Sample;
+use AppserverIo\Apps\Example\Entities\Product;
 
 /**
  * A singleton session bean implementation that handles the
@@ -34,65 +34,8 @@ use AppserverIo\Apps\Example\Entities\Sample;
  *
  * @Stateless
  */
-class SampleProcessor extends AbstractProcessor implements SampleProcessorInterface
+class ProductProcessor extends AbstractProcessor implements ProductProcessorInterface
 {
-
-    /**
-     * The user processor instance.
-     *
-     * @var \AppserverIo\Apps\Example\Services\UserProcessor
-     * @EnterpriseBean(name="UserProcessor")
-     */
-    protected $userProcessor;
-
-    /**
-     * The user processor instance.
-     *
-     * @var \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface
-     * @Resource(name="TimerServiceContextInterface")
-     */
-    protected $timerService;
-
-    /**
-     * Example method that should be invoked after constructor.
-     *
-     * @return void
-     * @PostConstruct
-     */
-    public function initialize()
-    {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
-        );
-    }
-
-    /**
-     * Injects the user processor into this instance.
-     *
-     * ATTENTION: Will only be used if you activate it in the epb.xml file!
-     *
-     * @param \AppserverIo\Apps\Example\Services\UserProcessor $userProcessor The user processor instance
-     *
-     * @return void
-     */
-    public function injectUserProcessor($userProcessor)
-    {
-        $this->userProcessor = $userProcessor;
-    }
-
-    /**
-     * Injects the timer service for this instance.
-     *
-     * ATTENTION: Will only be used if you activate it in the epb.xml file!
-     *
-     * @param \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface $timerService The timer service instance
-     *
-     * @return void
-     */
-    public function injectTimerService($timerService)
-    {
-        $this->timerService = $timerService;
-    }
 
     /**
      * Loads and returns the entity with the ID passed as parameter.
@@ -104,17 +47,17 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
     public function load($id)
     {
         $entityManager = $this->getEntityManager();
-        return $entityManager->find('AppserverIo\Apps\Example\Entities\Sample', $id);
+        return $entityManager->find('AppserverIo\Apps\Example\Entities\Product', $id);
     }
 
     /**
      * Persists the passed entity.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to persist
+     * @param \AppserverIo\Apps\Example\Entities\Product $entity The entity to persist
      *
-     * @return \AppserverIo\Apps\Example\Entities\Sample The persisted entity
+     * @return \AppserverIo\Apps\Example\Entities\Product The persisted entity
      */
-    public function persist(Sample $entity)
+    public function persist(Product $entity)
     {
         // load the entity manager
         $entityManager = $this->getEntityManager();
@@ -162,7 +105,7 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
     {
         // load all entities
         $entityManager = $this->getEntityManager();
-        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Sample');
+        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Product');
         return $repository->findBy(array(), array(), $limit, $offset);
     }
 }

@@ -21,6 +21,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use Doctrine\ORM\Tools\SchemaTool;
+use AppserverIo\Apps\Example\Entities\Product;
 
 /**
  * A singleton session bean implementation that handles the
@@ -36,6 +37,21 @@ use Doctrine\ORM\Tools\SchemaTool;
  */
 class SchemaProcessor extends AbstractProcessor implements SchemaProcessorInterface
 {
+
+    /**
+     * The DIC provider instance.
+     *
+     * @var \AppserverIo\Appserver\DependencyInjectionContainer\Interfaces\ProviderInterface $provider
+     * @Resource(name="ProviderInterface")
+     */
+    protected $provider;
+
+    /**
+     * The default username.
+     *
+     * @var string
+     */
+    const DEFAULT_USERNAME = 'appserver';
 
     /**
      * Example method that should be invoked after constructor.
@@ -70,5 +86,76 @@ class SchemaProcessor extends AbstractProcessor implements SchemaProcessorInterf
         // drop the schema if it already exists and create it new
         $schemaTool->dropSchema($classes);
         $schemaTool->createSchema($classes);
+    }
+
+    /**
+     * Creates the default products.
+     *
+     * @return void
+     */
+    public function createDefaultProducts()
+    {
+
+        try {
+            // load the entity manager
+            $entityManager = $this->getEntityManager();
+
+            // create 10 products
+            for ($i = 1; $i < 11; $i++) {
+                // set user data and save it
+                $product = $this->provider->newInstance('\AppserverIo\Apps\Example\Entities\Product');
+                $product->setName("Product-$i");
+                $product->setStatus(Product::STATUS_ACTIVE);
+                $product->setUrlKey("product-$i");
+                $product->setProductNumber($i);
+                $product->setSalesPrice($i);
+                $product->setDescription("Description of Product-$i");
+
+                // persist the user
+                $entityManager->persist($product);
+            }
+            // flush the entity manager
+            $entityManager->flush();
+
+        } catch (\Exception $e) {
+            // log the exception
+            $this->getInitialContext()->getSystemLogger()->error($e->__toString());
+        }
+    }
+
+    /**
+     * Creates the default credentials to login.
+     *
+     * @return void
+     */
+    public function createDefaultCredentials()
+    {
+
+        try {
+            // load the entity manager
+            $entityManager = $this->getEntityManager();
+
+            // set user data and save it
+            $user = $this->provider->newInstance('\AppserverIo\Apps\Example\Entities\User');
+            $user->setEmail('info@appserver.io');
+            $user->setUsername(SchemaProcessor::DEFAULT_USERNAME);
+            $user->setUserLocale('en_US');
+            $user->setPassword(md5('appserver.i0'));
+            $user->setEnabled(true);
+            $user->setRate(1000);
+            $user->setContractedHours(160);
+            $user->setLdapSynced(false);
+            $user->setSyncedAt(time());
+
+            // persist the user
+            $entityManager->persist($user);
+
+            // flush the entity manager
+            $entityManager->flush();
+
+        } catch (\Exception $e) {
+            // log the exception
+            $this->getInitialContext()->getSystemLogger()->error($e->__toString());
+        }
     }
 }

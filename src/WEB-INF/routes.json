@@ -35,6 +35,14 @@
         {
             "urlMapping": "/user*",
             "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\UserAction"
+        },
+        {
+            "urlMapping": "/cart*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\CartAction"
+        },
+        {
+            "urlMapping": "/product*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\ProductAction"
         }
     ]
 }

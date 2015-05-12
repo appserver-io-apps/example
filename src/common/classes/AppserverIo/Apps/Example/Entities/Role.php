@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Doctrine entity that represents a role.
  *
@@ -29,35 +31,35 @@ namespace AppserverIo\Apps\Example\Entities;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Entity
- * @Table(name="role")
+ * @ORM\Entity
+ * @ORM\Table(name="role")
  */
 class Role
 {
 
     /**
      * @var int
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     protected $roleId;
 
     /**
      * @var integer
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $roleIdFk;
 
     /**
      * @var integer
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $userIdFk;
 
     /**
      * @var string
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 

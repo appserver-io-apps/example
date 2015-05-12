@@ -52,4 +52,18 @@ class ProxyKeys
      * @return string
      */
     const USER_PROCESSOR = 'UserProcessor'; // 'php:global/example/UserProcessor/remote' for remote access
+
+    /**
+     * The naming directory key for the 'AppserverIo\Apps\Example\Services\CartProcessor' session bean.
+     *
+     * @return string
+     */
+    const PRODUCT_PROCESSOR = 'ProductProcessor'; // 'php:global/example/ProductProcessor/remote' for remote access
+
+    /**
+     * The naming directory key for the 'AppserverIo\Apps\Example\Services\CartProcessor' session bean.
+     *
+     * @return string
+     */
+    const CART_PROCESSOR = 'CartProcessor'; // 'php:global/example/CartProcessor/remote' for remote access
 }

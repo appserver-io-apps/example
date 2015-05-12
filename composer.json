@@ -6,7 +6,8 @@
 		"components/jquery" : "*",
 		"components/font-awesome" : "*",
 		"components/bootstrap" : "3.3.4",
-		"appserver-io/routlt" : "~1.0"
+		"appserver-io/routlt" : "~1.0",
+		"jms/serializer" : "0.16.*"
 	},
 	"require-dev" : {
 		"appserver-io/phar" : "~1.0",

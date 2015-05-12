@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\SampleProcessorInterface
+ * AppserverIo\Apps\Example\Services\ProductProcessorInterface
  *
  * NOTICE OF LICENSE
  *
@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Apps\Example\Entities\Sample;
+use AppserverIo\Apps\Example\Entities\Product;
 
 /**
  * A singleton session bean implementation that handles the
@@ -32,7 +32,7 @@ use AppserverIo\Apps\Example\Entities\Sample;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-interface SampleProcessorInterface
+interface ProductProcessorInterface
 {
 
     /**
@@ -47,11 +47,11 @@ interface SampleProcessorInterface
     /**
      * Persists the passed entity.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to persist
+     * @param \AppserverIo\Apps\Example\Entities\Product $entity The entity to persist
      *
-     * @return \AppserverIo\Apps\Example\Entities\Sample The persisted entity
+     * @return \AppserverIo\Apps\Example\Entities\Product The persisted entity
      */
-    public function persist(Sample $entity);
+    public function persist(Product $entity);
 
     /**
      * Deletes the entity with the passed ID.

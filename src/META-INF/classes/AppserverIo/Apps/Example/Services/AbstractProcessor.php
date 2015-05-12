@@ -23,6 +23,7 @@ namespace AppserverIo\Apps\Example\Services;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use AppserverIo\Psr\Application\ApplicationInterface;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
  * A singleton session bean implementation that handles the
@@ -49,7 +50,7 @@ class AbstractProcessor
      *
      * @var string
      */
-    protected $pathToEntities = 'META-INF/classes/TechDivision/Example/Entities';
+    protected $pathToEntities = 'common/classes/AppserverIo/Apps/Example/Entities';
 
     /**
      * The Doctrine EntityManager instance.
@@ -98,8 +99,14 @@ class AbstractProcessor
             }
         }
 
+        // register the annotations for the JMS serializer
+        AnnotationRegistry::registerAutoloadNamespace(
+            'JMS\\Serializer\\Annotation',
+            $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . 'vendor/jms/serializer/src'
+        );
+
         // create the database configuration and initialize the entity manager
-        $metadataConfiguration = Setup::createAnnotationMetadataConfiguration($absolutePaths, true);
+        $metadataConfiguration = Setup::createAnnotationMetadataConfiguration($absolutePaths, true, null, null, false);
 
         // iterate over the found database sources
         foreach ($this->getDatasources() as $datasourceNode) {

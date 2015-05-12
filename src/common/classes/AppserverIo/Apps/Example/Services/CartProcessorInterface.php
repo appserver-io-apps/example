@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\ASingletonProcessorInterface
+ * AppserverIo\Apps\Example\Services\CartProcessorInterface
  *
  * NOTICE OF LICENSE
  *
@@ -21,7 +21,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 /**
- * A dummy singleton session bean implementation.
+ * Interface for a cart processor.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -29,6 +29,36 @@ namespace AppserverIo\Apps\Example\Services;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-interface ASingletonProcessorInterface
+interface CartProcessorInterface
 {
+
+	/**
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function getCartContents();
+
+	/**
+	 * @param $sessionId
+	 */
+	public function initCart($sessionId);
+
+	/**
+	 * @return Cart
+	 */
+	public function getCart();
+
+	/**
+	 * @param CartItem $cartItem
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function addCartItem($cartItem);
+
+	/**
+	 * @param CartItem $cartItem
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function updateCartItem($cartItem);
 }
