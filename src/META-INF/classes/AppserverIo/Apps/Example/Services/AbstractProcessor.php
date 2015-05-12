@@ -91,6 +91,9 @@ class AbstractProcessor
     public function init()
     {
 
+        // re-register the Doctrine annotation libraries
+        $this->postDetach();
+
         // prepare the path to the entities
         $absolutePaths = array();
         if ($relativePaths = $this->getPathToEntities()) {
@@ -98,12 +101,6 @@ class AbstractProcessor
                 $absolutePaths[] = $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . $relativePath;
             }
         }
-
-        // register the annotations for the JMS serializer
-        AnnotationRegistry::registerAutoloadNamespace(
-            'JMS\\Serializer\\Annotation',
-            $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . 'vendor/jms/serializer/src'
-        );
 
         // create the database configuration and initialize the entity manager
         $metadataConfiguration = Setup::createAnnotationMetadataConfiguration($absolutePaths, true, null, null, false);
@@ -158,7 +155,7 @@ class AbstractProcessor
      *
      * @return void
      */
-    public function destroy($origin = '@PreDestroy annotation')
+    public function preAttach($origin = '@PreDestroy annotation')
     {
 
         // query wheter we've an entity manager instance
@@ -168,7 +165,7 @@ class AbstractProcessor
 
             // log a message that this method has been invoked
             $this->getInitialContext()->getSystemLogger()->info(
-                sprintf('%s has successfully been invoked by the %s', __METHOD__, $origin)
+                sprintf('%s::attach() has successfully been invoked by the %s', get_class($this), $origin)
             );
         }
     }
@@ -181,11 +178,48 @@ class AbstractProcessor
      * callback that gives you more specific possiblity to investigate on that
      * event.
      *
-     * @return void
+     * @return array The array with the properties bound to the SFSB
+     * @see http://php.net/manual/en/language.oop5.magic.php#object.sleep
      */
     public function __sleep()
     {
-        $this->destroy('__sleep method');
+        // destroy the Doctrine EntityManager's connection resource
+        $this->preAttach('__sleep method');
+
+        // return an array with the property names that has to be bound the SFSB
+        return array_keys(get_object_vars($this));
+    }
+
+    /**
+     * Re-register the Doctrine annotation libraries.
+     *
+     * @param string $origin The name of the origin that invokes this method
+     *
+     * @return void
+     */
+    public function postDetach($origin = '@PostConstruct annotation')
+    {
+        // register the annotations for the JMS serializer
+        AnnotationRegistry::registerAutoloadNamespace(
+            'JMS\\Serializer\\Annotation',
+            $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . 'vendor/jms/serializer/src'
+        );
+    }
+
+    /**
+     * When we've a SFSB, this method will be invoked before detached from the
+     * the container.
+     *
+     * As this is a magic method, in future versions there will be a lifecycle
+     * callback that gives you more specific possiblity to investigate on that
+     * event.
+     *
+     * @return array The array with the properties bound to the SFSB
+     * @see http://php.net/manual/en/language.oop5.magic.php#object.wakeup
+     */
+    public function __wakeup()
+    {
+        $this->postDetach('__wakeup method');
     }
 
     /**
