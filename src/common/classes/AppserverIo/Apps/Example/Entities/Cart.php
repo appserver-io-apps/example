@@ -75,15 +75,16 @@ class Cart extends AbstractEntity {
 	/**
 	 * INVERSE SIDE
 	 * @var ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem>
-	 * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\CartItem", mappedBy="cart", orphanRemoval=true, cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\CartItem", mappedBy="cart", cascade={"detach", "persist", "remove"})
 	 * @JMS\Expose
 	 * @JMS\Type("ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem>")
 	 * @JMS\Accessor(setter="setCartItems")
 	 */
 	protected $cartItems;
 
-
-	public function __construct() {
+    public function __construct()
+    {
+        $this->updateCreatedUpdatedDate();
 		$this->cartItems = new ArrayCollection();
 	}
 

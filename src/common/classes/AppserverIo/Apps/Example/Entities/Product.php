@@ -189,7 +189,10 @@ class Product extends AbstractEntity {
 	 */
 	protected $parentProduct;
 
-	public function __construct() {
+	public function __construct()
+	{
+
+        $this->updateCreatedUpdatedDate();
 
 	    // initialize the array with the status
 	    $this->statusArray = [self::STATUS_ACTIVE, self::STATUS_PROCESSING, self::STATUS_INACTIVE];

@@ -103,10 +103,9 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
             <tbody>
             <?php foreach ($this->getAttribute(ContextKeys::OVERVIEW_DATA) as $entity): ?>
                 <tr>
-                    <td><a href="<?php echo $this->getDetailLink($entity) ?>"><?php echo $entity->getId() ?></a>
-                    </td>
-                    <td><?php echo $entity->getName() ?></td>
-                    <td><a href="<?php echo $this->getDetailLink($entity) ?>">Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $this->getDeleteLink($entity) ?>">Delete</a></td>
+                    <td><?php echo $entity->getProductId() ?></td>
+                    <td><?php echo $entity->getProduct()->getName() ?></td>
+                    <td><a href="<?php echo $this->getDeleteCartItemLink($entity) ?>">Delete</a></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

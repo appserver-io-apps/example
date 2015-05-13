@@ -23,7 +23,7 @@
             <epb-name>UserProcessor</epb-name>
             <epb-class>AppserverIo\Apps\Example\Services\UserProcessor</epb-class>
             <pre-destroy>
-                <lifecycle-callback-method>destroy</lifecycle-callback-method>
+                <lifecycle-callback-method>preAttach</lifecycle-callback-method>
             </pre-destroy>
         </session>
         <session>
@@ -34,7 +34,7 @@
                 <lifecycle-callback-method>initialize</lifecycle-callback-method>
             </post-construct>
             <pre-destroy>
-                <lifecycle-callback-method>destroy</lifecycle-callback-method>
+                <lifecycle-callback-method>preAttach</lifecycle-callback-method>
             </pre-destroy>
             <!--
             <epb-ref>

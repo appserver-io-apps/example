@@ -70,6 +70,11 @@ class ProductImage extends AbstractEntity {
      */
     protected $product;
 
+    public function __construct()
+    {
+        $this->updateCreatedUpdatedDate();
+    }
+
     /**
      * @return int
      */

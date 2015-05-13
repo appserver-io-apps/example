@@ -51,6 +51,28 @@ class CartAction extends ExampleBaseAction
     const CART_TEMPLATE = 'static/templates/cart.phtml';
 
     /**
+     * We always start the session, because we need a session-ID for our SFSB.
+     *
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
+     *
+     * @see \AppserverIo\Routlt\BaseAction::preDispatch()
+     */
+    public function preDispatch(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    {
+
+        // set servlet request/response
+        $this->setServletRequest($servletRequest);
+        $this->setServletResponse($servletResponse);
+
+        // start the session
+        $this->getLoginSession(true)->start();
+
+        // initialize the cart for this session-ID
+        $this->getProxy(ProxyKeys::CART_PROCESSOR)->initCart($this->getLoginSession()->getId());
+    }
+
+    /**
      * Default action to invoke if no action parameter has been found in the request.
      *
      * Loads all sample data and attaches it to the servlet context ready to be rendered
@@ -63,15 +85,6 @@ class CartAction extends ExampleBaseAction
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-
-        // start the session, because we need a session-ID for our stateful session bean
-        $session = $this->getLoginSession(true);
-        $session->start();
-
-        // initialize the cart for this session-ID
-        $this->getProxy(ProxyKeys::CART_PROCESSOR)->initCart($session->getId());
-
-        // load the cart data
         $overviewData = $this->getProxy(ProxyKeys::CART_PROCESSOR)->getCartContents();
         $this->setAttribute(ContextKeys::OVERVIEW_DATA, $overviewData);
         $servletResponse->appendBodyStream($this->processTemplate(CartAction::CART_TEMPLATE, $servletRequest, $servletResponse));
@@ -92,13 +105,6 @@ class CartAction extends ExampleBaseAction
     public function addToCartAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        // start the session, because we need a session-ID for our stateful session bean
-        $session = $this->getLoginSession(true);
-        $session->start();
-
-        // initialize the cart for this session-ID
-        $this->getProxy(ProxyKeys::CART_PROCESSOR)->initCart($session->getId());
-
         // check if the necessary params has been specified and are valid
         $productId = $servletRequest->getParameter(RequestKeys::PRODUCT_ID, FILTER_VALIDATE_INT);
         if ($productId == null) {
@@ -118,13 +124,39 @@ class CartAction extends ExampleBaseAction
     }
 
     /**
+     * Deletes the cart item entity with the cart item ID found in the request from the cart.
+     *
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    {
+
+        // check if the necessary params has been specified and are valid
+        $cartItemId = $servletRequest->getParameter(RequestKeys::CART_ITEM_ID, FILTER_VALIDATE_INT);
+        if ($cartItemId == null) {
+            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::CART_ITEM_ID));
+        }
+
+        // delete the entity
+        $this->getProxy(ProxyKeys::CART_PROCESSOR)->removeCartItemByCartItemId($cartItemId);
+
+        // reload all entities and render the dialog
+        $this->indexAction($servletRequest, $servletResponse);
+    }
+
+    /**
      * Creates and returns the URL that has to be invoked to delete the passed entity from the cart.
      *
      * @param \AppserverIo\Apps\Example\Entities\CartItem $entity The entity to create the deletion link for
      *
      * @return string The URL with the deletion link
      */
-    public function getDeleteCartItem(CartItem $entity)
+    public function getDeleteCartItemLink(CartItem $entity)
     {
         return sprintf('index.do/cart/delete?%s=%d', RequestKeys::CART_ITEM_ID, $entity->getId());
     }

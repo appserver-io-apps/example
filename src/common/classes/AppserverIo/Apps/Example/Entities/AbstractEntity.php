@@ -39,14 +39,14 @@ class AbstractEntity
     /**
      *
      * @var \DateTime $createdAt
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(name="created_at", type="integer", nullable=false)
      */
     protected $createdAt;
 
     /**
      *
      * @var \DateTime $updatedAt
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @ORM\Column(name="updated_at", type="integer", nullable=false)
      */
     protected $updatedAt;
 
@@ -59,7 +59,7 @@ class AbstractEntity
 
     /**
      *
-     * @return \DateTime
+     * @return integer
      */
     public function getCreatedAt()
     {
@@ -68,7 +68,7 @@ class AbstractEntity
 
     /**
      *
-     * @param \DateTime $createdAt
+     * @param integer $createdAt
      */
     protected function setCreatedAt($createdAt)
     {
@@ -77,7 +77,7 @@ class AbstractEntity
 
     /**
      *
-     * @return \DateTime
+     * @return integer
      */
     public function getUpdatedAt()
     {
@@ -86,7 +86,7 @@ class AbstractEntity
 
     /**
      *
-     * @param \DateTime $updatedAt
+     * @param integer $updatedAt
      */
     protected function setUpdatedAt($updatedAt)
     {
@@ -117,10 +117,11 @@ class AbstractEntity
      */
     public function updateCreatedUpdatedDate()
     {
-        $this->setUpdatedAt(new \DateTime('now'));
+
+        $this->setUpdatedAt(time());
 
         if ($this->getCreatedAt() == null) {
-            $this->setCreatedAt(new \DateTime('now'));
+            $this->setCreatedAt(time());
         }
     }
 }
