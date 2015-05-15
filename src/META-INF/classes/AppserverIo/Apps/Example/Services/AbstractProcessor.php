@@ -88,20 +88,40 @@ class AbstractProcessor
      * @return void
      * @PostConstruct
      */
-    public function init()
+    public function postConstruct()
     {
-        $this->postDetach();
+        try {
+            $this->init();
+        } catch (\Exception $e) {
+            $this->getApplication()->getInitialContext()->getSystemLogger()->error($e->__toString());
+        }
     }
 
     /**
      * Re-register the Doctrine annotation libraries and re-load the
      * not serializable metadata.
      *
+     * @return void
+     * @PostDetach
+     */
+    public function postDetach()
+    {
+        try {
+            $this->init('@PostDetach annotation');
+        } catch (\Exception $e) {
+            $this->getApplication()->getInitialContext()->getSystemLogger()->error($e->__toString());
+        }
+    }
+
+    /**
+     * Initializes the database connection parameters necessary
+     * to connect to the database using Doctrine.
+     *
      * @param string $origin The name of the origin that invokes this method
      *
      * @return void
      */
-    public function postDetach($origin = '@PostConstruct annotation')
+    public function init($origin = '@PostConstruct annotation')
     {
 
         // register the annotations for the JMS serializer
@@ -164,53 +184,13 @@ class AbstractProcessor
     }
 
     /**
-     * When we've a SFSB, this method will be invoked before detached from the
-     * the container.
-     *
-     * As this is a magic method, in future versions there will be a lifecycle
-     * callback that gives you more specific possiblity to investigate on that
-     * event.
-     *
-     * @return void
-     * @see http://php.net/manual/en/language.oop5.magic.php#object.wakeup
-     */
-    public function __wakeup()
-    {
-        try {
-            $this->postDetach('__wakeup method');
-        } catch (\Exception $e) {
-            $this->getApplication()->getInitialContext()->getSystemLogger()->error($e->__toString());
-        }
-    }
-
-    /**
-     * When we've a SFSB, this method will be invoked before the SFSB will be
-     * re-attached to the container.
-     *
-     * As this is a magic method, in future versions there will be a lifecycle
-     * callback that gives you more specific possiblity to investigate on that
-     * event.
-     *
-     * @return void
-     * @see http://php.net/manual/en/language.oop5.magic.php#object.sleep
-     */
-    public function __sleep()
-    {
-
-        // unset the Doctrine EntityManager instance
-        $this->preAttach('__sleep() method');
-
-        // return the object vars we want to persist
-        return array_keys(get_object_vars($this));
-    }
-
-    /**
      * Deletes the Doctrine EntityManager instance, because it can't be
      * serialized between the requests.
      *
      * @param string $origin The name of the origin that invokes this method
      *
      * @return void
+     * @PreAttach
      */
     public function preAttach($origin = '@PreDestroy annotation')
     {
