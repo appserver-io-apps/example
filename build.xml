@@ -97,6 +97,16 @@
             <arg value="-c" />
             <arg value="scp -o StrictHostKeyChecking=no -i ${user.home}/.ssh/id_rsa ${php-target.dir}/${package.filename} ${build.server.user}@${build.server.host}:${build.server.upload-path}" />
         </exec>
+        <!-- update the latest remote package -->
+        <antcall target="update-latest-build" />
+    </target>
+
+    <!-- ==================================================================== -->
+    <!-- Will update the remote package indicating the latest successful      -->
+    <!-- built unless the "omit.update-latest" property is true.              -->
+    <!-- ==================================================================== -->
+    <target name="update-latest-build" unless="${omit.update-latest}" description="Will update the remote package indicating the latest successful built">
+        <echo message="Now try to update latest remote package"/>
         <exec executable="sh" failonerror="true">
             <arg value="-c" />
             <arg value="scp -o StrictHostKeyChecking=no -i ${user.home}/.ssh/id_rsa ${php-target.dir}/${package.filename} ${build.server.user}@${build.server.host}:${build.server.upload-path}/${appserver.webapp.name}-latest.phar" />
