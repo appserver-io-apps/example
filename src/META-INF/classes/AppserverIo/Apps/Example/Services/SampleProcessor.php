@@ -51,7 +51,7 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
      * @var \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface
      * @Resource(name="TimerServiceContextInterface")
      */
-    protected $timerService;
+    protected $timerServiceContextInterface;
 
     /**
      * Example method that should be invoked after constructor.

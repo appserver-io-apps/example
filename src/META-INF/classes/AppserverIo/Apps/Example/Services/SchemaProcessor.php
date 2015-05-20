@@ -44,7 +44,7 @@ class SchemaProcessor extends AbstractProcessor implements SchemaProcessorInterf
      * @var \AppserverIo\Appserver\DependencyInjectionContainer\Interfaces\ProviderInterface $provider
      * @Resource(name="ProviderInterface")
      */
-    protected $provider;
+    protected $providerInterface;
 
     /**
      * The default username.
@@ -103,7 +103,7 @@ class SchemaProcessor extends AbstractProcessor implements SchemaProcessorInterf
             // create 10 products
             for ($i = 1; $i < 11; $i++) {
                 // set user data and save it
-                $product = $this->provider->newInstance('\AppserverIo\Apps\Example\Entities\Product');
+                $product = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Product');
                 $product->setName("Product-$i");
                 $product->setStatus(Product::STATUS_ACTIVE);
                 $product->setUrlKey("product-$i");
@@ -136,7 +136,7 @@ class SchemaProcessor extends AbstractProcessor implements SchemaProcessorInterf
             $entityManager = $this->getEntityManager();
 
             // set user data and save it
-            $user = $this->provider->newInstance('\AppserverIo\Apps\Example\Entities\User');
+            $user = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\User');
             $user->setEmail('info@appserver.io');
             $user->setUsername(SchemaProcessor::DEFAULT_USERNAME);
             $user->setUserLocale('en_US');

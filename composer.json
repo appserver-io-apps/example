@@ -17,7 +17,7 @@
 		"appserver-io-psr/mop" : "~1.0",
 		"appserver-io-psr/epb" : "~1.0",
 		"appserver-io-psr/servlet" : "~1.0",
-		"doctrine/common" : "~2.2"
+		"doctrine/common" : "~2.5"
 	},
 	"config" : {
 		"vendor-dir" : "src/vendor",

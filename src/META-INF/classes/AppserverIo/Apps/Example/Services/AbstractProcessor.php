@@ -20,10 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
 use AppserverIo\Psr\Application\ApplicationInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
  * A singleton session bean implementation that handles the
@@ -39,23 +36,10 @@ class AbstractProcessor
 {
 
     /**
-     * Datasource name to use.
-     *
-     * @var string
-     */
-    protected $datasourceName = 'appserver.io-example-application';
-
-    /**
-     * Relative path to the folder with the database entries.
-     *
-     * @var string
-     */
-    protected $pathToEntities = 'common/classes/AppserverIo/Apps/Example/Entities';
-
-    /**
      * The Doctrine EntityManager instance.
      *
-     * @var \Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManagerInterface
+     * @PersistenceUnit(unitName="ExampleEntityManager")
      */
     protected $entityManager;
 
@@ -82,142 +66,55 @@ class AbstractProcessor
     }
 
     /**
-     * Initializes the database connection parameters necessary
-     * to connect to the database using Doctrine.
+     * Dummy implementation for demonstration purposes.
      *
      * @return void
      * @PostConstruct
      */
     public function postConstruct()
     {
-        try {
-            $this->init();
-        } catch (\Exception $e) {
-            $this->getApplication()->getInitialContext()->getSystemLogger()->error($e->__toString());
-        }
+        $this->getInitialContext()->getSystemLogger()->info(
+            sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
+        );
     }
 
     /**
-     * Re-register the Doctrine annotation libraries and re-load the
-     * not serializable metadata.
+     * Dummy implementation for demonstration purposes.
+     *
+     * @return void
+     * @PreDestroy
+     */
+    public function preDestroy()
+    {
+        $this->getInitialContext()->getSystemLogger()->info(
+            sprintf('%s has successfully been invoked by @PreDestroy annotation', __METHOD__)
+        );
+    }
+
+    /**
+     * Dummy implementation for demonstration purposes.
      *
      * @return void
      * @PostDetach
      */
     public function postDetach()
     {
-        try {
-            $this->init('@PostDetach annotation');
-        } catch (\Exception $e) {
-            $this->getApplication()->getInitialContext()->getSystemLogger()->error($e->__toString());
-        }
-    }
-
-    /**
-     * Initializes the database connection parameters necessary
-     * to connect to the database using Doctrine.
-     *
-     * @param string $origin The name of the origin that invokes this method
-     *
-     * @return void
-     */
-    public function init($origin = '@PostConstruct annotation')
-    {
-
-        // register the annotations for the JMS serializer
-        AnnotationRegistry::registerAutoloadNamespace(
-            'JMS\\Serializer\\Annotation',
-            $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . 'vendor/jms/serializer/src'
+        $this->getInitialContext()->getSystemLogger()->info(
+            sprintf('%s has successfully been invoked by @PostDetach annotation', __METHOD__)
         );
-
-        // prepare the path to the entities
-        $absolutePaths = array();
-        if ($relativePaths = $this->getPathToEntities()) {
-            foreach (explode(PATH_SEPARATOR, $relativePaths) as $relativePath) {
-                $absolutePaths[] = $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . $relativePath;
-            }
-        }
-
-        // create the database configuration and initialize the entity manager
-        $metadataConfiguration = Setup::createAnnotationMetadataConfiguration($absolutePaths, true, null, null, false);
-
-        // iterate over the found database sources
-        foreach ($this->getDatasources() as $datasourceNode) {
-            // if the datasource is related to the session bean
-            if ($datasourceNode->getName() == $this->getDatasourceName()) {
-                // initialize the database node
-                $databaseNode = $datasourceNode->getDatabase();
-
-                // initialize the connection parameters
-                $connectionParameters = array(
-                    'driver'   => $databaseNode->getDriver()->getNodeValue()->__toString(),
-                    'user'     => $databaseNode->getUser()->getNodeValue()->__toString(),
-                    'password' => $databaseNode->getPassword()->getNodeValue()->__toString()
-                );
-
-                // initialize the path to the database when we use sqlite for example
-                if ($databaseNode->getPath()) {
-                    if ($path = $databaseNode->getPath()->getNodeValue()->__toString()) {
-                        $connectionParameters['path'] = $this->getApplication()->getWebappPath() . DIRECTORY_SEPARATOR . $path;
-                    }
-                }
-
-                // add database name if using another PDO driver than sqlite
-                if ($databaseNode->getDatabaseName()) {
-                    $databaseName = $databaseNode->getDatabaseName()->getNodeValue()->__toString();
-                    $connectionParameters['dbname'] = $databaseName;
-                }
-
-                // add database host if using another PDO driver than sqlite
-                if ($databaseNode->getDatabaseHost()) {
-                    $databaseHost = $databaseNode->getDatabaseHost()->getNodeValue()->__toString();
-                    $connectionParameters['host'] = $databaseHost;
-                }
-
-                // initialize and set the EntityManager instance
-                $this->entityManager = EntityManager::create($connectionParameters, $metadataConfiguration);
-
-                // stop foreach loop when we've created the EntityManager instance
-                return;
-            }
-        }
     }
 
     /**
-     * Deletes the Doctrine EntityManager instance, because it can't be
-     * serialized between the requests.
-     *
-     * @param string $origin The name of the origin that invokes this method
+     * Dummy implementation for demonstration purposes.
      *
      * @return void
      * @PreAttach
      */
-    public function preAttach($origin = '@PreDestroy annotation')
+    public function preAttach()
     {
-
-        // ATTENTION: We can NOT persist the Doctrine EntityManager, because
-        //            internal proxy objects can contain closures!!!!!!!!!!!
-        unset($this->entityManager);
-    }
-
-    /**
-     * Return's the path to the doctrine entities.
-     *
-     * @return string The path to the doctrine entities
-     */
-    public function getPathToEntities()
-    {
-        return $this->pathToEntities;
-    }
-
-    /**
-     * Return's the datasource name to use.
-     *
-     * @return string The datasource name
-     */
-    public function getDatasourceName()
-    {
-        return $this->datasourceName;
+        $this->getInitialContext()->getSystemLogger()->info(
+            sprintf('%s has successfully been invoked by @PreAttach annotation', __METHOD__)
+        );
     }
 
     /**
@@ -233,7 +130,7 @@ class AbstractProcessor
     /**
      * Return's the initialized Doctrine entity manager.
      *
-     * @return \Doctrine\ORM\EntityManager The initialized Doctrine entity manager
+     * @return \Doctrine\ORM\EntityManagerInterface The initialized Doctrine entity manager
      */
     public function getEntityManager()
     {

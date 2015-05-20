@@ -55,6 +55,29 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     }
 
     /**
+     * Dummy implementation for demonstration purposes.
+     *
+     * @return void
+     * @PostDetach
+     */
+    public function postDetach()
+    {
+        try {
+
+            // ATTENTION: This is necessary to let Doctrine manage the entity.
+            //            When not merged, proxy classes are returned to the
+            //            view and no autoloader is aware how to resolve the
+            //            class definitions!!
+            $this->cart = $this->getEntityManager()->merge($this->cart);
+
+            parent::postDetach();
+
+        } catch (\Exception $e) {
+
+        }
+    }
+
+    /**
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -64,13 +87,6 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
         $items = array();
 
         if ($this->cart) {
-
-            // ATTENTION: This is necessary to let Doctrine manage the entity.
-            //            When not merged, proxy classes are returned to the
-            //            view and no autoloader is aware how to resolve the
-            //            class definitions!!
-            $this->cart = $this->getEntityManager()->merge($this->cart);
-
             $items = $this->cart->getCartItems();
         }
 
@@ -125,12 +141,6 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     public function addCartItem($cartItem)
     {
 
-        // ATTENTION: This is necessary to let Doctrine manage the entity.
-        //            When not merged, the cart can't be persisted again!!
-        $this->cart = $this->getEntityManager()->merge($this->cart);
-
-        $existingItem = $this->loadExistingCartItem($cartItem);
-
         if (!empty($existingItem)) {
             $this->updateExistingCartItem($existingItem, $cartItem);
         } else {
@@ -160,10 +170,6 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
      */
     public function updateCartItem($cartItem)
     {
-
-        // ATTENTION: This is necessary to let Doctrine manage the entity.
-        //            When not merged, the cart can't be persisted again!!
-        $this->cart = $this->getEntityManager()->merge($this->cart);
 
         $existingItem = $this->loadExistingCartItem($cartItem);
 
