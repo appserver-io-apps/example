@@ -41,4 +41,11 @@ interface SchemaProcessorInterface
      * @return void
      */
     public function createSchema();
+
+    /**
+     * Creates the default credentials to login.
+     *
+     * @return \AppserverIo\Apps\Example\Entities\User The default user instance
+     */
+    public function createDefaultCredentials();
 }

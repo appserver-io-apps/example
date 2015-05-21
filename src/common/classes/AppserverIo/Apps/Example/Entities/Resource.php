@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Doctrine entity that represents a resource.
  *
@@ -29,35 +31,35 @@ namespace AppserverIo\Apps\Example\Entities;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Entity
- * @Table(name="resource")
+ * @ORM\Entity
+ * @ORM\Table(name="resource")
  */
 class Resource
 {
 
     /**
      * @var int
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     protected $resourceId;
 
     /**
      * @var string
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $resourceLocale;
 
     /**
      * @var string
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $key;
 
     /**
      * @var string
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $message;
 

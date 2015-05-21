@@ -15,6 +15,10 @@ namespace AppserverIo\Apps\Example\Servlets;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 
+// initialize local variables
+$sampleId = 0;
+$name = '';
+
 // load the entity data if available
 if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
     $sampleId = $entity->getSampleId();

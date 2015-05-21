@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Doctrine entity that represents a rule.
  *
@@ -29,47 +31,47 @@ namespace AppserverIo\Apps\Example\Entities;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Entity
- * @Table(name="rule")
+ * @ORM\Entity
+ * @ORM\Table(name="rule")
  */
 class Rule
 {
 
     /**
      * @var integer
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     protected $ruleId;
 
     /**
      * @var integer
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $roleIdFk;
 
     /**
      * @var integer
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $assertionIdFk;
 
     /**
      * @var string
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $resource;
 
     /**
      * @var string
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $privileges;
 
     /**
      * @var string
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $permission;
 

@@ -61,8 +61,6 @@ class LoginAction extends ExampleBaseAction
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $viewData = $this->getProxy(ProxyKeys::USER_PROCESSOR)->checkForDefaultCredentials();
-        $this->setAttribute(ContextKeys::VIEW_DATA, $viewData);
         $servletResponse->appendBodyStream($this->processTemplate(LoginAction::LOGIN_TEMPLATE, $servletRequest, $servletResponse));
     }
 
