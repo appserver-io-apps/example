@@ -16,6 +16,8 @@ use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 
 // load the entity data if available
+$sampleId = 0;
+$name = '';
 if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
     $sampleId = $entity->getSampleId();
     $name = $entity->getName();
