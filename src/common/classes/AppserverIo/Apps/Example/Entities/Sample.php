@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Doctrine entity that represents a sample.
  *
@@ -29,8 +31,8 @@ namespace AppserverIo\Apps\Example\Entities;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Entity
- * @Table(name="sample")
+ * @ORM\Entity
+ * @ORM\Table(name="sample")
  */
 class Sample
 {
@@ -38,23 +40,23 @@ class Sample
     /**
      * @var integer
      *
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
     public $sampleId;
 
     /**
      * @var string
      *
-     * @Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     public $name;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @OneToMany(targetEntity="User", mappedBy="sample", cascade={"all"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="sample", cascade={"all"}, fetch="EAGER")
      */
     protected $users;
 

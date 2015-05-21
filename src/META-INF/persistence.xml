@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://www.appserver.io/appserver">
+
+    <persistenceUnits>
+
+        <persistenceUnit name="ExampleEntityManager"
+            interface="Doctrine\ORM\EntityManagerInterface"
+            type="Doctrine\ORM\EntityManager"
+            factory="AppserverIo\Appserver\PersistenceContainer\Doctrine\EntityManagerFactory">
+            
+            <metadataConfiguration type="annotation">
+                <directories>
+                    <directory>/common/classes/AppserverIo/Apps/Example/Entities</directory>
+                </directories>
+                <!--
+                <params>
+                    <param name="isDevMode" type="boolean">false</param>
+                    <param name="useSimpleAnnotationReader" type="boolean">false</param>
+                    <param name="proxyDir" type="string">false</param />
+                </params>
+                -->
+            </metadataConfiguration>
+
+            <datasource name="appserver.io-example-application"/>
+    
+            <!--
+            <annotationRegistries>
+                <annotationRegistry namespace="JMS\Serializer\Annotation">
+                    <directories>
+                        <directory>/vendor/jms/serializer/src</directory>
+                    </directories>
+                </annotationRegistry>
+            </annotationRegistries>
+            -->
+            
+        </persistenceUnit>
+
+    </persistenceUnits>
+
+</persistence>

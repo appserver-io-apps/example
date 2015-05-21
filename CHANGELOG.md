@@ -1,3 +1,13 @@
+# Version 1.2.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to new Doctrine integration
+
 # Version 1.1.1
 
 ## Bugfixes

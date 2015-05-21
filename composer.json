@@ -15,25 +15,11 @@
         "appserver-io/lang":"~1.0",
         "appserver-io-psr/mop":"~1.0",
         "appserver-io-psr/epb":"~1.0",
-        "appserver-io-psr/servlet":"~1.0",
-        "doctrine/common":"~2.2"
+        "appserver-io-psr/servlet":"~1.0"
     },
     "config":{
         "vendor-dir":"src/vendor",
         "component-dir":"src/components"
-    },
-    "autoload":{
-        "psr-0":{
-            "AppserverIo\\Apps\\Example":[
-                "common/classes/",
-                "src/WEB-INF/classes/",
-                "src/META-INF/classes/",
-                "tests/WEB-INF/classes/",
-                "tests/META-INF/classes/"
-            ]
-            
-        }
-        
     },
     "authors":[
         {

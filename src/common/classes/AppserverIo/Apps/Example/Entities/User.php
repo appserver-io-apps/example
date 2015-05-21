@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Entities;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Doctrine entity that represents a user.
  *
@@ -29,8 +31,8 @@ namespace AppserverIo\Apps\Example\Entities;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Entity
- * @Table(name="user")
+ * @ORM\Entity
+ * @ORM\Table(name="user")
  */
 class User
 {
@@ -38,80 +40,80 @@ class User
     /**
      * @var integer
      *
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     protected $userId;
 
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $email;
 
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $username;
 
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $userLocale;
 
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $password;
 
     /**
      * @var boolean
      *
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $enabled;
 
     /**
      * @var integer
      *
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $rate;
 
     /**
      * @var integer
      *
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $contractedHours;
 
     /**
      * @var boolean
      *
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $ldapSynced;
 
     /**
      * @var integer
      *
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $syncedAt;
 
     /**
      * @var \AppserverIo\Apps\Example\Entities\Sample
      *
-     * @ManyToOne(targetEntity="Sample", inversedBy="users", cascade={"all"}, fetch="EAGER")
-     * @JoinColumn(name="sampleIdFk", referencedColumnName="sampleId")
+     * @ORM\ManyToOne(targetEntity="Sample", inversedBy="users", cascade={"all"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="sampleIdFk", referencedColumnName="sampleId")
      */
     protected $sample;
 
