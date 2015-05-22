@@ -23,8 +23,7 @@ namespace AppserverIo\Apps\Example\Services;
 use AppserverIo\Psr\Application\ApplicationInterface;
 
 /**
- * A singleton session bean implementation that handles the
- * data by using Doctrine ORM.
+ * Abstract processor implementation that provides basic functionality.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -32,16 +31,8 @@ use AppserverIo\Psr\Application\ApplicationInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-class AbstractProcessor
+abstract class AbstractProcessor
 {
-
-    /**
-     * The Doctrine EntityManager instance.
-     *
-     * @var \Doctrine\ORM\EntityManagerInterface
-     * @PersistenceUnit(unitName="ExampleEntityManager")
-     */
-    protected $entityManager;
 
     /**
      * The application instance that provides the entity manager.
@@ -125,16 +116,6 @@ class AbstractProcessor
     public function getApplication()
     {
         return $this->application;
-    }
-
-    /**
-     * Return's the initialized Doctrine entity manager.
-     *
-     * @return \Doctrine\ORM\EntityManagerInterface The initialized Doctrine entity manager
-     */
-    public function getEntityManager()
-    {
-        return $this->entityManager;
     }
 
     /**

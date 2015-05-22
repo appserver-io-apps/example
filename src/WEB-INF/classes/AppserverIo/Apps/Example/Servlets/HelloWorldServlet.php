@@ -72,6 +72,8 @@ class HelloWorldServlet extends HttpServlet
             );
         }
 
+        $this->sampleProcessor->appendSomething('Hans Huber');
+
         // log the number of samples found in the database
         $servletRequest->getContext()->getInitialContext()->getSystemLogger()->info(
             sprintf("Found %d samples", sizeof($this->sampleProcessor->findAll()))

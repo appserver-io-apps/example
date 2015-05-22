@@ -35,7 +35,7 @@ use AppserverIo\Apps\Example\Entities\Product;
  *
  * @Stateless
  */
-class SchemaProcessor extends AbstractProcessor implements SchemaProcessorInterface
+class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProcessorInterface
 {
 
     /**
