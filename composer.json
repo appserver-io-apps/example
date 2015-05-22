@@ -3,6 +3,7 @@
     "description":"The example application for the ApplicationServer",
     "version":"1.0.0",
     "require":{
+        "robloach/component-installer" : "0.0.12",
         "components/jquery":"*",
         "components/font-awesome":"*",
         "components/bootstrap":"3.3.4",
