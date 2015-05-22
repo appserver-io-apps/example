@@ -3,13 +3,13 @@
     "description":"The example application for the ApplicationServer",
     "version":"1.0.0",
     "require":{
+        "robloach/component-installer" : "0.0.12",
         "components/jquery":"*",
         "components/font-awesome":"*",
         "components/bootstrap":"3.3.4",
         "appserver-io/routlt":"~1.0"
     },
     "require-dev":{
-	"robloach/component-installer" : "0.0.12",
         "appserver-io/phar":"~1.0",
         "appserver-io/build":"~1.0",
         "appserver-io/messaging":"~1.0",
