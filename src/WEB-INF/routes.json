@@ -13,12 +13,12 @@
             "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\LoginAction"
         },
         {
-            "urlMapping": "/basicAuthentication*",
-            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\BasicAuthenticationAction"
+            "urlMapping": "/basic/authentication*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\Authentication\\BasicAction"
         },
         {
-            "urlMapping": "/digestAuthentication*",
-            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\DigestAuthenticationAction"
+            "urlMapping": "/digest/authentication*",
+            "actionClass": "\\AppserverIo\\Apps\\Example\\Actions\\Authentication\\DigestAction"
         },
         {
             "urlMapping": "/webSocket*",
