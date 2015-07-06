@@ -1,3 +1,13 @@
+# Version 1.0.4
+
+## Bugfixes
+
+* Fix a problem with colliding authentication paths
+
+## Features
+
+* None
+
 # Version 1.0.3
 
 ## Bugfixes
