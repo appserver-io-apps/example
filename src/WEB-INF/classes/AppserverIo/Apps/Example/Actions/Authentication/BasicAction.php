@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\BasicAuthenticationAction
+ * AppserverIo\Apps\Example\Actions\BasicAction
  *
  * NOTICE OF LICENSE
  *
@@ -18,10 +18,11 @@
  * @link      http://www.appserver.io
  */
 
-namespace AppserverIo\Apps\Example\Actions;
+namespace AppserverIo\Apps\Example\Actions\Authentication;
 
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
+use AppserverIo\Apps\Example\Actions\ExampleBaseAction;
 
 /**
  * Example servlet implementation that requests digest authentication to be loaded.
@@ -32,7 +33,7 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-class BasicAuthenticationAction extends ExampleBaseAction
+class BasicAction extends ExampleBaseAction
 {
 
     /**
@@ -50,8 +51,8 @@ class BasicAuthenticationAction extends ExampleBaseAction
      *
      * @return void
      */
-    public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    public function authenticationAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $servletResponse->appendBodyStream($this->processTemplate(BasicAuthenticationAction::INDEX_TEMPLATE, $servletRequest, $servletResponse));
+        $servletResponse->appendBodyStream($this->processTemplate(BasicAction::INDEX_TEMPLATE, $servletRequest, $servletResponse));
     }
 }
