@@ -1,7 +1,7 @@
 <?php
 
 /**
- * templates\user_detail.phtml
+ * templates\messageQueue.phtml
  *
  * NOTICE OF LICENSE
  *
@@ -15,21 +15,7 @@ namespace AppserverIo\Apps\Example\Servlets;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 
-// load the entity data if available
-if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
-    $userId = $entity->getUserId();
-    $username = $entity->getUsername();
-    $userLocale = $entity->getUserLocale();
-    $syncedAt = $entity->getSyncedAt();
-    $rate = $entity->getRate();
-    $password = $entity->getPassword();
-    $ldapSynced = $entity->getLdapSynced();
-    $enabled = $entity->getEnabled();
-    $email = $entity->getEmail();
-    $contractedHours = $entity->getContractedHours();
-}
-
-/** @var $this \AppserverIo\Apps\Example\Actions\UserAction */
+/** @var $this \AppserverIo\Apps\Example\Servlets\LoginServlet */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,10 +55,12 @@ if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
-                    <li class="active"><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
-                    <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
-                    <li><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Message-Queue</a></li>
+                    <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a></li>
+                    <li><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Login</a></li>
+                    <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload</a></li>
+                    <li class="active"><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Message-Queue</a></li>
+                    <li><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
+                    <li><a href="index.do/cart"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Cart</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;Authentication <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -100,22 +88,40 @@ if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
         </a>
 
         <br>
+        <h1>Select file</h1>
+        <div class="alert alert-info">You can find two example files (example-persons.csv with 300 rows + example-persons3000.csv with 300.000 rows) under &lt;APPSERVER-ROOT&gt;/webapps/example/META-INF/data.</div>
+        <div class="alert alert-danger">Please be aware, that importing 300.000 rows, depending on your hardware, can still need up <strong>to 3 hours</strong> and <strong>4 GB of memory</strong> ;)</div>
 
-        <h1>Your Data</h1>
-
-        <form class="form-center" role="form" action="index.do/user/save" method="post">
-            <input type="hidden" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::USER_ID ?>" value="<?php echo $userId ?>" />
-            <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="<?php echo RequestKeys::USERNAME ?>" value="<?php echo $username ?>" />
-            <input type="text" class="form-control" placeholder="E-Mail" required="" autofocus="" name="<?php echo RequestKeys::EMAIL ?>" value="<?php echo $email ?>" />
-            <input type="text" class="form-control" placeholder="Locale" required="" autofocus="" name="<?php echo RequestKeys::USER_LOCALE ?>" value="<?php echo $userLocale ?>" />
-            <input type="text" class="form-control" placeholder="Contracted Hours" required="" autofocus="" name="<?php echo RequestKeys::CONTRACTED_HOURS ?>" value="<?php echo $contractedHours ?>" />
-            <input type="text" class="form-control" placeholder="Rate" required="" autofocus="" name="<?php echo RequestKeys::RATE ?>" value="<?php echo $rate ?>" />
-            <input type="checkbox" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::ENABLED ?>" value="<?php echo $enabled ?>" />
-            <input type="checkbox" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::LDAP_SYNCED ?>" value="<?php echo $ldapSynced ?>" />
-            <input type="text" class="form-control" placeholder="Synched At" required="" autofocus="" name="<?php echo RequestKeys::SYNCED_AT ?>" value="<?php echo $syncedAt ?>" />
-            <input type="password" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>" value="<?php echo $password ?>" />
-            <button class="btn btn-lg btn-info btn-block" type="submit">Save</button>
+        <form class="form-center" role="form" action="index.do/messageQueue/upload" method="post" enctype="multipart/form-data">
+            <input name="<?php echo RequestKeys::FILE_TO_UPLOAD ?>" type="file" required="" class="form-control" placeholder="Filename" />
+            <br/>
+            <label class="checkbox" for="<?php echo RequestKeys::WATCH_DIRECTORY ?>">
+                <input type="checkbox" name="<?php echo RequestKeys::WATCH_DIRECTORY ?>" value="true"> Watch directory
+            </label>
+            <br/>
+            <button class="btn btn-lg btn-info btn-block" type="submit">Upload file</button>
         </form>
+
+        <br><br>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->getAttribute(ContextKeys::OVERVIEW_DATA) as $importFile): ?>
+                    <tr>
+                        <td><?php echo $importFile ?></td>
+                        <td><a href="<?php echo $this->getImportLink($importFile) ?>">Import</a></td>
+                        <td><a href="<?php echo $this->getDeleteLink($importFile) ?>">Delete</a></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
         <div class="footer">
             <p>&copy; and built with pride by <a href="http://appserver.io" target="_blank">appserver.io</a></p>
@@ -123,9 +129,9 @@ if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
 
     </div>
 
-<!-- placed at the end of the document so the pages load faster -->
-<script src="components/jquery/jquery.min.js"></script>
-<script src="components/bootstrap/js/bootstrap.min.js"></script>
+    <!-- placed at the end of the document so the pages load faster -->
+    <script src="components/jquery/jquery.min.js"></script>
+    <script src="components/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

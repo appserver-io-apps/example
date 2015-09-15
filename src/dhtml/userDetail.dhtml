@@ -1,7 +1,7 @@
 <?php
 
 /**
- * templates\index.phtml
+ * templates\user_detail.phtml
  *
  * NOTICE OF LICENSE
  *
@@ -13,7 +13,23 @@
 namespace AppserverIo\Apps\Example\Servlets;
 
 use AppserverIo\Apps\Example\Utils\ContextKeys;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
 
+// load the entity data if available
+if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
+    $userId = $entity->getUserId();
+    $username = $entity->getUsername();
+    $userLocale = $entity->getUserLocale();
+    $syncedAt = $entity->getSyncedAt();
+    $rate = $entity->getRate();
+    $password = $entity->getPassword();
+    $ldapSynced = $entity->getLdapSynced();
+    $enabled = $entity->getEnabled();
+    $email = $entity->getEmail();
+    $contractedHours = $entity->getContractedHours();
+}
+
+/** @var $this \AppserverIo\Apps\Example\Actions\UserAction */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,10 +70,12 @@ use AppserverIo\Apps\Example\Utils\ContextKeys;
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
-                    <li><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
+                    <li class="active"><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
                     <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
                     <li><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Message-Queue</a></li>
-                    <li class="dropdown active">
+                    <li><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
+                    <li><a href="index.do/cart"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Cart</a></li>
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;Authentication <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="index.do/basic/authentication">Basic</a></li>
@@ -85,21 +103,21 @@ use AppserverIo\Apps\Example\Utils\ContextKeys;
 
         <br>
 
-        <h1>Succesfully passed basic authentication</h1>
+        <h1>Your Data</h1>
 
-        <div class="row-fluid marketing">
-
-            <div class="span12 text-center">
-                <?php if ($errorMessages = $this->getAttribute(ContextKeys::ERROR_MESSAGES)): ?>
-                    <div class="alert alert-error">
-                        <?php foreach ($errorMessages as $errorMessage): ?>
-                            <?php echo $errorMessage ?><br/>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-        </div>
+        <form class="form-center" role="form" action="index.do/user/save" method="post">
+            <input type="hidden" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::USER_ID ?>" value="<?php echo $userId ?>" />
+            <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="<?php echo RequestKeys::USERNAME ?>" value="<?php echo $username ?>" />
+            <input type="text" class="form-control" placeholder="E-Mail" required="" autofocus="" name="<?php echo RequestKeys::EMAIL ?>" value="<?php echo $email ?>" />
+            <input type="text" class="form-control" placeholder="Locale" required="" autofocus="" name="<?php echo RequestKeys::USER_LOCALE ?>" value="<?php echo $userLocale ?>" />
+            <input type="text" class="form-control" placeholder="Contracted Hours" required="" autofocus="" name="<?php echo RequestKeys::CONTRACTED_HOURS ?>" value="<?php echo $contractedHours ?>" />
+            <input type="text" class="form-control" placeholder="Rate" required="" autofocus="" name="<?php echo RequestKeys::RATE ?>" value="<?php echo $rate ?>" />
+            <input type="checkbox" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::ENABLED ?>" value="<?php echo $enabled ?>" />
+            <input type="checkbox" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::LDAP_SYNCED ?>" value="<?php echo $ldapSynced ?>" />
+            <input type="text" class="form-control" placeholder="Synched At" required="" autofocus="" name="<?php echo RequestKeys::SYNCED_AT ?>" value="<?php echo $syncedAt ?>" />
+            <input type="password" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>" value="<?php echo $password ?>" />
+            <button class="btn btn-lg btn-info btn-block" type="submit">Save</button>
+        </form>
 
         <div class="footer">
             <p>&copy; and built with pride by <a href="http://appserver.io" target="_blank">appserver.io</a></p>

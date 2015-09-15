@@ -1,7 +1,7 @@
 <?php
 
 /**
- * templates\login.phtml
+ * templates\messageQueue.phtml
  *
  * NOTICE OF LICENSE
  *
@@ -55,10 +55,12 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
-                    <li><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
-                    <li class="active"><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
-                    <li><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Message-Queue</a></li>
+                    <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a></li>
+                    <li><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Login</a></li>
+                    <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload</a></li>
+                    <li class="active"><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Message-Queue</a></li>
+                    <li><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
+                    <li><a href="index.do/cart"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Cart</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;Authentication <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -85,17 +87,11 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
             <img src="static/img/logo-black.png"/>
         </a>
 
-        <br>
+        <br/><br/><br/><br/>
 
-        <h1>Select a file</h1>
+        <p>Generated Session-ID: <?php echo $this->getSessionId() ?></p>
 
-        <br>
-
-        <form class="form-center" role="form" action="index.do/upload/upload" method="post" enctype="multipart/form-data">
-            <input name="<?php echo RequestKeys::FILE_TO_UPLOAD ?>" type="file" class="form-control" required="" placeholder="Filename">
-            <br>
-            <button class="btn btn-lg btn-info btn-block" type="submit">Upload file</button>
-        </form>
+        <br/><br/><br/><br/>
 
         <div class="footer">
             <p>&copy; and built with pride by <a href="http://appserver.io" target="_blank">appserver.io</a></p>

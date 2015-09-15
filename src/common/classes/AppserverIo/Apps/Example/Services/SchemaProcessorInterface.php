@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\SchemaProcessor
+ * AppserverIo\Apps\Example\Services\SchemaProcessorInterface
  *
  * NOTICE OF LICENSE
  *
@@ -45,7 +45,14 @@ interface SchemaProcessorInterface
     /**
      * Creates the default credentials to login.
      *
-     * @return \AppserverIo\Apps\Example\Entities\User The default user instance
+     * @return void
      */
     public function createDefaultCredentials();
+
+    /**
+     * Creates the default products.
+     *
+     * @return void
+     */
+    public function createDefaultProducts();
 }

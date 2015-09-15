@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\SampleProcessor
+ * AppserverIo\Apps\Example\Services\SampleProcessorInterface
  *
  * NOTICE OF LICENSE
  *
@@ -47,9 +47,9 @@ interface SampleProcessorInterface
     /**
      * Persists the passed entity.
      *
-     * @param Sample $entity The entity to persist
+     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to persist
      *
-     * @return Sample The persisted entity
+     * @return \AppserverIo\Apps\Example\Entities\Sample The persisted entity
      */
     public function persist(Sample $entity);
 
@@ -65,7 +65,10 @@ interface SampleProcessorInterface
     /**
      * Returns an array with all existing entities.
      *
+     * @param integer $limit  The maxium number of rows to return
+     * @param integer $offset The row to start with
+     *
      * @return array An array with all existing entities
      */
-    public function findAll();
+    public function findAll($limit = 100, $offset = 0);
 }

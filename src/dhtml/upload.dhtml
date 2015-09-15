@@ -56,9 +56,11 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
-                    <li class="active"><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
-                    <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
+                    <li><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
+                    <li class="active"><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
                     <li><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Message-Queue</a></li>
+                    <li><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
+                    <li><a href="index.do/cart"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Cart</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;Authentication <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -87,15 +89,14 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
         <br>
 
-        <h1>Please sign in</h1>
+        <h1>Select a file</h1>
 
-        <form class="form-center" role="form" action="index.do/login/login" method="post">
-            <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="<?php echo RequestKeys::USERNAME ?>">
-            <input type="password" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>">
-            <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-            <button class="btn btn-lg btn-info btn-block" type="submit">Sign in</button>
+        <br>
+
+        <form class="form-center" role="form" action="index.do/upload/upload" method="post" enctype="multipart/form-data">
+            <input name="<?php echo RequestKeys::FILE_TO_UPLOAD ?>" type="file" class="form-control" required="" placeholder="Filename">
+            <br>
+            <button class="btn btn-lg btn-info btn-block" type="submit">Upload file</button>
         </form>
 
         <div class="footer">
@@ -104,9 +105,9 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
     </div>
 
-<!-- placed at the end of the document so the pages load faster -->
-<script src="components/jquery/jquery.min.js"></script>
-<script src="components/bootstrap/js/bootstrap.min.js"></script>
+    <!-- placed at the end of the document so the pages load faster -->
+    <script src="components/jquery/jquery.min.js"></script>
+    <script src="components/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

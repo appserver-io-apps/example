@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context 
+    name="routlt"
+    type="AppserverIo\Appserver\Application\Application"
+    xmlns="http://www.appserver.io/appserver">
+
+    <classLoaders>
+        <classLoader
+            name="DgClassLoader"
+            interface="ClassLoaderInterface"
+            type="AppserverIo\Appserver\Core\DgClassLoader"
+            factory="AppserverIo\Appserver\Core\DgClassLoaderFactory">
+            <params>
+                <param name="environment" type="string">production</param>
+                <param name="enforcementLevel" type="integer">7</param>
+                <param name="typeSafety" type="boolean">1</param>
+                <param name="processing" type="string">exception</param>
+            </params>
+            <directories>
+                <directory enforced="true">/common/classes</directory>
+                <directory enforced="true">/WEB-INF/classes</directory>
+                <directory enforced="true">/META-INF/classes</directory>
+                <!-- directory enforced="true">/vendor/appserver-io/routlt</directory -->
+            </directories>
+        </classLoader>
+    </classLoaders>
+
+    <managers>
+        <manager
+            name="ObjectManagerInterface"
+            type="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManager"
+            factory="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManagerFactory">
+            <descriptors>
+                <descriptor>AppserverIo\Description\ServletDescriptor</descriptor>
+                <descriptor>AppserverIo\Description\MessageDrivenBeanDescriptor</descriptor>
+                <descriptor>AppserverIo\Description\StatefulSessionBeanDescriptor</descriptor>
+                <descriptor>AppserverIo\Description\SingletonSessionBeanDescriptor</descriptor>
+                <descriptor>AppserverIo\Description\StatelessSessionBeanDescriptor</descriptor>
+                <descriptor>AppserverIo\Routlt\Description\PathDescriptor</descriptor>
+            </descriptors>
+        </manager>
+    </managers>
+
+</context>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * templates\index.phtml
+ * templates\product.phtml
  *
  * NOTICE OF LICENSE
  *
@@ -14,16 +14,6 @@ namespace AppserverIo\Apps\Example\Servlets;
 
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
-
-// initialize local variables
-$sampleId = 0;
-$name = '';
-
-// load the entity data if available
-if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
-    $sampleId = $entity->getSampleId();
-    $name = $entity->getName();
-}
 
 ?>
 <!DOCTYPE html>
@@ -64,15 +54,17 @@ if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
+                    <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
                     <li><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
                     <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
                     <li><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Message-Queue</a></li>
+                    <li class="active"><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
+                    <li><a href="index.do/cart"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Cart</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;Authentication <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="index.do/basic/authentication">Basic</a></li>
-                            <li><a href="index.do/digest/authentication">Digest</a></li>
+                            <li><a href="index.do/basicAuthentication">Basic</a></li>
+                            <li><a href="index.do/digestAuthentication">Digest</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -94,21 +86,11 @@ if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
             <img src="static/img/logo-black.png"/>
         </a>
 
-        <br>
+        <br/>
 
-        <h1>Example app</h1>
+        <h1>Products</h1>
 
-        <br>
-
-        <form action="index.do/index/persist" method="post" class="form-inline" role="form">
-            <div class="form-group">
-                <input name="<?php echo RequestKeys::SAMPLE_ID ?>" type="hidden" value="<?php echo $sampleId ?>"/>
-                <input name="<?php echo RequestKeys::NAME ?>" type="text" required="" placeholder="Type your name..." class="form-control" value="<?php echo $name ?>"/>
-                <button type="submit" class="btn btn-defalt">Submit</button>
-            </div>
-        </form>
-
-        <br><br>
+        <br/>
 
         <table class="table table-hover">
             <thead>
@@ -121,10 +103,9 @@ if ($entity = $this->getAttribute(ContextKeys::VIEW_DATA)) {
             <tbody>
             <?php foreach ($this->getAttribute(ContextKeys::OVERVIEW_DATA) as $entity): ?>
                 <tr>
-                    <td><a href="<?php echo $this->getEditLink($entity) ?>"><?php echo $entity->getSampleId() ?></a>
-                    </td>
+                    <td><?php echo $entity->getId() ?></td>
                     <td><?php echo $entity->getName() ?></td>
-                    <td><a href="<?php echo $this->getEditLink($entity) ?>">Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo $this->getDeleteLink($entity) ?>">Delete</a></td>
+                    <td><a href="<?php echo $this->getAddToCartLink($entity) ?>">Add to Cart</a></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

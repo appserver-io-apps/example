@@ -89,6 +89,41 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     }
 
     /**
+     * Creates the default products.
+     *
+     * @return void
+     */
+    public function createDefaultProducts()
+    {
+
+        try {
+            // load the entity manager
+            $entityManager = $this->getEntityManager();
+
+            // create 10 products
+            for ($i = 1; $i < 11; $i++) {
+                // set user data and save it
+                $product = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Product');
+                $product->setName("Product-$i");
+                $product->setStatus(Product::STATUS_ACTIVE);
+                $product->setUrlKey("product-$i");
+                $product->setProductNumber($i);
+                $product->setSalesPrice($i);
+                $product->setDescription("Description of Product-$i");
+
+                // persist the user
+                $entityManager->persist($product);
+            }
+            // flush the entity manager
+            $entityManager->flush();
+
+        } catch (\Exception $e) {
+            // log the exception
+            $this->getInitialContext()->getSystemLogger()->error($e->__toString());
+        }
+    }
+
+    /**
      * Creates the default credentials to login.
      *
      * @return void

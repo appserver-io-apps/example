@@ -54,6 +54,20 @@ class RequestKeys
     const SAMPLE_ID = 'sampleId';
 
     /**
+     * The key for a 'productId'.
+     *
+     * @return string
+     */
+    const PRODUCT_ID = 'productId';
+
+    /**
+     * The key for a 'cartItemId'.
+     *
+     * @return string
+     */
+    const CART_ITEM_ID = 'cartItemId';
+
+    /**
      * The key for a 'name'.
      *
      * @return string
