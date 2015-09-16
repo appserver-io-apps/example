@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
+use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
@@ -33,16 +35,16 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
+ *
+ * @Path(name="/upload")
+ *
+ * @Results({
+ *     @Result(name="input", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ * })
  */
-class UploadAction extends ExampleBaseAction
+class UploadAction extends DispatchAction
 {
-
-    /**
-     * The relative path, up from the webapp path, to the template to use.
-     *
-     * @var string
-     */
-    const UPLOAD_TEMPLATE = 'static/templates/upload.phtml';
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
@@ -52,11 +54,13 @@ class UploadAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
+     *
+     * @Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $servletResponse->appendBodyStream($this->processTemplate(UploadAction::UPLOAD_TEMPLATE, $servletRequest, $servletResponse));
+        return ActionInterface::INPUT;
     }
 
     /**
@@ -66,24 +70,34 @@ class UploadAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
      * @see IndexServlet::indexAction()
+     *
+     * @Action(name="/upload")
      */
     public function uploadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        // check if a file has been selected
-        if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
-            // save file to appserver's upload tmp folder with tmpname
-            $fileToUpload->init();
-            $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
+        try {
+            // check if a file has been selected
+            if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
+                // save file to appserver's upload tmp folder with tmpname
+                $fileToUpload->init();
+                $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
 
-        } else {
-            // if no file has been selected, add an error message
-            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please select a file to upload!'));
+            } else {
+                // if no file has been selected, add an error message
+                $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please select a file to upload!'));
+            }
+
+        } catch (\Exception $e) {
+            // append the exception the response body
+            $this->addFieldError('critical', $e->getMessage());
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
-        // after the successfull upload, render the template again
-        $this->indexAction($servletRequest, $servletResponse);
+        // action invocation has been successfull
+        return ActionInterface::INPUT;
     }
 }

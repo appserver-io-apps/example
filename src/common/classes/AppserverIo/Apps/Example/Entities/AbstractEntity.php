@@ -59,7 +59,7 @@ class AbstractEntity
 
     /**
      *
-     * @return integer
+     * @return integer|null
      */
     public function getCreatedAt()
     {
@@ -77,7 +77,7 @@ class AbstractEntity
 
     /**
      *
-     * @return integer
+     * @return integer|null
      */
     public function getUpdatedAt()
     {

@@ -20,8 +20,11 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Apps\Example\Utils\ContextKeys;
+use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\ActionInterface;
+use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\ProxyKeys;
+use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Utils\SessionKeys;
 use AppserverIo\Apps\Example\Exceptions\LoginException;
@@ -37,16 +40,24 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
+ *
+ * @Path(name="/login")
+ *
+ * @Results({
+ *     @Result(name="input", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ * })
  */
-class LoginAction extends ExampleBaseAction
+class LoginAction extends DispatchAction
 {
 
     /**
-     * The relative path, up from the webapp path, to the template to use.
+     * The UserProcessor instance to handle the login functionality.
      *
-     * @var string
+     * @var \AppserverIo\Apps\Example\Services\UserProcessor
+     * @EnterpriseBean
      */
-    const LOGIN_TEMPLATE = 'static/templates/login.phtml';
+    protected $userProcessor;
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
@@ -57,11 +68,13 @@ class LoginAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
+     *
+     * @Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $servletResponse->appendBodyStream($this->processTemplate(LoginAction::LOGIN_TEMPLATE, $servletRequest, $servletResponse));
+        return ActionInterface::INPUT;
     }
 
     /**
@@ -71,8 +84,10 @@ class LoginAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
+     *
+     * @Action(name="/login")
      */
     public function loginAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -89,25 +104,29 @@ class LoginAction extends ExampleBaseAction
             }
 
             // start the session, because we need a session-ID for our stateful session bean
-            $session = $this->getLoginSession(true);
+            $session = ViewHelper::singleton()->getLoginSession($servletRequest, true);
             $session->start();
 
             // try to login, using the session bean
-            $this->getProxy(ProxyKeys::USER_PROCESSOR)->login($username, $password);
+            $this->userProcessor->login($username, $password);
 
             // if successfully then add the username to the session and redirect to the overview
             $session->putData(SessionKeys::USERNAME, $username);
 
         } catch (LoginException $e) {
             // invalid login credentials
-            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array("Username or Password invalid"));
+            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array("Username or Password invalid"));
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         } catch (\Exception $e) {
             // if not add an error message
-            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
+            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
+        // action invocation has been successfull
+        return ActionInterface::INPUT;
     }
 
     /**
@@ -116,18 +135,28 @@ class LoginAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
+     *
+     * @Action(name="/logout")
      */
     public function logoutAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        // destroy the session and reset the cookie
-        if ($session = $this->getLoginSession()) {
-            $session->destroy('Explicit logout requested by: ' . $this->getUsername());
+        try {
+            // destroy the session and reset the cookie
+            if ($session = ViewHelper::singleton()->getLoginSession($servletRequest)) {
+                $session->destroy('Explicit logout requested by: ' . ViewHelper::singleton()->getUsername($servletRequest));
+            }
+
+        } catch (\Exception $e) {
+            // if not add an error message
+            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
+        // action invocation has been successfull
+        return ActionInterface::INPUT;
     }
 }

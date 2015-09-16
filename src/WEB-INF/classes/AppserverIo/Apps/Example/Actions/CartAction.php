@@ -20,7 +20,10 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
+use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\ProxyKeys;
+use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Entities\CartItem;
@@ -43,11 +46,12 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/cart")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/cart.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/cart.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/cart.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
  * })
  *
  */
-class CartAction extends ExampleBaseAction
+class CartAction extends DispatchAction
 {
 
     /**
@@ -67,7 +71,9 @@ class CartAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
+     *
+     * @Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -78,9 +84,10 @@ class CartAction extends ExampleBaseAction
             $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
 
         } catch (\Exception $e) {
-
-            // append the exception the response body
-            $this->addFieldError('critical', $e->getMessage());
+            // if not add an error message
+            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
         // action invocation has been successfull
@@ -94,40 +101,49 @@ class CartAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
      *
      * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
+     *
+     * @Action(name="/addToCart")
      */
     public function addToCartAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        // check if the necessary params has been specified and are valid
-        $productId = $servletRequest->getParameter(RequestKeys::PRODUCT_ID, FILTER_VALIDATE_INT);
-        if ($productId == null) {
-            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::PRODUCT_ID));
+        try {
+            // check if the necessary params has been specified and are valid
+            $productId = $servletRequest->getParameter(RequestKeys::PRODUCT_ID, FILTER_VALIDATE_INT);
+            if ($productId == null) {
+                throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::PRODUCT_ID));
+            }
+
+            // start the session
+            ViewHelper::singleton()->getLoginSession($servletRequest, true)->start();
+
+            // initialize the cart for this session-ID
+            $this->cartProcessor->initCart(ViewHelper::singleton()->getLoginSession($servletRequest)->getId());
+
+            // create a new cart item from the passed product-ID
+            $cartItem = new CartItem();
+            $cartItem->setQuantity(1);
+            $cartItem->setProductId($productId);
+
+            // delete the entity
+            $this->cartProcessor->addCartItem($cartItem);
+
+            // append the shopping cart data to the request attributes
+            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
+
+        } catch (\Exception $e) {
+            // if not add an error message
+            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
-        // set servlet request/response
-        $this->setServletRequest($servletRequest);
-        $this->setServletResponse($servletResponse);
-
-        // start the session
-        $this->getLoginSession(true)->start();
-
-        // initialize the cart for this session-ID
-        $this->cartProcessor->initCart($this->getLoginSession()->getId());
-
-        // create a new cart item from the passed product-ID
-        $cartItem = new CartItem();
-        $cartItem->setQuantity(1);
-        $cartItem->setProductId($productId);
-
-        // delete the entity
-        $this->cartProcessor->addCartItem($cartItem);
-
-        // reload the cart data
-        $this->indexAction($servletRequest, $servletResponse);
+        // action invocation has been successfull
+        return ActionInterface::INPUT;
     }
 
     /**
@@ -136,35 +152,38 @@ class CartAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
      *
-     * @throws \Exception
+     * @Action(name="/delete")
      */
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        // check if the necessary params has been specified and are valid
-        $cartItemId = $servletRequest->getParameter(RequestKeys::CART_ITEM_ID, FILTER_VALIDATE_INT);
-        if ($cartItemId == null) {
-            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::CART_ITEM_ID));
+        try {
+            // check if the necessary params has been specified and are valid
+            $productId = $servletRequest->getParameter(RequestKeys::PRODUCT_ID, FILTER_VALIDATE_INT);
+            if ($productId == null) {
+                throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::PRODUCT_ID));
+            }
+
+            // create a new cart item from the passed product-ID
+            $cartItem = new CartItem();
+            $cartItem->setProductId($productId);
+
+            // delete the cart item entity
+            $this->cartProcessor->removeCartItem($cartItem);
+
+            // append the shopping cart data to the request attributes
+            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
+
+        } catch (\Exception $e) {
+            // if not add an error message
+            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
-        // delete the entity
-        $this->cartProcessor->removeCartItemByCartItemId($cartItemId);
-
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
-    }
-
-    /**
-     * Creates and returns the URL that has to be invoked to delete the passed entity from the cart.
-     *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $entity The entity to create the deletion link for
-     *
-     * @return string The URL with the deletion link
-     */
-    public function getDeleteCartItemLink(CartItem $entity)
-    {
-        return sprintf('index.do/cart/delete?%s=%d', RequestKeys::CART_ITEM_ID, $entity->getId());
+        // action invocation has been successfull
+        return ActionInterface::INPUT;
     }
 }

@@ -58,6 +58,8 @@ class LoggerAspect
      */
     public function logInfoAdvice(MethodInvocationInterface $methodInvocation)
     {
+
+        /*
         $methodInvocation->getContext()
             ->getServletRequest()
             ->getContext()
@@ -68,5 +70,6 @@ class LoggerAspect
                 $methodInvocation->getStructureName(),
                 $methodInvocation->getName()
             ));
+        */
     }
 }

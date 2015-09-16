@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Authentication\DigestAction
+ * AppserverIo\Apps\Example\Actions\DigestAction
  *
  * NOTICE OF LICENSE
  *
@@ -18,11 +18,12 @@
  * @link      http://www.appserver.io
  */
 
-namespace AppserverIo\Apps\Example\Actions\Authentication;
+namespace AppserverIo\Apps\Example\Actions;
 
+use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
-use AppserverIo\Apps\Example\Actions\ExampleBaseAction;
 
 /**
  * Example servlet implementation that requests digest authentication to be loaded.
@@ -32,16 +33,17 @@ use AppserverIo\Apps\Example\Actions\ExampleBaseAction;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
+ *
+ * @Path(name="/digest")
+ *
+ * @Results({
+ *     @Result(name="input", result="/dhtml/digest.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/digest.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ * })
+ *
  */
-class DigestAction extends ExampleBaseAction
+class DigestAction extends DispatchAction
 {
-
-    /**
-     * The relative path, up from the webapp path, to the template to use.
-     *
-     * @var string
-     */
-    const INDEX_TEMPLATE = 'static/templates/digestAuthentication.phtml';
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
@@ -49,12 +51,12 @@ class DigestAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
+     *
+     * @Action(name="/index")
      */
-    public function authenticationAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $servletResponse->appendBodyStream(
-            $this->processTemplate(DigestAction::INDEX_TEMPLATE, $servletRequest, $servletResponse)
-        );
+        return ActionInterface::INPUT;
     }
 }

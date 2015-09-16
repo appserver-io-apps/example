@@ -79,7 +79,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
 
     /**
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection|array The cart items
      */
     public function getCartContents()
     {
@@ -154,12 +154,24 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     /**
      *
      * @param CartItem $cartItem
-     * @return array
+     * @return void
      * @throws \Exception
      */
     public function removeCartItem($cartItem)
     {
-        // still to implement
+
+        $cart = $this->cart;
+
+        $existingItem = $this->loadExistingCartItem($cartItem);
+
+        $cart->removeCartItem($existingItem);
+
+        error_log("Found " . sizeof($cart->getCartItems()) . " cart items");
+
+        $this->getEntityManager()->persist($cart);
+        $this->getEntityManager()->flush();
+
+        $this->cart = $cart;
     }
 
     /**

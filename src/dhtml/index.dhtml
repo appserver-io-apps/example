@@ -1,7 +1,7 @@
 <?php
 
 /**
- * templates\index.phtml
+ * templates\index.dhtml
  *
  * NOTICE OF LICENSE
  *
@@ -9,6 +9,24 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  */
+
+namespace AppserverIo\Apps\Example\Servlets;
+
+use AppserverIo\Apps\Example\Utils\ViewHelper;
+use AppserverIo\Apps\Example\Utils\ContextKeys;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
+
+// initialize local variables
+$sampleId = 0;
+$name = '';
+
+// load the entity data if available
+$sampleId = 0;
+$name = '';
+if ($entity = $servletRequest->getAttribute(ContextKeys::VIEW_DATA)) {
+    $sampleId = $entity->getSampleId();
+    $name = $entity->getName();
+}
 
 ?>
 <!DOCTYPE html>
@@ -22,7 +40,7 @@
 
     <title>appserver.io example</title>
 
-    <base href="/">
+    <base href="<?php echo ViewHelper::singleton()->getBaseUrl($servletRequest) ?>">
 
     <link href="components/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="static/css/style.css" rel="stylesheet">
@@ -45,14 +63,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <p class="navbar-text"></p>
+                        <p class="navbar-text"><?php if (ViewHelper::singleton()->isLoggedIn($servletRequest)): ?>Logged in as: <strong><?php echo ViewHelper::singleton()->getUsername($servletRequest) ?></strong>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo ViewHelper::singleton()->getLogoutLink() ?>">logout</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo ViewHelper::singleton()->getUserEditLink() ?>">edit</a><?php else: ?>Not logged in.<?php endif; ?></p>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
                     <li><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
                     <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
-                    <li><a href="index.do/messageQueue"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Message-Queue</a></li>
+                    <li><a href="index.do/import"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Import</a></li>
                     <li><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
                     <li><a href="index.do/cart"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Cart</a></li>
                     <li class="dropdown">
@@ -69,6 +87,14 @@
 
     <div class="container content">
 
+        <?php if ($errorMessages = $servletRequest->getAttribute(ContextKeys::ERROR_MESSAGES)): ?>
+            <div class="alert alert-danger">
+                <?php foreach ($errorMessages as $errorMessage): ?>
+                    <?php echo $errorMessage ?><br/>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
         <a href="http://appserver.io">
             <img src="static/img/logo-black.png"/>
         </a>
@@ -81,8 +107,8 @@
 
         <form action="index.do/index/persist" method="post" class="form-inline" role="form">
             <div class="form-group">
-                <input name="sampleId" type="hidden" value=""/>
-                <input name="name" type="text" required="" placeholder="Type your name..." class="form-control" value=""/>
+                <input name="<?php echo RequestKeys::SAMPLE_ID ?>" type="hidden" value="<?php echo $sampleId ?>"/>
+                <input name="<?php echo RequestKeys::NAME ?>" type="text" required="" placeholder="Type your name..." class="form-control" value="<?php echo $name ?>"/>
                 <button type="submit" class="btn btn-defalt">Submit</button>
             </div>
         </form>
@@ -98,11 +124,14 @@
             </tr>
             </thead>
             <tbody>
+            <?php foreach ($servletRequest->getAttribute(ContextKeys::OVERVIEW_DATA) as $entity): ?>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><a href="<?php echo ViewHelper::singleton()->getEditLink($entity) ?>"><?php echo $entity->getSampleId() ?></a>
+                    </td>
+                    <td><?php echo $entity->getName() ?></td>
+                    <td><a href="<?php echo ViewHelper::singleton()->getEditLink($entity) ?>">Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?php echo ViewHelper::singleton()->getDeleteLink($entity) ?>">Delete</a></td>
                 </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
 

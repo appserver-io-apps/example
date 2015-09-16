@@ -20,6 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
+use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Entities\Sample;
 use AppserverIo\Apps\Example\Utils\ProxyKeys;
@@ -49,7 +50,7 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * })
  *
  */
-class IndexAction extends ExampleBaseAction
+class IndexAction extends DispatchAction
 {
 
     /**
@@ -69,7 +70,7 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return string
+     * @return string|null The action result
      *
      * @Action(name="/index")
      */
@@ -77,14 +78,14 @@ class IndexAction extends ExampleBaseAction
     {
 
         try {
-
             // append the sample data to the request attributes
             $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
 
         } catch (\Exception $e) {
-
             // append the exception the response body
             $this->addFieldError('critical', $e->getMessage());
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
         // action invocation has been successfull
@@ -98,7 +99,7 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return string
+     * @return string|null The action result
      *
      * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
@@ -108,18 +109,29 @@ class IndexAction extends ExampleBaseAction
     public function loadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        // check if the necessary params has been specified and are valid
-        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
-        if ($sampleId == null) {
-            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
+        try {
+            // check if the necessary params has been specified and are valid
+            $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
+            if ($sampleId == null) {
+                throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
+            }
+
+            // load the entity to be edited and attach it to the servlet context
+            $viewData = $this->sampleProcessor->load($sampleId);
+            $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $viewData);
+
+            // append the sample data to the request attributes
+            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
+
+        } catch (\Exception $e) {
+            // append the exception the response body
+            $this->addFieldError('critical', $e->getMessage());
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
-        // load the entity to be edited and attach it to the servlet context
-        $viewData = $this->sampleProcessor->load($sampleId);
-        $this->setAttribute(ContextKeys::VIEW_DATA, $viewData);
-
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
+        // action invocation has been successfull
+        return ActionInterface::INPUT;
     }
 
     /**
@@ -129,7 +141,7 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return string
+     * @return string|null The action result
      *
      * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
@@ -139,17 +151,28 @@ class IndexAction extends ExampleBaseAction
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        // check if the necessary params has been specified and are valid
-        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
-        if ($sampleId == null) {
-            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
+        try {
+            // check if the necessary params has been specified and are valid
+            $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
+            if ($sampleId == null) {
+                throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
+            }
+
+            // delete the entity
+            $this->sampleProcessor->delete($sampleId);
+
+            // append the sample data to the request attributes
+            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
+
+        } catch (\Exception $e) {
+            // append the exception the response body
+            $this->addFieldError('critical', $e->getMessage());
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
-        // delete the entity
-        $this->sampleProcessor->delete($sampleId);
-
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
+        // action invocation has been successfull
+        return ActionInterface::INPUT;
     }
 
     /**
@@ -158,55 +181,38 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return string
+     * @return string|null The action result
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/persist")
      */
     public function persistAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
+         try {
+             // check if the necessary params has been specified and are valid
+             $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
 
-        // check if the necessary params has been specified and are valid
-        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
+             // check if the user has a name specified
+             if ($name = trim($servletRequest->getParameter(RequestKeys::NAME))) {
+                 // create a new entity and persist it
+                 $entity = new Sample();
+                 $entity->setSampleId((integer) $sampleId);
+                 $entity->setName($name);
+                 $this->sampleProcessor->persist($entity);
 
-        // check if the user has a name specified
-        if ($name = trim($servletRequest->getParameter(RequestKeys::NAME))) {
-            // create a new entity and persist it
-            $entity = new Sample();
-            $entity->setSampleId((integer) $sampleId);
-            $entity->setName($name);
-            $this->sampleProcessor->persist($entity);
+             } else {
+                 // if no name has been specified, add an error message
+                 $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please add a name!'));
+             }
 
-        } else {
-            // if no name has been specified, add an error message
-            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please add a name!'));
+         } catch (\Exception $e) {
+            // append the exception the response body
+            $this->addFieldError('critical', $e->getMessage());
+            // action invocation has failed
+            return ActionInterface::FAILURE;
         }
 
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
-    }
-
-    /**
-     * Creates and returns the URL to open the dialog to edit the passed entity.
-     *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to create the edit link for
-     *
-     * @return string The URL to open the edit dialog
-     */
-    public function getEditLink(Sample $entity)
-    {
-        return sprintf('index.do/index/load?%s=%d', RequestKeys::SAMPLE_ID, $entity->getSampleId());
-    }
-
-    /**
-     * Creates and returns the URL that has to be invoked to delete the passed entity.
-     *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to create the deletion link for
-     *
-     * @return string The URL with the deletion link
-     */
-    public function getDeleteLink(Sample $entity)
-    {
-        return sprintf('index.do/index/delete?%s=%d', RequestKeys::SAMPLE_ID, $entity->getSampleId());
+        // action invocation has been successfull
+        return ActionInterface::INPUT;
     }
 }

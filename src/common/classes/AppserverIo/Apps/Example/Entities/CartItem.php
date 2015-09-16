@@ -107,6 +107,13 @@ class CartItem extends AbstractEntity {
 	/**
 	 * @return int
 	 */
+	public function setId($id) {
+		return $this->id = $id;
+	}
+
+	/**
+	 * @return int
+	 */
 	public function getId() {
 		return $this->id;
 	}
