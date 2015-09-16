@@ -126,7 +126,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
         <div class="footer">
             <p>&copy; and built with pride by <a href="http://appserver.io" target="_blank">appserver.io</a></p>
         </div>
-
+        
     </div>
 
 <!-- placed at the end of the document so the pages load faster -->
