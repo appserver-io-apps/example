@@ -38,7 +38,8 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="product")
  * @JMS\ExclusionPolicy("all")
  */
-class Product extends AbstractEntity {
+class Product extends AbstractEntity
+{
 
 	const STATUS_ACTIVE = 1;
 	const STATUS_PROCESSING = 2;

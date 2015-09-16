@@ -36,7 +36,8 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity
  * @ORM\Table(name="cart")
  */
-class Cart extends AbstractEntity {
+class Cart extends AbstractEntity
+{
 
 	/**
 	 * @var int $id
