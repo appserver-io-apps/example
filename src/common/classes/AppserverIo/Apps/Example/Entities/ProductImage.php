@@ -34,7 +34,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="product_image")
  */
-class ProductImage extends AbstractEntity {
+class ProductImage extends AbstractEntity
+{
 
     /**
      * @var int $id

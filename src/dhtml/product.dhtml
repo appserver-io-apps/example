@@ -82,7 +82,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-
+        
         <a href="http://appserver.io">
             <img src="static/img/logo-black.png"/>
         </a>
@@ -92,6 +92,56 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
         <h1>Products</h1>
 
         <br/>
+        
+        <div id="carousel-example" class="carousel slide hidden-xs" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+        
+        <div class="row">
+            <?php foreach ($servletRequest->getAttribute(ContextKeys::OVERVIEW_DATA) as $entity): ?>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail" >
+                        <img src="http://lorempixel.com/340/200/technics/<?php echo $entity->getId() ?>" class="img-responsive">
+                        <div class="caption">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-6 text-left">
+                                    <h3><?php echo $entity->getName() ?></h3>
+                                </div>
+                                <div class="col-md-6 col-xs-6 price text-right">
+                                    <h3><label>$<?php echo $entity->getSalesPrice() ?></label></h3>
+                                </div>
+                            </div>
+                            <p class="text-left"><?php echo $entity->getDescription() ?></p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a> 
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="<?php echo ViewHelper::singleton()->getAddToCartLink($entity) ?>" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</a></div>
+                            </div>
+    
+                            <p> </p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        
+        </div></div></div>
+        
+        <?php /* 
+
+<div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="http://lorempixel.com/340/200/technics/<?php echo $entity->getId() ?>" alt="" />
+                    <div class="caption">
+                        <h3><?php echo $entity->getName() ?></h3>
+                        <p><a href="<?php echo ViewHelper::singleton()->getAddToCartLink($entity) ?>" class="btn btn-primary" role="button">Add to Cart</a></p>
+                    </div>
+                </div>
+            </div>
+
 
         <table class="table table-hover">
             <thead>
@@ -115,6 +165,8 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
         <div class="footer">
             <p>&copy; and built with pride by <a href="http://appserver.io" target="_blank">appserver.io</a></p>
         </div>
+
+        */ ?>
 
     </div>
 
