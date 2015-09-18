@@ -123,7 +123,7 @@ class ViewHelper
      */
     public function getLogoutLink()
     {
-        return 'index.do/login/logout';
+        return 'index.do/logout';
     }
 
     /**
@@ -237,7 +237,7 @@ class ViewHelper
      */
     public function getImportLink($importFile)
     {
-        return sprintf('index.do/messageQueue/import?%s=%s', RequestKeys::FILENAME, $importFile);
+        return sprintf('index.do/import/import?%s=%s', RequestKeys::FILENAME, $importFile);
     }
 
     /**
@@ -249,6 +249,6 @@ class ViewHelper
      */
     public function getDeleteImportFileLink($importFile)
     {
-        return sprintf('index.do/messageQueue/delete?%s=%s', RequestKeys::FILENAME, $importFile);
+        return sprintf('index.do/import/delete?%s=%s', RequestKeys::FILENAME, $importFile);
     }
 }

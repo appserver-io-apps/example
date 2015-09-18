@@ -58,18 +58,12 @@ class LoggerAspect
      */
     public function logInfoAdvice(MethodInvocationInterface $methodInvocation)
     {
-
-        /*
-        $methodInvocation->getContext()
+        $methodInvocation
+            ->getContext()
             ->getServletRequest()
             ->getContext()
             ->getInitialContext()
             ->getSystemLogger()
-            ->info(sprintf(
-                'The method %s::%s is about to be called',
-                $methodInvocation->getStructureName(),
-                $methodInvocation->getName()
-            ));
-        */
+            ->info(sprintf( 'The method %s::%s is about to be called', $methodInvocation->getStructureName(), $methodInvocation->getName()));
     }
 }

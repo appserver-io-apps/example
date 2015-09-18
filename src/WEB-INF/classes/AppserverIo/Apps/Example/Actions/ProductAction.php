@@ -75,16 +75,8 @@ class ProductAction extends DispatchAction
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // load the data of the user actually logged into the system
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->productProcessor->findAll());
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
+        // load the data of the user actually logged into the system
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->productProcessor->findAll());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;

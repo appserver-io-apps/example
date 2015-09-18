@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\UploadAction
+ * AppserverIo\Apps\Example\Actions\LoginAction
  *
  * NOTICE OF LICENSE
  *
@@ -20,15 +20,22 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
+use AppserverIo\Http\HttpProtocol;
 use AppserverIo\Routlt\BaseAction;
 use AppserverIo\Routlt\ActionInterface;
+use AppserverIo\Routlt\Util\Validateable;
+use AppserverIo\Apps\Example\Utils\ViewHelper;
+use AppserverIo\Apps\Example\Utils\ProxyKeys;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
+use AppserverIo\Apps\Example\Utils\SessionKeys;
+use AppserverIo\Apps\Example\Exceptions\LoginException;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
 /**
- * Example servlet implementation that handles an upload request.
+ * Example servlet implementation that validates passed user credentials against
+ * persistence container proxy and stores the user data in the session.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -36,37 +43,31 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Path(name="/upload")
+ * @Path(name="/logout")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
  * })
  */
-class UploadAction extends BaseAction
+class LogoutAction extends BaseAction
 {
 
     /**
-     * Loads the sample entity with the sample ID found in the request and attaches
-     * it to the servlet context ready to be rendered by the template.
+     * Action that destroys the session and log the user out.
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
+     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
     public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        // check if a file has been selected
-        if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
-            // save file to appserver's upload tmp folder with tmpname
-            $fileToUpload->init();
-            $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
-
-        } else {
-            // if no file has been selected, add an error message
-            $this->addFieldError('fileToUpload', 'Please select a file to upload!');
+        // destroy the session and reset the cookie
+        if ($session = ViewHelper::singleton()->getLoginSession($servletRequest)) {
+            $session->destroy('Explicit logout requested by: ' . ViewHelper::singleton()->getUsername($servletRequest));
         }
 
         // action invocation has been successfull

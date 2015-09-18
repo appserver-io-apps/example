@@ -20,8 +20,9 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\BaseAction;
 use AppserverIo\Routlt\ActionInterface;
+use AppserverIo\Routlt\Util\Validateable;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\ProxyKeys;
 use AppserverIo\Apps\Example\Utils\ContextKeys;
@@ -48,7 +49,7 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  *     @Result(name="failure", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
  * })
  */
-class LoginAction extends DispatchAction
+class LoginAction extends BaseAction implements Validateable
 {
 
     /**
@@ -60,21 +61,80 @@ class LoginAction extends DispatchAction
     protected $userProcessor;
 
     /**
-     * Default action to invoke if no action parameter has been found in the request.
+     * The username entered by the user.
      *
-     * Loads all sample data and attaches it to the servlet context ready to be rendered
-     * by the template.
-     *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
-     *
-     * @return string|null The action result
-     *
-     * @Action(name="/index")
+     * @var string
      */
-    public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    protected $username;
+
+    /**
+     * The password entered by the user.
+     *
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * Initializes the username from the request parameters.
+     *
+     * @param string $username The username entered by the user
+     *
+     * @return void
+     */
+    public function setUsername($username)
     {
-        return ActionInterface::INPUT;
+        $this->username = $username;
+    }
+
+
+    /**
+     * Returns the username entered by the user.
+     *
+     * @return string|null The user's username
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Initializes the password from the request parameters.
+     *
+     * @param string $password The password entered by the user
+     *
+     * @return void
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * Returns the password entered by the user.
+     *
+     * @return string|null The user's password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \AppserverIo\Routlt\Util\Validateable::validate()
+     */
+    public function validate()
+    {
+
+        // check if the necessary params has been specified and are valid
+        if ($this->getUsername() == null) {
+            $this->addFieldError(RequestKeys::USERNAME, sprintf('Please enter a valid %s', RequestKeys::USERNAME));
+        }
+
+        // check if the necessary params has been specified and are valid
+        if ($this->getPassword() == null) {
+            $this->addFieldError(RequestKeys::PASSWORD, sprintf('Please enter a valid %s', RequestKeys::PASSWORD));
+        }
     }
 
     /**
@@ -86,74 +146,24 @@ class LoginAction extends DispatchAction
      *
      * @return string|null The action result
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
-     *
-     * @Action(name="/login")
      */
-    public function loginAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         try {
-            // check if the necessary params has been specified and are valid
-            if (($username = $servletRequest->getParameter(RequestKeys::USERNAME)) === null) {
-                throw new \Exception(sprintf('Please enter a valid %s', RequestKeys::USERNAME));
-            }
-
-            // check if the necessary params has been specified and are valid
-            if (($password = $servletRequest->getParameter(RequestKeys::PASSWORD)) === null) {
-                throw new \Exception(sprintf('Please enter a valid %s', RequestKeys::PASSWORD));
-            }
-
             // start the session, because we need a session-ID for our stateful session bean
             $session = ViewHelper::singleton()->getLoginSession($servletRequest, true);
             $session->start();
 
             // try to login, using the session bean
-            $this->userProcessor->login($username, $password);
+            $this->userProcessor->login($username = $this->getUsername(), $this->getPassword());
 
             // if successfully then add the username to the session and redirect to the overview
             $session->putData(SessionKeys::USERNAME, $username);
 
         } catch (LoginException $e) {
             // invalid login credentials
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array("Username or Password invalid"));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
-    }
-
-    /**
-     * Action that destroys the session and log the user out.
-     *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
-     *
-     * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
-     *
-     * @Action(name="/logout")
-     */
-    public function logoutAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
-    {
-
-        try {
-            // destroy the session and reset the cookie
-            if ($session = ViewHelper::singleton()->getLoginSession($servletRequest)) {
-                $session->destroy('Explicit logout requested by: ' . ViewHelper::singleton()->getUsername($servletRequest));
-            }
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
+            $this->addFieldError('critical', "Username or Password invalid");
         }
 
         // action invocation has been successfull

@@ -78,17 +78,8 @@ class CartAction extends DispatchAction
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-
-            // append the shopping cart data to the request attributes
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
+        // append the shopping cart data to the request attributes
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -111,36 +102,28 @@ class CartAction extends DispatchAction
     public function addToCartAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // check if the necessary params has been specified and are valid
-            $productId = $servletRequest->getParameter(RequestKeys::PRODUCT_ID, FILTER_VALIDATE_INT);
-            if ($productId == null) {
-                throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::PRODUCT_ID));
-            }
-
-            // start the session
-            ViewHelper::singleton()->getLoginSession($servletRequest, true)->start();
-
-            // initialize the cart for this session-ID
-            $this->cartProcessor->initCart(ViewHelper::singleton()->getLoginSession($servletRequest)->getId());
-
-            // create a new cart item from the passed product-ID
-            $cartItem = new CartItem();
-            $cartItem->setQuantity(1);
-            $cartItem->setProductId($productId);
-
-            // delete the entity
-            $this->cartProcessor->addCartItem($cartItem);
-
-            // append the shopping cart data to the request attributes
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
+        // check if the necessary params has been specified and are valid
+        $productId = $servletRequest->getParameter(RequestKeys::PRODUCT_ID, FILTER_VALIDATE_INT);
+        if ($productId == null) {
+            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::PRODUCT_ID));
         }
+
+        // start the session
+        ViewHelper::singleton()->getLoginSession($servletRequest, true)->start();
+
+        // initialize the cart for this session-ID
+        $this->cartProcessor->initCart(ViewHelper::singleton()->getLoginSession($servletRequest)->getId());
+
+        // create a new cart item from the passed product-ID
+        $cartItem = new CartItem();
+        $cartItem->setQuantity(1);
+        $cartItem->setProductId($productId);
+
+        // delete the entity
+        $this->cartProcessor->addCartItem($cartItem);
+
+        // append the shopping cart data to the request attributes
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -159,29 +142,21 @@ class CartAction extends DispatchAction
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // check if the necessary params has been specified and are valid
-            $productId = $servletRequest->getParameter(RequestKeys::PRODUCT_ID, FILTER_VALIDATE_INT);
-            if ($productId == null) {
-                throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::PRODUCT_ID));
-            }
-
-            // create a new cart item from the passed product-ID
-            $cartItem = new CartItem();
-            $cartItem->setProductId($productId);
-
-            // delete the cart item entity
-            $this->cartProcessor->removeCartItem($cartItem);
-
-            // append the shopping cart data to the request attributes
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
+        // check if the necessary params has been specified and are valid
+        $productId = $servletRequest->getParameter(RequestKeys::PRODUCT_ID, FILTER_VALIDATE_INT);
+        if ($productId == null) {
+            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::PRODUCT_ID));
         }
+
+        // create a new cart item from the passed product-ID
+        $cartItem = new CartItem();
+        $cartItem->setProductId($productId);
+
+        // delete the cart item entity
+        $this->cartProcessor->removeCartItem($cartItem);
+
+        // append the shopping cart data to the request attributes
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;

@@ -77,16 +77,8 @@ class IndexAction extends DispatchAction
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // append the sample data to the request attributes
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
-
-        } catch (\Exception $e) {
-            // append the exception the response body
-            $this->addFieldError('critical', $e->getMessage());
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
+        // append the sample data to the request attributes
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -109,26 +101,18 @@ class IndexAction extends DispatchAction
     public function loadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // check if the necessary params has been specified and are valid
-            $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
-            if ($sampleId == null) {
-                throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
-            }
-
-            // load the entity to be edited and attach it to the servlet context
-            $viewData = $this->sampleProcessor->load($sampleId);
-            $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $viewData);
-
-            // append the sample data to the request attributes
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
-
-        } catch (\Exception $e) {
-            // append the exception the response body
-            $this->addFieldError('critical', $e->getMessage());
-            // action invocation has failed
-            return ActionInterface::FAILURE;
+        // check if the necessary params has been specified and are valid
+        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
+        if ($sampleId == null) {
+            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
         }
+
+        // load the entity to be edited and attach it to the servlet context
+        $viewData = $this->sampleProcessor->load($sampleId);
+        $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $viewData);
+
+        // append the sample data to the request attributes
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -151,25 +135,17 @@ class IndexAction extends DispatchAction
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // check if the necessary params has been specified and are valid
-            $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
-            if ($sampleId == null) {
-                throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
-            }
-
-            // delete the entity
-            $this->sampleProcessor->delete($sampleId);
-
-            // append the sample data to the request attributes
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
-
-        } catch (\Exception $e) {
-            // append the exception the response body
-            $this->addFieldError('critical', $e->getMessage());
-            // action invocation has failed
-            return ActionInterface::FAILURE;
+        // check if the necessary params has been specified and are valid
+        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
+        if ($sampleId == null) {
+            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
         }
+
+        // delete the entity
+        $this->sampleProcessor->delete($sampleId);
+
+        // append the sample data to the request attributes
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -188,29 +164,25 @@ class IndexAction extends DispatchAction
      */
     public function persistAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-         try {
-             // check if the necessary params has been specified and are valid
-             $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
 
-             // check if the user has a name specified
-             if ($name = trim($servletRequest->getParameter(RequestKeys::NAME))) {
-                 // create a new entity and persist it
-                 $entity = new Sample();
-                 $entity->setSampleId((integer) $sampleId);
-                 $entity->setName($name);
-                 $this->sampleProcessor->persist($entity);
+         // check if the necessary params has been specified and are valid
+         $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
 
-             } else {
-                 // if no name has been specified, add an error message
-                 $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please add a name!'));
-             }
+         // check if the user has a name specified
+         if ($name = trim($servletRequest->getParameter(RequestKeys::NAME))) {
+             // create a new entity and persist it
+             $entity = new Sample();
+             $entity->setSampleId((integer) $sampleId);
+             $entity->setName($name);
+             $this->sampleProcessor->persist($entity);
 
-         } catch (\Exception $e) {
-            // append the exception the response body
-            $this->addFieldError('critical', $e->getMessage());
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
+            // append the sample data to the request attributes
+            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
+
+         } else {
+             // if no name has been specified, add an error message
+             $this->addFieldError(RequestKeys::NAME, 'Please add a name!');
+         }
 
         // action invocation has been successfull
         return ActionInterface::INPUT;

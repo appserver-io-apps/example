@@ -75,16 +75,8 @@ class UserAction extends DispatchAction
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // load the data of the user actually logged into the system
-            $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $this->userProcessor->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
+        // load the data of the user actually logged into the system
+        $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $this->userProcessor->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -102,19 +94,12 @@ class UserAction extends DispatchAction
      */
     public function saveAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        try {
-            // add a message, that the save action is not yet implemented
-            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('The saveAction() method is not yet implemented!'));
 
-            // load the data of the user actually logged into the system
-            $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $this->userProcessor->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
+        // add a message, that the save action is not yet implemented
+        $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array('The saveAction() method is not yet implemented!'));
 
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
+        // load the data of the user actually logged into the system
+        $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $this->userProcessor->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
 
         // action invocation has been successfull
         return ActionInterface::INPUT;

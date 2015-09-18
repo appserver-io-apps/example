@@ -57,16 +57,16 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
-                    <li class="active"><a href="index.do/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
-                    <li><a href="index.do/upload"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
+                    <li class="active"><a href="dhtml/login.dhtml"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
+                    <li><a href="dhtml/upload.dhtml"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
                     <li><a href="index.do/import"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Import</a></li>
                     <li><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
                     <li><a href="index.do/cart"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Cart</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-briefcase"></span>&nbsp;&nbsp;&nbsp;Authentication <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="index.do/basic/authentication">Basic</a></li>
-                            <li><a href="index.do/digest/authentication">Digest</a></li>
+                            <li><a href="dhtml/basic.dhtml/authentication">Basic</a></li>
+                            <li><a href="dhtml/digest.dhtml/authentication">Digest</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -92,7 +92,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
         <h1>Please sign in</h1>
 
-        <form class="form-center" role="form" action="index.do/login/login" method="post">
+        <form class="form-center" role="form" action="index.do/login" method="post">
             <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="<?php echo RequestKeys::USERNAME ?>">
             <input type="password" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>">
             <label class="checkbox">

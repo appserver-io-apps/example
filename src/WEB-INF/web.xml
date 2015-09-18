@@ -136,7 +136,7 @@
     </servlet-mapping>
 
     <security>
-        <url-pattern>/index.do/basic*</url-pattern>
+        <url-pattern>/dhtml/basic.dhtml*</url-pattern>
         <auth>
             <auth-type>Basic</auth-type>
             <realm>test</realm>
@@ -148,7 +148,7 @@
     </security>
 
     <security>
-        <url-pattern>/index.do/digest*</url-pattern>
+        <url-pattern>/dhtml/digest.dhtml*</url-pattern>
         <auth>
             <auth-type>Digest</auth-type>
             <realm>Digest-Example-Realm</realm>

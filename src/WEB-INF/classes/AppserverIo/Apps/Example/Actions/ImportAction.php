@@ -75,16 +75,8 @@ class ImportAction extends DispatchAction
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // attach a list with all files that can be imported to the request
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
+        // attach a list with all files that can be imported to the request
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -105,26 +97,18 @@ class ImportAction extends DispatchAction
     public function importAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // try to load the filename that has to imported
-            if ($filename = $servletRequest->getParameter(RequestKeys::FILENAME, FILTER_SANITIZE_STRING)) {
-                // import the file with the name passed as request parameter
-                $this->importProcessor->import($filename);
+        // try to load the filename that has to imported
+        if ($filename = $servletRequest->getParameter(RequestKeys::FILENAME, FILTER_SANITIZE_STRING)) {
+            // import the file with the name passed as request parameter
+            $this->importProcessor->import($filename);
 
-            } else {
-                // if no file has been selected, add an error message
-                throw new \Exception('Please select a file to import!');
-            }
-
-            // attach a list with all files that can be imported to the request
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
+        } else {
+            // if no file has been selected, add an error message
+            throw new \Exception('Please select a file to import!');
         }
+
+        // attach a list with all files that can be imported to the request
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -145,35 +129,27 @@ class ImportAction extends DispatchAction
     public function uploadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // check if a file has been selected
-            if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
+        // check if a file has been selected
+        if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
 
-                // query whether the directory has to be watched or not
-                if ($watchDirectory = $servletRequest->getParameter(RequestKeys::WATCH_DIRECTORY, FILTER_VALIDATE_BOOLEAN)) {
-                    $watchDirectory = Boolean::valueOf(new String($watchDirectory));
-                } else {
-                    // initialize the flag if the directory has to be watched
-                    $watchDirectory = new Boolean(false);
-                }
-
-                // if yes, upload the file to be imported and watch the Directory
-                $this->importProcessor->upload($fileToUpload, $watchDirectory);
-
+            // query whether the directory has to be watched or not
+            if ($watchDirectory = $servletRequest->getParameter(RequestKeys::WATCH_DIRECTORY, FILTER_VALIDATE_BOOLEAN)) {
+                $watchDirectory = Boolean::valueOf(new String($watchDirectory));
             } else {
-                // if no file has been selected, add an error message
-                throw new \Exception('Please select a file to upload!');
+                // initialize the flag if the directory has to be watched
+                $watchDirectory = new Boolean(false);
             }
 
-            // attach a list with all files that can be imported to the request
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
+            // if yes, upload the file to be imported and watch the Directory
+            $this->importProcessor->upload($fileToUpload, $watchDirectory);
 
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
+        } else {
+            // if no file has been selected, add an error message
+            throw new \Exception('Please select a file to upload!');
         }
+
+        // attach a list with all files that can be imported to the request
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
@@ -193,19 +169,11 @@ class ImportAction extends DispatchAction
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-        try {
-            // delete the file from the temporary upload directory
-            $this->importProcessor->delete($servletRequest->getParameter(RequestKeys::FILENAME, FILTER_SANITIZE_STRING));
+        // delete the file from the temporary upload directory
+        $this->importProcessor->delete($servletRequest->getParameter(RequestKeys::FILENAME, FILTER_SANITIZE_STRING));
 
-            // attach a list with all files that can be imported to the request
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
-
-        } catch (\Exception $e) {
-            // if not add an error message
-            $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array($e->getMessage()));
-            // action invocation has failed
-            return ActionInterface::FAILURE;
-        }
+        // attach a list with all files that can be imported to the request
+        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
 
         // action invocation has been successfull
         return ActionInterface::INPUT;
