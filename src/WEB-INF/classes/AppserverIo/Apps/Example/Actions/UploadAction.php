@@ -20,7 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Apps\Example\Utils\ContextKeys;
+use AppserverIo\Routlt\BaseAction;
+use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -33,31 +34,16 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
+ *
+ * @Path(name="/upload")
+ *
+ * @Results({
+ *     @Result(name="input", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ * })
  */
-class UploadAction extends ExampleBaseAction
+class UploadAction extends BaseAction
 {
-
-    /**
-     * The relative path, up from the webapp path, to the template to use.
-     *
-     * @var string
-     */
-    const UPLOAD_TEMPLATE = 'static/templates/upload.phtml';
-
-    /**
-     * Default action to invoke if no action parameter has been found in the request.
-     *
-     * Renders an upload dialoge with a select and submit button.
-     *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
-     *
-     * @return void
-     */
-    public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
-    {
-        $servletResponse->appendBodyStream($this->processTemplate(UploadAction::UPLOAD_TEMPLATE, $servletRequest, $servletResponse));
-    }
 
     /**
      * Loads the sample entity with the sample ID found in the request and attaches
@@ -66,10 +52,9 @@ class UploadAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
-     * @see IndexServlet::indexAction()
+     * @return string|null The action result
      */
-    public function uploadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
         // check if a file has been selected
@@ -80,10 +65,7 @@ class UploadAction extends ExampleBaseAction
 
         } else {
             // if no file has been selected, add an error message
-            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please select a file to upload!'));
+            $this->addFieldError('fileToUpload', 'Please select a file to upload!');
         }
-
-        // after the successfull upload, render the template again
-        $this->indexAction($servletRequest, $servletResponse);
     }
 }

@@ -57,6 +57,7 @@ class PrepareDatabaseStep extends AbstractStep
 
             // create schema, default products + login credentials
             $schemaProcessor->createSchema();
+            $schemaProcessor->createDefaultProducts();
             $schemaProcessor->createDefaultCredentials();
 
             // log a message that provisioning has been successfull

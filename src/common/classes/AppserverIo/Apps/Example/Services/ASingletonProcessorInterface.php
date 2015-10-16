@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\ASingletonProcessor
+ * AppserverIo\Apps\Example\Services\ASingletonProcessorInterface
  *
  * NOTICE OF LICENSE
  *

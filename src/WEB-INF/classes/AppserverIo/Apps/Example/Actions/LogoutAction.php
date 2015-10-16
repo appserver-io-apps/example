@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\SessionGeneratorAction
+ * AppserverIo\Apps\Example\Actions\LoginAction
  *
  * NOTICE OF LICENSE
  *
@@ -20,7 +20,14 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Psr\Servlet\SessionUtils;
+use AppserverIo\Http\HttpProtocol;
+use AppserverIo\Routlt\BaseAction;
+use AppserverIo\Routlt\ActionInterface;
+use AppserverIo\Routlt\Util\Validateable;
+use AppserverIo\Apps\Example\Utils\ViewHelper;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
+use AppserverIo\Apps\Example\Utils\SessionKeys;
+use AppserverIo\Apps\Example\Exceptions\LoginException;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -33,52 +40,32 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
+ *
+ * @Path(name="/logout")
+ *
+ * @Results({
+ *     @Result(name="input", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ * })
  */
-class SessionGeneratorAction extends ExampleBaseAction
+class LogoutAction extends BaseAction
 {
 
     /**
-     * The relative path, up from the webapp path, to the template to use.
-     *
-     * @var string
-     */
-    const SESSION_GENERATOR_TEMPLATE = 'static/templates/sessionGenerator.phtml';
-
-    /**
-     * The generted session ID.
-     *
-     * @var string
-     */
-    protected $sessionId;
-
-    /**
-     * Default action to create an endless number of session (for performance testing purposes only).
+     * Action that destroys the session and log the user out.
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
+     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
-    public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        // create a random session and start it
-        $servletRequest->setRequestedSessionName('example_' . SessionUtils::generateRandomString());
-        $session = $servletRequest->getSession(true);
 
-        // write the session to the member varialbe
-        $this->sessionId = $session->getId();
-
-        // render the template
-        $servletResponse->appendBodyStream($this->processTemplate(SessionGeneratorAction::SESSION_GENERATOR_TEMPLATE, $servletRequest, $servletResponse));
-    }
-
-    /**
-     * Returns the generated session ID.
-     *
-     * @return string The session ID
-     */
-    public function getSessionId()
-    {
-        return $this->sessionId;
+        // destroy the session and reset the cookie
+        if ($session = ViewHelper::singleton()->getLoginSession($servletRequest)) {
+            $session->destroy('Explicit logout requested by: ' . ViewHelper::singleton()->getUsername($servletRequest));
+        }
     }
 }

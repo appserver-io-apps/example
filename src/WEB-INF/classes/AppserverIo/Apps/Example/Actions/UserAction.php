@@ -20,8 +20,10 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
+use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\ActionInterface;
+use AppserverIo\Apps\Example\Utils\ViewHelper;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -37,16 +39,34 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
+ *
+ * @Path(name="/user")
+ *
+ * @Results({
+ *     @Result(name="input", result="/dhtml/user.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/user.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ * })
  */
-class UserAction extends ExampleBaseAction
+class UserAction extends DispatchAction
 {
 
     /**
-     * The relative path, up from the webapp path, to the template to use.
+     * The UserProcessor instance to handle the user functionality.
      *
-     * @var string
+     * @var \AppserverIo\Apps\Example\Services\UserProcessor
+     * @EnterpriseBean
      */
-    const USER_DETAIL_TEMPLATE = 'static/templates/userDetail.phtml';
+    protected $userProcessor;
+
+    /**
+     * Returns the ImportProcessor instance to handle the user functionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getUserProcessor()
+    {
+        return $this->userProcessor;
+    }
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
@@ -57,13 +77,15 @@ class UserAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
+     *
+     * @Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $viewData = $this->getProxy(ProxyKeys::USER_PROCESSOR)->getUserViewData($this->getUsername());
-        $this->setAttribute(ContextKeys::VIEW_DATA, $viewData);
-        $servletResponse->appendBodyStream($this->processTemplate(UserAction::USER_DETAIL_TEMPLATE, $servletRequest, $servletResponse));
+
+        // load the data of the user actually logged into the system
+        $servletRequest->setAttribute(RequestKeys::VIEW_DATA, $this->getUserProcessor()->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
     }
 
     /**
@@ -72,12 +94,17 @@ class UserAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
+     *
+     * @Action(name="/save")
      */
     public function saveAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
+
         // add a message, that the save action is not yet implemented
-        $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('The saveAction() method is not yet implemented!'));
-        $this->indexAction($servletRequest, $servletResponse);
+        $servletRequest->setAttribute(RequestKeys::ERROR_MESSAGES, array('The saveAction() method is not yet implemented!'));
+
+        // load the data of the user actually logged into the system
+        $servletRequest->setAttribute(RequestKeys::VIEW_DATA, $this->getUserProcessor()->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
     }
 }

@@ -40,6 +40,27 @@ class RequestKeys
     }
 
     /**
+     * The key for a collection with error messages.
+     *
+     * @return string
+     */
+    const ERROR_MESSAGES = 'error.messages';
+
+    /**
+     * The key for a collection with entities.
+     *
+     * @return string
+     */
+    const OVERVIEW_DATA = 'overview.data';
+
+    /**
+     * The key for an entity.
+     *
+     * @return string
+     */
+    const VIEW_DATA = 'view.data';
+
+    /**
      * The key for a 'action'.
      *
      * @return string
@@ -52,6 +73,20 @@ class RequestKeys
      * @return string
      */
     const SAMPLE_ID = 'sampleId';
+
+    /**
+     * The key for a 'productId'.
+     *
+     * @return string
+     */
+    const PRODUCT_ID = 'productId';
+
+    /**
+     * The key for a 'cartItemId'.
+     *
+     * @return string
+     */
+    const CART_ITEM_ID = 'cartItemId';
 
     /**
      * The key for a 'name'.

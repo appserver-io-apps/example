@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Utils\ContextKeys
+ * AppserverIo\Apps\Example\Services\CartProcessorInterface
  *
  * NOTICE OF LICENSE
  *
@@ -18,10 +18,10 @@
  * @link      http://www.appserver.io
  */
 
-namespace AppserverIo\Apps\Example\Utils;
+namespace AppserverIo\Apps\Example\Services;
 
 /**
- * Context keys that are used to store data in a application context.
+ * Interface for a cart processor.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -29,34 +29,36 @@ namespace AppserverIo\Apps\Example\Utils;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-class ContextKeys
+interface CartProcessorInterface
 {
 
-    /**
-     * Private to constructor to avoid instancing this class.
-     */
-    private function __construct()
-    {
-    }
+	/**
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function getCartContents();
 
-    /**
-     * The key for a collection with error messages.
-     *
-     * @return string
-     */
-    const ERROR_MESSAGES = 'error.messages';
+	/**
+	 * @param $sessionId
+	 */
+	public function initCart($sessionId);
 
-    /**
-     * The key for a collection with entities.
-     *
-     * @return string
-     */
-    const OVERVIEW_DATA = 'overview.data';
+	/**
+	 * @return Cart
+	 */
+	public function getCart();
 
-    /**
-     * The key for an entity.
-     *
-     * @return string
-     */
-    const VIEW_DATA = 'view.data';
+	/**
+	 * @param CartItem $cartItem
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function addCartItem($cartItem);
+
+	/**
+	 * @param CartItem $cartItem
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function updateCartItem($cartItem);
 }
