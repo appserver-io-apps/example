@@ -22,7 +22,6 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\BaseAction;
 use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -68,8 +67,5 @@ class UploadAction extends BaseAction
             // if no file has been selected, add an error message
             $this->addFieldError('fileToUpload', 'Please select a file to upload!');
         }
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
     }
 }

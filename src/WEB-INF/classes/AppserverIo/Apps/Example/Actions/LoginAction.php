@@ -24,8 +24,6 @@ use AppserverIo\Routlt\BaseAction;
 use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Routlt\Util\Validateable;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Utils\SessionKeys;
 use AppserverIo\Apps\Example\Exceptions\LoginException;
@@ -73,6 +71,16 @@ class LoginAction extends BaseAction implements Validateable
      * @var string
      */
     protected $password;
+
+    /**
+     * Returns the ImportProcessor instance to handle the login functionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getUserProcessor()
+    {
+        return $this->userProcessor;
+    }
 
     /**
      * Initializes the username from the request parameters.
@@ -156,7 +164,7 @@ class LoginAction extends BaseAction implements Validateable
             $session->start();
 
             // try to login, using the session bean
-            $this->userProcessor->login($username = $this->getUsername(), $this->getPassword());
+            $this->getUserProcessor()->login($username = $this->getUsername(), $this->getPassword());
 
             // if successfully then add the username to the session and redirect to the overview
             $session->putData(SessionKeys::USERNAME, $username);
@@ -165,8 +173,5 @@ class LoginAction extends BaseAction implements Validateable
             // invalid login credentials
             $this->addFieldError('critical', "Username or Password invalid");
         }
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
     }
 }

@@ -21,6 +21,7 @@
 namespace AppserverIo\Apps\Example\Aspects;
 
 use AppserverIo\Psr\MetaobjectProtocol\Aop\MethodInvocationInterface;
+use AppserverIo\Appserver\ServletEngine\RequestHandler;
 
 /**
  * Aspect which allows for logging within the app's classes.
@@ -58,12 +59,13 @@ class LoggerAspect
      */
     public function logInfoAdvice(MethodInvocationInterface $methodInvocation)
     {
-        $methodInvocation
-            ->getContext()
-            ->getServletRequest()
-            ->getContext()
-            ->getInitialContext()
-            ->getSystemLogger()
-            ->info(sprintf( 'The method %s::%s is about to be called', $methodInvocation->getStructureName(), $methodInvocation->getName()));
+
+        // load the application context
+        $application = RequestHandler::getApplicationContext();
+
+        // log that the method has been invoked
+        $application->getInitialContext()
+                    ->getSystemLogger()
+                    ->info(sprintf( 'The method %s::%s is about to be called', $methodInvocation->getStructureName(), $methodInvocation->getName()));
     }
 }

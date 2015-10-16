@@ -22,9 +22,8 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -52,12 +51,22 @@ class UserAction extends DispatchAction
 {
 
     /**
-     * The UserProcessor instance to handle the login functionality.
+     * The UserProcessor instance to handle the user functionality.
      *
      * @var \AppserverIo\Apps\Example\Services\UserProcessor
      * @EnterpriseBean
      */
     protected $userProcessor;
+
+    /**
+     * Returns the ImportProcessor instance to handle the user functionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getUserProcessor()
+    {
+        return $this->userProcessor;
+    }
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
@@ -76,10 +85,7 @@ class UserAction extends DispatchAction
     {
 
         // load the data of the user actually logged into the system
-        $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $this->userProcessor->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::VIEW_DATA, $this->getUserProcessor()->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
     }
 
     /**
@@ -96,12 +102,9 @@ class UserAction extends DispatchAction
     {
 
         // add a message, that the save action is not yet implemented
-        $servletRequest->setAttribute(ContextKeys::ERROR_MESSAGES, array('The saveAction() method is not yet implemented!'));
+        $servletRequest->setAttribute(RequestKeys::ERROR_MESSAGES, array('The saveAction() method is not yet implemented!'));
 
         // load the data of the user actually logged into the system
-        $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $this->userProcessor->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::VIEW_DATA, $this->getUserProcessor()->getUserViewData(ViewHelper::singleton()->getUsername($servletRequest)));
     }
 }

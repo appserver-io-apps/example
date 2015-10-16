@@ -13,7 +13,6 @@
 namespace AppserverIo\Apps\Example\Servlets;
 
 use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 
 // initialize local variables
@@ -23,7 +22,7 @@ $name = '';
 // load the entity data if available
 $sampleId = 0;
 $name = '';
-if ($entity = $servletRequest->getAttribute(ContextKeys::VIEW_DATA)) {
+if ($entity = $servletRequest->getAttribute(RequestKeys::VIEW_DATA)) {
     $sampleId = $entity->getSampleId();
     $name = $entity->getName();
 }
@@ -87,7 +86,7 @@ if ($entity = $servletRequest->getAttribute(ContextKeys::VIEW_DATA)) {
 
     <div class="container content">
 
-        <?php if ($errorMessages = $servletRequest->getAttribute(ContextKeys::ERROR_MESSAGES)): ?>
+        <?php if ($errorMessages = $servletRequest->getAttribute(RequestKeys::ERROR_MESSAGES)): ?>
             <div class="alert alert-danger">
                 <?php foreach ($errorMessages as $errorMessage): ?>
                     <?php echo $errorMessage ?><br/>
@@ -124,7 +123,7 @@ if ($entity = $servletRequest->getAttribute(ContextKeys::VIEW_DATA)) {
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($servletRequest->getAttribute(ContextKeys::OVERVIEW_DATA) as $entity): ?>
+            <?php foreach ($servletRequest->getAttribute(RequestKeys::OVERVIEW_DATA) as $entity): ?>
                 <tr>
                     <td><a href="<?php echo ViewHelper::singleton()->getEditLink($entity) ?>"><?php echo $entity->getSampleId() ?></a>
                     </td>

@@ -13,7 +13,6 @@
 namespace AppserverIo\Apps\Example\Servlets;
 
 use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 
 ?>
@@ -75,14 +74,14 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
     <div class="container content">
 
-        <?php if ($errorMessages = $servletRequest->getAttribute(ContextKeys::ERROR_MESSAGES)): ?>
+        <?php if ($errorMessages = $servletRequest->getAttribute(RequestKeys::ERROR_MESSAGES)): ?>
             <div class="alert alert-danger">
                 <?php foreach ($errorMessages as $errorMessage): ?>
                     <?php echo $errorMessage ?><br/>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        
+
         <a href="http://appserver.io">
             <img src="static/img/logo-black.png"/>
         </a>
@@ -92,9 +91,9 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
         <h1>Products</h1>
 
         <br/>
-        
+
         <div class="row">
-            <?php foreach ($servletRequest->getAttribute(ContextKeys::OVERVIEW_DATA) as $entity): ?>
+            <?php foreach ($servletRequest->getAttribute(RequestKeys::OVERVIEW_DATA) as $entity): ?>
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail" >
                         <img src="http://lorempixel.com/340/200/technics/<?php echo $entity->getId() ?>" class="img-responsive">
@@ -110,12 +109,12 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
                             <p class="text-left"><?php echo $entity->getDescription() ?></p>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a> 
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
                                 </div>
                                 <div class="col-md-6">
                                     <a href="<?php echo ViewHelper::singleton()->getAddToCartLink($entity) ?>" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</a></div>
                             </div>
-    
+
                             <p> </p>
                         </div>
                     </div>
@@ -126,7 +125,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
         <div class="footer">
             <p>&copy; and built with pride by <a href="http://appserver.io" target="_blank">appserver.io</a></p>
         </div>
-        
+
     </div>
 
 <!-- placed at the end of the document so the pages load faster -->

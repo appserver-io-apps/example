@@ -22,8 +22,6 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -60,6 +58,16 @@ class ProductAction extends DispatchAction
     protected $productProcessor;
 
     /**
+     * Returns the ImportProcessor instance to handle the product functionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getProductProcessor()
+    {
+        return $this->productProcessor;
+    }
+
+    /**
      * Default action to invoke if no action parameter has been found in the request.
      *
      * Loads all sample data and attaches it to the servlet context ready to be rendered
@@ -76,9 +84,6 @@ class ProductAction extends DispatchAction
     {
 
         // load the data of the user actually logged into the system
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->productProcessor->findAll());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getProductProcessor()->findAll());
     }
 }

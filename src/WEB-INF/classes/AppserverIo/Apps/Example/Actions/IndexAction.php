@@ -23,8 +23,6 @@ namespace AppserverIo\Apps\Example\Actions;
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Entities\Sample;
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -54,12 +52,22 @@ class IndexAction extends DispatchAction
 {
 
     /**
-     * The CartProcessor instance to handle the shopping cart functionality.
+     * The CartProcessor instance to handle the sample functionality.
      *
      * @var \AppserverIo\Apps\Example\Services\SampleProcessor
      * @EnterpriseBean
      */
     protected $sampleProcessor;
+
+    /**
+     * Returns the SampleProcessor instance to handle the sample funcionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getSampleProcessor()
+    {
+        return $this->sampleProcessor;
+    }
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
@@ -78,10 +86,7 @@ class IndexAction extends DispatchAction
     {
 
         // append the sample data to the request attributes
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
     }
 
     /**
@@ -108,14 +113,11 @@ class IndexAction extends DispatchAction
         }
 
         // load the entity to be edited and attach it to the servlet context
-        $viewData = $this->sampleProcessor->load($sampleId);
-        $servletRequest->setAttribute(ContextKeys::VIEW_DATA, $viewData);
+        $viewData = $this->getSampleProcessor()->load($sampleId);
+        $servletRequest->setAttribute(RequestKeys::VIEW_DATA, $viewData);
 
         // append the sample data to the request attributes
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
     }
 
     /**
@@ -142,13 +144,10 @@ class IndexAction extends DispatchAction
         }
 
         // delete the entity
-        $this->sampleProcessor->delete($sampleId);
+        $this->getSampleProcessor()->delete($sampleId);
 
         // append the sample data to the request attributes
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
     }
 
     /**
@@ -174,17 +173,14 @@ class IndexAction extends DispatchAction
              $entity = new Sample();
              $entity->setSampleId((integer) $sampleId);
              $entity->setName($name);
-             $this->sampleProcessor->persist($entity);
+             $this->getSampleProcessor()->persist($entity);
 
             // append the sample data to the request attributes
-            $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->sampleProcessor->findAll());
+            $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
 
          } else {
              // if no name has been specified, add an error message
              $this->addFieldError(RequestKeys::NAME, 'Please add a name!');
          }
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
     }
 }

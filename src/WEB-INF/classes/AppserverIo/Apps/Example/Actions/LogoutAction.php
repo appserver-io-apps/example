@@ -25,8 +25,6 @@ use AppserverIo\Routlt\BaseAction;
 use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Routlt\Util\Validateable;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Utils\SessionKeys;
 use AppserverIo\Apps\Example\Exceptions\LoginException;
@@ -69,8 +67,5 @@ class LogoutAction extends BaseAction
         if ($session = ViewHelper::singleton()->getLoginSession($servletRequest)) {
             $session->destroy('Explicit logout requested by: ' . ViewHelper::singleton()->getUsername($servletRequest));
         }
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
     }
 }

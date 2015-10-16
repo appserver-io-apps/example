@@ -22,9 +22,7 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Entities\CartItem;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
@@ -63,6 +61,16 @@ class CartAction extends DispatchAction
     protected $cartProcessor;
 
     /**
+     * Returns the CartProcessor instance to handle the shopping cart functionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getCartProcessor()
+    {
+        return $this->cartProcessor;
+    }
+
+    /**
      * Default action to invoke if no action parameter has been found in the request.
      *
      * Loads all sample data and attaches it to the servlet context ready to be rendered
@@ -79,10 +87,7 @@ class CartAction extends DispatchAction
     {
 
         // append the shopping cart data to the request attributes
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getCartProcessor()->getCartContents());
     }
 
     /**
@@ -112,7 +117,7 @@ class CartAction extends DispatchAction
         ViewHelper::singleton()->getLoginSession($servletRequest, true)->start();
 
         // initialize the cart for this session-ID
-        $this->cartProcessor->initCart(ViewHelper::singleton()->getLoginSession($servletRequest)->getId());
+        $this->getCartProcessor()->initCart(ViewHelper::singleton()->getLoginSession($servletRequest)->getId());
 
         // create a new cart item from the passed product-ID
         $cartItem = new CartItem();
@@ -120,13 +125,10 @@ class CartAction extends DispatchAction
         $cartItem->setProductId($productId);
 
         // delete the entity
-        $this->cartProcessor->addCartItem($cartItem);
+        $this->getCartProcessor()->addCartItem($cartItem);
 
         // append the shopping cart data to the request attributes
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getCartProcessor()->getCartContents());
     }
 
     /**
@@ -153,12 +155,9 @@ class CartAction extends DispatchAction
         $cartItem->setProductId($productId);
 
         // delete the cart item entity
-        $this->cartProcessor->removeCartItem($cartItem);
+        $this->getCartProcessor()->removeCartItem($cartItem);
 
         // append the shopping cart data to the request attributes
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->cartProcessor->getCartContents());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getCartProcessor()->getCartContents());
     }
 }

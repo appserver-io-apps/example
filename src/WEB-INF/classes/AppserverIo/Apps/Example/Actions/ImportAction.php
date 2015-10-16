@@ -24,10 +24,8 @@ use AppserverIo\Lang\String;
 use AppserverIo\Lang\Boolean;
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -60,6 +58,16 @@ class ImportAction extends DispatchAction
     protected $importProcessor;
 
     /**
+     * Returns the ImportProcessor instance to handle the import functionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getImportProcessor()
+    {
+        return $this->importProcessor;
+    }
+
+    /**
      * Default action to invoke if no action parameter has been found in the request.
      *
      * Loads all .csv file uploads and attaches it to the servlet context ready to be rendered
@@ -76,10 +84,7 @@ class ImportAction extends DispatchAction
     {
 
         // attach a list with all files that can be imported to the request
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getImportProcessor()->findAll());
     }
 
     /**
@@ -100,7 +105,7 @@ class ImportAction extends DispatchAction
         // try to load the filename that has to imported
         if ($filename = $servletRequest->getParameter(RequestKeys::FILENAME, FILTER_SANITIZE_STRING)) {
             // import the file with the name passed as request parameter
-            $this->importProcessor->import($filename);
+            $this->getImportProcessor()->import($filename);
 
         } else {
             // if no file has been selected, add an error message
@@ -108,10 +113,7 @@ class ImportAction extends DispatchAction
         }
 
         // attach a list with all files that can be imported to the request
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getImportProcessor()->findAll());
     }
 
     /**
@@ -141,7 +143,7 @@ class ImportAction extends DispatchAction
             }
 
             // if yes, upload the file to be imported and watch the Directory
-            $this->importProcessor->upload($fileToUpload, $watchDirectory);
+            $this->getImportProcessor()->upload($fileToUpload, $watchDirectory);
 
         } else {
             // if no file has been selected, add an error message
@@ -149,10 +151,7 @@ class ImportAction extends DispatchAction
         }
 
         // attach a list with all files that can be imported to the request
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getImportProcessor()->findAll());
     }
 
     /**
@@ -170,12 +169,9 @@ class ImportAction extends DispatchAction
     {
 
         // delete the file from the temporary upload directory
-        $this->importProcessor->delete($servletRequest->getParameter(RequestKeys::FILENAME, FILTER_SANITIZE_STRING));
+        $this->getImportProcessor()->delete($servletRequest->getParameter(RequestKeys::FILENAME, FILTER_SANITIZE_STRING));
 
         // attach a list with all files that can be imported to the request
-        $servletRequest->setAttribute(ContextKeys::OVERVIEW_DATA, $this->importProcessor->findAll());
-
-        // action invocation has been successfull
-        return ActionInterface::INPUT;
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getImportProcessor()->findAll());
     }
 }

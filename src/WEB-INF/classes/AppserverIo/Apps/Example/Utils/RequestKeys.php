@@ -40,6 +40,27 @@ class RequestKeys
     }
 
     /**
+     * The key for a collection with error messages.
+     *
+     * @return string
+     */
+    const ERROR_MESSAGES = 'error.messages';
+
+    /**
+     * The key for a collection with entities.
+     *
+     * @return string
+     */
+    const OVERVIEW_DATA = 'overview.data';
+
+    /**
+     * The key for an entity.
+     *
+     * @return string
+     */
+    const VIEW_DATA = 'view.data';
+
+    /**
      * The key for a 'action'.
      *
      * @return string

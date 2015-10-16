@@ -13,7 +13,7 @@
 namespace AppserverIo\Apps\Example\Servlets;
 
 use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
 
 ?>
 <!DOCTYPE html>
@@ -74,7 +74,7 @@ use AppserverIo\Apps\Example\Utils\ContextKeys;
 
     <div class="container content">
 
-        <?php if ($errorMessages = $servletRequest->getAttribute(ContextKeys::ERROR_MESSAGES)): ?>
+        <?php if ($errorMessages = $servletRequest->getAttribute(RequestKeys::ERROR_MESSAGES)): ?>
             <div class="alert alert-danger">
                 <?php foreach ($errorMessages as $errorMessage): ?>
                     <?php echo $errorMessage ?><br/>
