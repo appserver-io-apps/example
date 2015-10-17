@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Assertion
+ * AppserverIo\Apps\Example\Actions\AbstractEntity
  *
  * NOTICE OF LICENSE
  *
@@ -22,13 +22,13 @@ namespace AppserverIo\Apps\Example\Entities;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Doctrine entity that represents an abstract entity.
+ * Abstract Doctrine entity representation.
  *
- * @author Tim Wagner <tw@appserver.io>
+ * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
- * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link https://github.com/appserver-io-apps/example
- * @link http://www.appserver.io
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  *
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
@@ -37,29 +37,33 @@ class AbstractEntity
 {
 
     /**
+     * A UNIX timestamp with the entities creation date.
      *
-     * @var \DateTime $createdAt
+     * @var integer
      * @ORM\Column(name="created_at", type="integer", nullable=false)
      */
     protected $createdAt;
 
     /**
+     * A UNIX timestamp with date the entity has been updated.
      *
-     * @var \DateTime $updatedAt
+     * @var integer
      * @ORM\Column(name="updated_at", type="integer", nullable=false)
      */
     protected $updatedAt;
 
     /**
+     * Mark's the entity as deleted.
      *
-     * @var int $deleted
+     * @var int
      * @ORM\Column(name="deleted", type="integer", nullable=false)
      */
     protected $deleted = 0;
 
     /**
+     * Return's the UNIX timestamp with the entities creation date.
      *
-     * @return integer|null
+     * @return integer|null The entities creation date
      */
     public function getCreatedAt()
     {
@@ -67,8 +71,11 @@ class AbstractEntity
     }
 
     /**
+     * Set's the UNIX timestamp with the entities creation date.
      *
-     * @param integer $createdAt
+     * @param integer $createdAt The entities creation date
+     *
+     * @return void
      */
     protected function setCreatedAt($createdAt)
     {
@@ -76,8 +83,9 @@ class AbstractEntity
     }
 
     /**
+     * Return's the UNIX timestamp with date the entity has been updated.
      *
-     * @return integer|null
+     * @return integer|null The UNIX timestamp with the entity's last update
      */
     public function getUpdatedAt()
     {
@@ -85,8 +93,11 @@ class AbstractEntity
     }
 
     /**
+     * Set's the UNIX timestamp with date the entity has been updated.
      *
-     * @param integer $updatedAt
+     * @param integer $updatedAt The UNIX timestamp with the entity's last update
+     *
+     * @return void
      */
     protected function setUpdatedAt($updatedAt)
     {
@@ -94,8 +105,9 @@ class AbstractEntity
     }
 
     /**
+     * Return's the flag if the entity has been deleted or not.
      *
-     * @return int
+     * @return integer 1 if the entity has been deleted, else 0
      */
     public function getDeleted()
     {
@@ -103,8 +115,11 @@ class AbstractEntity
     }
 
     /**
+     * Mark's the entity as deleted, if 1 has been passed.
      *
-     * @param int $deleted
+     * @param integer $deleted 1 if the entity should be marked as deleted, else 0
+     *
+     * @return void
      */
     public function setDeleted($deleted)
     {
@@ -112,14 +127,19 @@ class AbstractEntity
     }
 
     /**
+     * Updates the creation and update date with a UNIX timestamp.
+     *
+     * @return void
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
     public function updateCreatedUpdatedDate()
     {
 
+        // initialize the update time
         $this->setUpdatedAt(time());
 
+        // query whether or not we've to initialize the creation date too
         if ($this->getCreatedAt() == null) {
             $this->setCreatedAt(time());
         }

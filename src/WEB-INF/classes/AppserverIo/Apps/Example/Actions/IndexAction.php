@@ -164,23 +164,23 @@ class IndexAction extends DispatchAction
     public function persistAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
 
-         // check if the necessary params has been specified and are valid
-         $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
+        // check if the necessary params has been specified and are valid
+        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
 
-         // check if the user has a name specified
-         if ($name = trim($servletRequest->getParameter(RequestKeys::NAME))) {
-             // create a new entity and persist it
-             $entity = new Sample();
-             $entity->setSampleId((integer) $sampleId);
-             $entity->setName($name);
-             $this->getSampleProcessor()->persist($entity);
+        // check if the user has a name specified
+        if ($name = trim($servletRequest->getParameter(RequestKeys::NAME))) {
+            // create a new entity and persist it
+            $entity = new Sample();
+            $entity->setSampleId((integer) $sampleId);
+            $entity->setName($name);
+            $this->getSampleProcessor()->persist($entity);
 
             // append the sample data to the request attributes
             $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
 
-         } else {
-             // if no name has been specified, add an error message
-             $this->addFieldError(RequestKeys::NAME, 'Please add a name!');
-         }
+        } else {
+            // if no name has been specified, add an error message
+            $this->addFieldError(RequestKeys::NAME, 'Please add a name!');
+        }
     }
 }

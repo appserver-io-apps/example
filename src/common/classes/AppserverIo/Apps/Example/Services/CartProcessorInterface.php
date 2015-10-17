@@ -17,7 +17,6 @@
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-
 namespace AppserverIo\Apps\Example\Services;
 
 /**
@@ -32,33 +31,50 @@ namespace AppserverIo\Apps\Example\Services;
 interface CartProcessorInterface
 {
 
-	/**
-	 * @return array
-	 * @throws \Exception
-	 */
-	public function getCartContents();
+    /**
+     * Returns a Collection or an array with the cart items.
+     *
+     * @return \Doctrine\Common\Collections\Collection|array The cart items
+     */
+    public function getCartContents();
 
-	/**
-	 * @param $sessionId
-	 */
-	public function initCart($sessionId);
+    /**
+     * Initializes the cart for the passed session-ID.
+     *
+     * @param string $sessionId The session-ID to initialize the cart with
+     *
+     * @return void
+     */
+    public function initCart($sessionId);
 
-	/**
-	 * @return Cart
-	 */
-	public function getCart();
+    /**
+     * Returns the cart instance.
+     *
+     * @return \AppserverIo\Apps\Example\Entities\Cart The cart instance
+     */
+    public function getCart();
 
-	/**
-	 * @param CartItem $cartItem
-	 * @return array
-	 * @throws \Exception
-	 */
-	public function addCartItem($cartItem);
+    /**
+     * Adds the passed cart item to the cart.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be added
+     * @return void
+     */
+    public function addCartItem($cartItem);
 
-	/**
-	 * @param CartItem $cartItem
-	 * @return array
-	 * @throws \Exception
-	 */
-	public function updateCartItem($cartItem);
+    /**
+     * Updates the passed cart item.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be updated
+     * @return void
+     */
+    public function updateCartItem($cartItem);
+
+    /**
+     * Removes the passed cart item from the cart.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be removed
+     * @return void
+     */
+    public function removeCartItem($cartItem);
 }

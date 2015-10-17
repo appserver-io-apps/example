@@ -128,7 +128,9 @@ class LoginAction extends BaseAction implements Validateable
     }
 
     /**
-     * (non-PHPdoc)
+     * The validation method that implements the action's validation method.
+     *
+     * @return void
      * @see \AppserverIo\Routlt\Util\Validateable::validate()
      */
     public function validate()

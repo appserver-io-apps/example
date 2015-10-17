@@ -46,8 +46,9 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     protected $cart;
 
     /**
+     * Returns the cart instance.
      *
-     * @return \AppserverIo\Apps\Example\Entities\Cart
+     * @return \AppserverIo\Apps\Example\Entities\Cart The cart instance
      */
     public function getCart()
     {
@@ -78,6 +79,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     }
 
     /**
+     * Returns a Collection or an array with the cart items.
      *
      * @return \Doctrine\Common\Collections\Collection|array The cart items
      */
@@ -133,10 +135,10 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     }
 
     /**
+     * Adds the passed cart item to the cart.
      *
-     * @param CartItem $cartItem
+     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be added
      * @return void
-     * @throws \Exception
      */
     public function addCartItem($cartItem)
     {
@@ -152,10 +154,10 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     }
 
     /**
+     * Removes the passed cart item from the cart.
      *
-     * @param CartItem $cartItem
+     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be removed
      * @return void
-     * @throws \Exception
      */
     public function removeCartItem($cartItem)
     {
@@ -175,10 +177,10 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     }
 
     /**
+     * Updates the passed cart item.
      *
-     * @param CartItem $cartItem
-     * @return array
-     * @throws \Exception
+     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be updated
+     * @return void
      */
     public function updateCartItem($cartItem)
     {

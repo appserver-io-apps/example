@@ -66,14 +66,21 @@ class ViewHelper
      */
     public static function singleton()
     {
+
+        // query whether we've an instance or not
         if (ViewHelper::$instance == null) {
+            // create the instance
             ViewHelper::$instance = new ViewHelper();
         }
+
+        // return the instance
         return ViewHelper::$instance;
     }
 
     /**
      * Returns base URL for the html base tag.
+     *
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest The request instance
      *
      * @return string The base URL
      */
@@ -163,8 +170,8 @@ class ViewHelper
     /**
      * Returns the session with the passed session name.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest  The request instance
-     * @param boolean                                                   $create TRUE if a session has to be created if we can't find any
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest The request instance
+     * @param boolean                                                   $create         TRUE if a session has to be created if we can't find any
      *
      * @return \AppserverIo\Psr\Servlet\Http\HttpSessionInterface|null The requested session instance
      */
@@ -176,7 +183,7 @@ class ViewHelper
     /**
      * Returns TRUE if a user has been logged in, else FALSE.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest The request instance
      *
      * @return boolean TRUE if a user has been logged into the sytem
      */
@@ -203,7 +210,7 @@ class ViewHelper
     /**
      * Returns the name of the user currently logged into the system.
      *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest The request instance
      *
      * @return string Name of the user logged into the system
      * @throws \AppserverIo\Apps\Example\Exceptions\LoginException Is thrown if we can't find a session or a user logged in

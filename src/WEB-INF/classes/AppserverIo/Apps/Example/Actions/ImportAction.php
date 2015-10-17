@@ -133,7 +133,6 @@ class ImportAction extends DispatchAction
 
         // check if a file has been selected
         if ($fileToUpload = $servletRequest->getPart(RequestKeys::FILE_TO_UPLOAD)) {
-
             // query whether the directory has to be watched or not
             if ($watchDirectory = $servletRequest->getParameter(RequestKeys::WATCH_DIRECTORY, FILTER_VALIDATE_BOOLEAN)) {
                 $watchDirectory = Boolean::valueOf(new String($watchDirectory));

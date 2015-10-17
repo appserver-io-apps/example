@@ -60,7 +60,6 @@ class LoginServlet extends HttpServlet
 
         // check if we've a user logged into the system
         if ($this->userProcessor->getUserViewDataOfLoggedIn() == null) {
-
             // start the session, because we need a session-ID for our stateful session bean
             $session = $this->getLoginSession($servletRequest, true);
             $session->start();
