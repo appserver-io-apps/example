@@ -25,15 +25,20 @@ use AppserverIo\Psr\Application\ApplicationInterface;
 /**
  * Abstract processor implementation that provides basic cache functionality.
  *
- * @author Tim Wagner <tw@appserver.io>
+ * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
- * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link https://github.com/appserver-io-apps/example
- * @link http://www.appserver.io
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  */
 abstract class AbstractCacheProcessor extends \Stackable
 {
 
+    /**
+     * The cache lifetime in seconds.
+     *
+     * @var integer
+     */
     private $CACHE_LIFETIME = 0;
 
     /**
@@ -62,6 +67,9 @@ abstract class AbstractCacheProcessor extends \Stackable
     }
 
     /**
+     * Initializes the session bean with the default cache lifetime.
+     *
+     * @return void
      * @PostConstruct
      */
     public function initialize()
@@ -70,39 +78,56 @@ abstract class AbstractCacheProcessor extends \Stackable
     }
 
     /**
+     * Returns the cache data for the passed key.
      *
-     * @param mixed $key
+     * @param mixed $key The key of the cache data to return
+     *
      * @return null|array The cached data
      */
     public function get($key)
     {
+
+        // create a local copy of the data and the lifetime
         $data = $this->data;
         $cacheLifetime = $this->CACHE_LIFETIME;
 
-        error_log(print_r($this->data, true));
-
+        // query whether we've a cached version of the requested data
         if (isset($data[$key])) {
+            // query whether the lifetime of the cached data has been expired or not
             if (($data[$key]['created'] + $cacheLifetime) < time()) {
                 unset($data[$key]);
                 $this->data = $data;
-                return NULL;
+                return null;
             }
+            // return the cached data
             return $data[$key]['data'];
         }
-        return NULL;
+
+        // return null if we've not cached any data
+        return null;
     }
 
     /**
+     * Add's the passed data to the cache.
      *
-     * @param mixed $key
-     * @param mixed $data
+     * @param mixed $key  The cache key
+     * @param mixed $data The data to cache
+     *
+     * @return void
      */
     public function set($key, $data)
     {
+
+        // create a local copy of the data
         $cacheData = $this->data;
+
+        // query whether we've already cached the data
         if (isset($cacheData[$key])) {
+            // remove the cached data
             unset($cacheData[$key]);
         }
+
+        // cache the passed data
         $cacheData[$key] = [];
         $cacheData[$key]['created'] = time();
         $cacheData[$key]['data'] = $data;

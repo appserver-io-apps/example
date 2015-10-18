@@ -38,7 +38,9 @@ class ProductImage extends AbstractEntity
 {
 
     /**
-     * @var int $id
+     * The unique ID of this entity.
+     *
+     * @var integer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(name="id", type="integer", nullable=false)
@@ -46,38 +48,50 @@ class ProductImage extends AbstractEntity
     protected $id;
 
     /**
-     * @var int $productId
+     * The product ID the product image is bound to.
+     *
+     * @var integer
      * @ORM\Column(name="product_id", type="integer", nullable=false)
      */
     protected $productId;
 
     /**
-     * @var string $title
+     * The product image title.
+     *
+     * @var string
      * @ORM\Column(name="title", type="string", nullable=false)
      */
     protected $title;
 
     /**
-     * @var string $filename
+     * The product image filename.
+     *
+     * @var string
      * @ORM\Column(name="filename", type="string", nullable=false)
      */
     protected $filename;
 
     /**
-     * OWNING SIDE
-     * @var Product $product
+     * The product this product image is bound to.
+     *
+     * @var \AppserverIo\Apps\Example\Entities\Product
      * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Product", inversedBy="images")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
 
+    /**
+     * Initializes the product image instance.
+     */
     public function __construct()
     {
         $this->updateCreatedUpdatedDate();
     }
 
     /**
-     * @return int
+     * Return's the unique cart item ID.
+     *
+     * @return integer The unique cart item ID
      */
     public function getId()
     {
@@ -85,7 +99,11 @@ class ProductImage extends AbstractEntity
     }
 
     /**
-     * @param int $id
+     * Set's the unique cart item ID.
+     *
+     * @param integer $id The unique cart item ID
+     *
+     * @return void
      */
     public function setId($id)
     {
@@ -93,7 +111,9 @@ class ProductImage extends AbstractEntity
     }
 
     /**
-     * @return int
+     * Return's the product ID the cart item is bound to.
+     *
+     * @return integer The product ID the cart item is bound to
      */
     public function getProductId()
     {
@@ -101,7 +121,11 @@ class ProductImage extends AbstractEntity
     }
 
     /**
-     * @param int $productId
+     * Set's the product ID the cart item is bound to.
+     *
+     * @param integer $productId The product ID the cart item is bound to
+     *
+     * @return void
      */
     public function setProductId($productId)
     {
@@ -109,7 +133,9 @@ class ProductImage extends AbstractEntity
     }
 
     /**
-     * @return string
+     * Returns the product image title.
+     *
+     * @return string The product image title
      */
     public function getTitle()
     {
@@ -117,7 +143,11 @@ class ProductImage extends AbstractEntity
     }
 
     /**
-     * @param string $title
+     * Set's the product image title.
+     *
+     * @param string $title The product image title
+     *
+     * @return void
      */
     public function setTitle($title)
     {
@@ -125,7 +155,9 @@ class ProductImage extends AbstractEntity
     }
 
     /**
-     * @return string
+     * Returns the product image filename.
+     *
+     * @return string The product image filename
      */
     public function getFilename()
     {
@@ -133,10 +165,36 @@ class ProductImage extends AbstractEntity
     }
 
     /**
-     * @param string $filename
+     * Set's the product image filename.
+     *
+     * @param string $filename The product image filename
+     *
+     * @return void
      */
     public function setFilename($filename)
     {
         $this->filename = $filename;
+    }
+
+    /**
+     * Return's the product this cart item is bound to.
+     *
+     * @return \AppserverIo\Apps\Example\Entities\Product The product the cart item is bound to
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set's the product this cart item is bound to.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\Product $product The product the cart item is bound to
+     *
+     * @return void
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
     }
 }
