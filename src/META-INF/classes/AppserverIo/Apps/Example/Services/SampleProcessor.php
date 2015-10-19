@@ -34,7 +34,7 @@ use AppserverIo\Apps\Example\Entities\Sample;
  *
  * @Stateless
  */
-class SampleProcessor extends AbstractProcessor implements SampleProcessorInterface
+class SampleProcessor extends AbstractPersistenceProcessor implements SampleProcessorInterface
 {
 
     /**
@@ -164,5 +164,20 @@ class SampleProcessor extends AbstractProcessor implements SampleProcessorInterf
         $entityManager = $this->getEntityManager();
         $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Sample');
         return $repository->findBy(array(), array(), $limit, $offset);
+    }
+
+    /**
+     * Returns an array with the entities with the IDs passed as filter.
+     *
+     * @param array $filter The filter
+     *
+     * @return array An array with entities matching the filter with the passed IDs
+     */
+    public function findByFilter(array $filter)
+    {
+        // load the entities with the IDs passed as filter
+        $entityManager = $this->getEntityManager();
+        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Sample');
+        return $repository->findBy(array('sampleId' => $filter));
     }
 }

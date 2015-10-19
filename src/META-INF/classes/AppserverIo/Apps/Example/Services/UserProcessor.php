@@ -35,7 +35,7 @@ use AppserverIo\Apps\Example\Exceptions\FoundInvalidUserException;
  *
  * @Stateful
  */
-class UserProcessor extends AbstractProcessor implements UserProcessorInterface
+class UserProcessor extends AbstractPersistenceProcessor implements UserProcessorInterface
 {
 
     /**

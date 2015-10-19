@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\UserProcessor
+ * AppserverIo\Apps\Example\Services\UserProcessorInterface
  *
  * NOTICE OF LICENSE
  *

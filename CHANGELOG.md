@@ -1,3 +1,13 @@
+# Version 2.0.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch to Rout.Lt 2
+
 # Version 1.2.1
 
 ## Bugfixes

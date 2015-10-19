@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Utils\ContextKeys
+ * AppserverIo\Apps\Example\Services\AbstractPersistenceProcessor
  *
  * NOTICE OF LICENSE
  *
@@ -18,10 +18,12 @@
  * @link      http://www.appserver.io
  */
 
-namespace AppserverIo\Apps\Example\Utils;
+namespace AppserverIo\Apps\Example\Services;
+
+use AppserverIo\Psr\Application\ApplicationInterface;
 
 /**
- * Context keys that are used to store data in a application context.
+ * Abstract processor implementation that provides a Doctrine ORM entity manager.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -29,34 +31,24 @@ namespace AppserverIo\Apps\Example\Utils;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-class ContextKeys
+abstract class AbstractPersistenceProcessor extends AbstractProcessor
 {
 
     /**
-     * Private to constructor to avoid instancing this class.
+     * The Doctrine EntityManager instance.
+     *
+     * @var \Doctrine\ORM\EntityManagerInterface
+     * @PersistenceUnit(unitName="ExampleEntityManager")
      */
-    private function __construct()
+    protected $entityManager;
+
+    /**
+     * Return's the initialized Doctrine entity manager.
+     *
+     * @return \Doctrine\ORM\EntityManagerInterface The initialized Doctrine entity manager
+     */
+    public function getEntityManager()
     {
+        return $this->entityManager;
     }
-
-    /**
-     * The key for a collection with error messages.
-     *
-     * @return string
-     */
-    const ERROR_MESSAGES = 'error.messages';
-
-    /**
-     * The key for a collection with entities.
-     *
-     * @return string
-     */
-    const OVERVIEW_DATA = 'overview.data';
-
-    /**
-     * The key for an entity.
-     *
-     * @return string
-     */
-    const VIEW_DATA = 'view.data';
 }

@@ -24,6 +24,12 @@
         
     </session-config>
 
+    <!--
+     | This section defines the servlets configured to handle all requests
+     | of your application. The configured servlets has to be mapped to the
+     | request URIs in the next section.
+    -->
+
     <servlet>
         <description>The hello world as servlet implementation.</description>
         <display-name>Hello World</display-name>
@@ -39,7 +45,13 @@
     </servlet>
 
     <servlet>
-    
+        <description>An example login implmentation.</description>
+        <display-name>The login servlet</display-name>
+        <servlet-name>login</servlet-name>
+        <servlet-class>\AppserverIo\Apps\Example\Servlets\LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <description>The routlt controller servlet implementation.</description>
         <display-name>Random runtime servlet</display-name>
         <servlet-name>randomRuntime</servlet-name>
@@ -47,18 +59,46 @@
     </servlet>
 
     <servlet>
-    
-        <description>The routlt controller servlet implementation.</description>
-        <display-name>The routlt controller servlet</display-name>
-        <servlet-name>routlt</servlet-name>
-        <servlet-class>\AppserverIo\Routlt\ControllerServlet</servlet-class>
-        
-        <init-param>
-            <param-name>configurationFile</param-name>
-            <param-value>WEB-INF/routes.json</param-value>
-        </init-param>
-        
+        <description>A servlet that handles DHTML files.</description>
+        <display-name>The DHTML servlet</display-name>
+        <servlet-name>dhtml</servlet-name>
+        <servlet-class>AppserverIo\Appserver\ServletEngine\Servlets\DhtmlServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <description>The Rout.Lt controller servlet implementation.</description>
+        <display-name>The Rout.Lt controller servlet</display-name>
+        <servlet-name>routlt</servlet-name>
+        <servlet-class>AppserverIo\Routlt\ControllerServlet</servlet-class>
+
+        <!--
+         | Namespace your actions are using.
+        -->
+
+        <init-param>
+            <param-name>action.namespace</param-name>
+            <param-value>/AppserverIo/Apps/Example/Actions</param-value>
+        </init-param>
+
+        <!--
+         | Optional path to a configuration file to store login credentials
+         | or custom stuff in.
+        -->
+
+        <!--
+        <init-param>
+            <param-name>routlt.configuration.file</param-name>
+            <param-value>WEB-INF/routlt.properties</param-value>
+        </init-param>
+        -->
+
+    </servlet>
+
+    <!--
+     | These are the servlet mappings that maps a request by the script
+     | file name part of the URI to the apropriate servlet. The mapping
+     | uses the PHP fnmatch() method that allows several wildcards.
+    -->
 
     <servlet-mapping>
         <servlet-name>helloWorld</servlet-name>
@@ -66,8 +106,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>webservice</servlet-name>
-        <url-pattern>/webservice.do</url-pattern>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/login.do</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -81,8 +121,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>randomRuntime</servlet-name>
-        <url-pattern>/randomRuntime.do*</url-pattern>
+        <servlet-name>dhtml</servlet-name>
+        <url-pattern>*.dhtml</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -96,7 +136,7 @@
     </servlet-mapping>
 
     <security>
-        <url-pattern>/index.do/basic/authentication*</url-pattern>
+        <url-pattern>/dhtml/basic.dhtml*</url-pattern>
         <auth>
             <auth-type>Basic</auth-type>
             <realm>test</realm>
@@ -108,7 +148,7 @@
     </security>
 
     <security>
-        <url-pattern>/index.do/digest/authentication*</url-pattern>
+        <url-pattern>/dhtml/digest.dhtml*</url-pattern>
         <auth>
             <auth-type>Digest</auth-type>
             <realm>Digest-Example-Realm</realm>

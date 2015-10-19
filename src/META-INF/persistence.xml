@@ -12,18 +12,17 @@
                 <directories>
                     <directory>/common/classes/AppserverIo/Apps/Example/Entities</directory>
                 </directories>
-                <!--
+
                 <params>
-                    <param name="isDevMode" type="boolean">false</param>
+                    <param name="isDevMode" type="boolean">true</param>
                     <param name="useSimpleAnnotationReader" type="boolean">false</param>
-                    <param name="proxyDir" type="string">false</param />
+                    <param name="proxyDir" type="string">false</param>
                 </params>
-                -->
+
             </metadataConfiguration>
 
             <datasource name="appserver.io-example-application"/>
-    
-            <!--
+
             <annotationRegistries>
                 <annotationRegistry namespace="JMS\Serializer\Annotation">
                     <directories>
@@ -31,8 +30,7 @@
                     </directories>
                 </annotationRegistry>
             </annotationRegistries>
-            -->
-            
+
         </persistenceUnit>
 
     </persistenceUnits>

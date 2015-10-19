@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<containers xmlns="http://www.appserver.io/appserver">
+    <container name="combined-appserver">
+        <servers>
+            <server name="http">
+                <virtualHosts>
+                    <virtualHost name="example.local www.example.local">
+                        <params>
+                            <param name="admin" type="string">info@appserver.io</param>
+                            <param name="documentRoot" type="string">webapps/example</param>
+                        </params>
+                        <rewrites>
+                            <rewrite condition="-d{OR}-f{OR}-l" target="" flag="L" />
+                        </rewrites>
+                        <accesses>
+                            <access type="allow">
+                                <params>
+                                    <param name="X_REQUEST_URI" type="string">^.*
+                                    </param>
+                                </params>
+                            </access>
+                        </accesses>
+                        <!-- An example how to modify response headers -->
+                        <!--
+                        <headers>
+                            <header type="response" name="Server" value="My Own Server" override="true"/>
+                            <header type="response" name="X-Powered-By" value="example.local"/>
+                        </headers>
+                        -->
+                        <!-- An example to activate a the auto index functionality on a custom directory -->
+                        <!--
+                        <locations>
+                            <location condition="^\/META-INF\/.*">
+                                <headers>
+                                    <header type="response" name="X-Powered-By" value="autoIndex" append="true"/>
+                                </headers>
+                                <params>
+                                    <param name="autoIndex" type="boolean">true</param>
+                                </params>
+                            </location>
+                        </locations>
+                        -->
+                    </virtualHost>
+                </virtualHosts>
+            </server>
+        </servers>
+    </container>
+</containers>

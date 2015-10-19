@@ -23,8 +23,7 @@ namespace AppserverIo\Apps\Example\Services;
 use AppserverIo\Psr\Application\ApplicationInterface;
 
 /**
- * A singleton session bean implementation that handles the
- * data by using Doctrine ORM.
+ * Abstract processor implementation that provides basic functionality.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -32,7 +31,7 @@ use AppserverIo\Psr\Application\ApplicationInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-class AbstractProcessor
+abstract class AbstractProcessor
 {
 
     /**

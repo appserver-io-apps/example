@@ -20,9 +20,9 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
+use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Entities\Sample;
-use AppserverIo\Apps\Example\Utils\ProxyKeys;
-use AppserverIo\Apps\Example\Utils\ContextKeys;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -39,16 +39,35 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
+ *
+ * @Path(name="/index")
+ *
+ * @Results({
+ *     @Result(name="input", result="/dhtml/index.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/index.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ * })
+ *
  */
-class IndexAction extends ExampleBaseAction
+class IndexAction extends DispatchAction
 {
 
     /**
-     * The relative path, up from the webapp path, to the template to use.
+     * The CartProcessor instance to handle the sample functionality.
      *
-     * @var string
+     * @var \AppserverIo\Apps\Example\Services\SampleProcessor
+     * @EnterpriseBean
      */
-    const INDEX_TEMPLATE = 'static/templates/index.phtml';
+    protected $sampleProcessor;
+
+    /**
+     * Returns the SampleProcessor instance to handle the sample funcionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getSampleProcessor()
+    {
+        return $this->sampleProcessor;
+    }
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
@@ -59,13 +78,15 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
+     *
+     * @Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        $overviewData = $this->getProxy(ProxyKeys::SAMPLE_PROCESSOR)->findAll();
-        $this->setAttribute(ContextKeys::OVERVIEW_DATA, $overviewData);
-        $servletResponse->appendBodyStream($this->processTemplate(IndexAction::INDEX_TEMPLATE, $servletRequest, $servletResponse));
+
+        // append the sample data to the request attributes
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
     }
 
     /**
@@ -75,10 +96,12 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
      *
      * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
+     *
+     * @Action(name="/load")
      */
     public function loadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -90,11 +113,11 @@ class IndexAction extends ExampleBaseAction
         }
 
         // load the entity to be edited and attach it to the servlet context
-        $viewData = $this->getProxy(ProxyKeys::SAMPLE_PROCESSOR)->load($sampleId);
-        $this->setAttribute(ContextKeys::VIEW_DATA, $viewData);
+        $viewData = $this->getSampleProcessor()->load($sampleId);
+        $servletRequest->setAttribute(RequestKeys::VIEW_DATA, $viewData);
 
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
+        // append the sample data to the request attributes
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
     }
 
     /**
@@ -104,10 +127,12 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
      *
      * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
+     *
+     * @Action(name="/delete")
      */
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -119,10 +144,10 @@ class IndexAction extends ExampleBaseAction
         }
 
         // delete the entity
-        $this->getProxy(ProxyKeys::SAMPLE_PROCESSOR)->delete($sampleId);
+        $this->getSampleProcessor()->delete($sampleId);
 
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
+        // append the sample data to the request attributes
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
     }
 
     /**
@@ -131,8 +156,10 @@ class IndexAction extends ExampleBaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return void
+     * @return string|null The action result
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
+     *
+     * @Action(name="/persist")
      */
     public function persistAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -146,38 +173,14 @@ class IndexAction extends ExampleBaseAction
             $entity = new Sample();
             $entity->setSampleId((integer) $sampleId);
             $entity->setName($name);
-            $this->getProxy(ProxyKeys::SAMPLE_PROCESSOR)->persist($entity);
+            $this->getSampleProcessor()->persist($entity);
+
+            // append the sample data to the request attributes
+            $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
 
         } else {
             // if no name has been specified, add an error message
-            $this->setAttribute(ContextKeys::ERROR_MESSAGES, array('Please add a name!'));
+            $this->addFieldError(RequestKeys::NAME, 'Please add a name!');
         }
-
-        // reload all entities and render the dialog
-        $this->indexAction($servletRequest, $servletResponse);
-    }
-
-    /**
-     * Creates and returns the URL to open the dialog to edit the passed entity.
-     *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to create the edit link for
-     *
-     * @return string The URL to open the edit dialog
-     */
-    public function getEditLink(Sample $entity)
-    {
-        return sprintf('index.do/index/load?%s=%d', RequestKeys::SAMPLE_ID, $entity->getSampleId());
-    }
-
-    /**
-     * Creates and returns the URL that has to be invoked to delete the passed entity.
-     *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to create the deletion link for
-     *
-     * @return string The URL with the deletion link
-     */
-    public function getDeleteLink(Sample $entity)
-    {
-        return sprintf('index.do/index/delete?%s=%d', RequestKeys::SAMPLE_ID, $entity->getSampleId());
     }
 }
