@@ -27,11 +27,11 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * Doctrine entity that represents a assertion.
  *
- * @author Tim Wagner <tw@appserver.io>
+ * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
- * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link https://github.com/appserver-io-apps/example
- * @link http://www.appserver.io
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  *
  * @ORM\Entity
  * @ORM\Table(name="product")
@@ -40,17 +40,38 @@ use JMS\Serializer\Annotation as JMS;
 class Product extends AbstractEntity
 {
 
+    /**
+     * Status of an active product.
+     *
+     * @var integer
+     */
     const STATUS_ACTIVE = 1;
 
+    /**
+     * Status of a processing product.
+     *
+     * @var integer
+     */
     const STATUS_PROCESSING = 2;
 
+    /**
+     * Status of an inactive product.
+     *
+     * @var integer
+     */
     const STATUS_INACTIVE = 0;
 
+    /**
+     * The array with the product status.
+     *
+     * @var array
+     */
     protected $statusArray = array();
 
     /**
+     * The unique ID of this entity.
      *
-     * @var int $id
+     * @var integer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(name="id", type="integer", nullable=false)
@@ -61,8 +82,9 @@ class Product extends AbstractEntity
     protected $id;
 
     /**
+     * The product status.
      *
-     * @var int $status
+     * @var integer
      * @ORM\Column(name="status", type="integer", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"search"})
@@ -71,8 +93,9 @@ class Product extends AbstractEntity
     protected $status = 0;
 
     /**
+     * The product name.
      *
-     * @var string $name
+     * @var string
      * @ORM\Column(name="name", type="string", nullable=false)
      * @JMS\Expose
      * @JMS\Groups({"search"})
@@ -81,8 +104,9 @@ class Product extends AbstractEntity
     protected $name;
 
     /**
+     * The product's URL key.
      *
-     * @var string $urlKey
+     * @var string
      * @ORM\Column(name="url_key", type="string", nullable=false, unique=true)
      * @JMS\Expose
      * @JMS\Groups({"search"})
@@ -91,8 +115,9 @@ class Product extends AbstractEntity
     protected $urlKey;
 
     /**
+     * The unique product number.
      *
-     * @var string $productNumber
+     * @var string
      * @ORM\Column(name="product_number", type="string", nullable=false, unique=true)
      * @JMS\Expose
      * @JMS\Groups({"search"})
@@ -101,25 +126,28 @@ class Product extends AbstractEntity
     protected $productNumber;
 
     /**
+     * The sales price of the product.
      *
-     * @var float $salesPrice
-     * @ORM\Column(name="sales_price", type="float", nullable=false)
+     * @var integer
+     * @ORM\Column(name="sales_price", type="integer", nullable=false)
      * @JMS\Expose
      * @JMS\Groups({"search"})
-     * @JMS\Type("double")
+     * @JMS\Type("integer")
      */
     protected $salesPrice;
 
     /**
+     * The stroke price of the product.
      *
-     * @var float $strokePrice
-     * @ORM\Column(name="stroke_price", type="float", nullable=true)
+     * @var integer
+     * @ORM\Column(name="stroke_price", type="integer", nullable=true)
      */
     protected $strokePrice;
 
     /**
+     * The product description.
      *
-     * @var string $description
+     * @var string
      * @ORM\Column(name="description", type="text", nullable=false)
      * @JMS\Expose
      * @JMS\Groups({"search"})
@@ -128,8 +156,9 @@ class Product extends AbstractEntity
     protected $description;
 
     /**
+     * The short product description.
      *
-     * @var string $shortDescription
+     * @var string
      * @ORM\Column(name="short_description", type="text", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"search"})
@@ -138,9 +167,10 @@ class Product extends AbstractEntity
     protected $shortDescription;
 
     /**
+     * The UNIX timestamp with the start date the product is rated as new.
      *
-     * @var \DateTime $newFrom
-     * @ORM\Column(name="new_from", type="date", nullable=true)
+     * @var integer $newFrom
+     * @ORM\Column(name="new_from", type="integer", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"search"})
      * @JMS\Type("DateTime")
@@ -148,9 +178,10 @@ class Product extends AbstractEntity
     protected $newFrom;
 
     /**
+     * The UNIX timestamp with the end date the product is rated as new.
      *
-     * @var \DateTime $newTo
-     * @ORM\Column(name="new_to", type="date", nullable=true)
+     * @var integer
+     * @ORM\Column(name="new_to", type="integer", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"search"})
      * @JMS\Type("DateTime")
@@ -158,26 +189,17 @@ class Product extends AbstractEntity
     protected $newTo;
 
     /**
+     * The ID of the parent product.
      *
-     * @var int $voting
-     * @ORM\Column(name="voting", type="integer", nullable=false)
-     * @JMS\Type("integer")
-     * @JMS\Expose
-     * @JMS\Groups({"search"})
-     */
-    protected $voting = 0;
-
-    /**
-     *
-     * @var integer $parentId
+     * @var integer
      * @ORM\Column(name="parent_id", type="integer", nullable=true)
      */
     protected $parentId;
 
     /**
-     * INVERSE SIDE
+     * The product's product images.
      *
-     * @var ArrayCollection $images
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\ProductImages> $images
      * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\ProductImage", mappedBy="product")
      * @JMS\Expose
      * @JMS\MaxDepth(2)
@@ -187,9 +209,9 @@ class Product extends AbstractEntity
     protected $images;
 
     /**
-     * INVERSE SIDE
+     * The product variants.
      *
-     * @var ArrayCollection $productVariants
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\ProductImages> $productVariants
      * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Product", mappedBy="parentProduct")
      * @JMS\Expose
      * @JMS\MaxDepth(2)
@@ -199,7 +221,7 @@ class Product extends AbstractEntity
     protected $productVariants;
 
     /**
-     * Owning SIDE
+     * The parent product.
      *
      * @var \AppserverIo\Apps\Example\Entities\Product $parentProduct
      * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Product", inversedBy="productVariants")
@@ -207,8 +229,13 @@ class Product extends AbstractEntity
      */
     protected $parentProduct;
 
+    /**
+     * Initialize the product instance.
+     */
     public function __construct()
     {
+
+        // update the creation and update date
         $this->updateCreatedUpdatedDate();
 
         // initialize the array with the status
@@ -218,14 +245,16 @@ class Product extends AbstractEntity
             self::STATUS_INACTIVE
         ];
 
+        // initialize the product's collections
         $this->variants = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->productVariants = new ArrayCollection();
     }
 
     /**
+     * Return's the unique product ID.
      *
-     * @return int
+     * @return integer The unique product ID
      */
     public function getId()
     {
@@ -233,8 +262,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the product status.
      *
-     * @return int
+     * @return integer The product status
      */
     public function getStatus()
     {
@@ -242,21 +272,29 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the product status.
      *
-     * @param int $status
+     * @param integer $status The product status
+     *
+     * @return void
+     * @throws \InvalidArgumentException Is thrown if the passed status is invalid
      */
     public function setStatus($status)
     {
-        if (! in_array($status, $this->statusArray)) {
+
+        // query whether the passed status is valid
+        if (!in_array($status, $this->statusArray)) {
             throw new \InvalidArgumentException("Invalid status");
         }
 
+        // set the status
         $this->status = $status;
     }
 
     /**
+     * Return's the product name.
      *
-     * @return string
+     * @return string The product name
      */
     public function getName()
     {
@@ -264,8 +302,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the product name.
      *
-     * @param string $name
+     * @param string $name The product name
+     *
+     * @return void
      */
     public function setName($name)
     {
@@ -273,8 +314,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the product's URL key.
      *
-     * @return string
+     * @return string The product's URL key
      */
     public function getUrlKey()
     {
@@ -282,8 +324,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the product's URL key.
      *
-     * @param string $urlKey
+     * @param string $urlKey The product's URL key
+     *
+     * @return void
      */
     public function setUrlKey($urlKey)
     {
@@ -291,8 +336,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the unique product number.
      *
-     * @return string
+     * @return string The unique product number
      */
     public function getProductNumber()
     {
@@ -300,8 +346,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the unique product number.
      *
-     * @param string $productNumber
+     * @param string $productNumber The unique product number
+     *
+     * @return void
      */
     public function setProductNumber($productNumber)
     {
@@ -309,8 +358,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the product's sales price.
      *
-     * @return float
+     * @return integer The product's sales price
      */
     public function getSalesPrice()
     {
@@ -318,8 +368,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the product's sales price.
      *
-     * @param float $salesPrice
+     * @param integer $salesPrice The product's sales price
+     *
+     * @return void
      */
     public function setSalesPrice($salesPrice)
     {
@@ -327,8 +380,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the product's stroke price.
      *
-     * @return float
+     * @return integer The product's stroke price
      */
     public function getStrokePrice()
     {
@@ -336,8 +390,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the product's stroke price.
      *
-     * @param float $strokePrice
+     * @param integer $strokePrice The product's stroke price
+     *
+     * @return void
      */
     public function setStrokePrice($strokePrice)
     {
@@ -345,8 +402,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the product description.
      *
-     * @return string
+     * @return string The product description
      */
     public function getDescription()
     {
@@ -354,8 +412,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the product description.
      *
-     * @param string $description
+     * @param string $description The product description
+     *
+     * @return void
      */
     public function setDescription($description)
     {
@@ -363,8 +424,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the product's short description.
      *
-     * @return string
+     * @return string The product's short description
      */
     public function getShortDescription()
     {
@@ -372,8 +434,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the product's short description.
      *
-     * @param string $shortDescription
+     * @param string $shortDescription The product's short description
+     *
+     * @return void
      */
     public function setShortDescription($shortDescription)
     {
@@ -381,8 +446,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the UNIX timestamp with the start date the product is rated as new.
      *
-     * @return \DateTime
+     * @return integer The UNIX timestamp with the start date
      */
     public function getNewFrom()
     {
@@ -390,8 +456,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the UNIX timestamp with the start date the product is rated as new.
      *
-     * @param \DateTime $newFrom
+     * @param integer $newFrom The UNIX timestamp with the start date
+     *
+     * @return void
      */
     public function setNewFrom($newFrom)
     {
@@ -399,8 +468,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the UNIX timestamp with the end date the product is rated as new.
      *
-     * @return \DateTime
+     * @return integer The UNIX timestamp with the end date
      */
     public function getNewTo()
     {
@@ -408,8 +478,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the UNIX timestamp with the end date the product is rated as new.
      *
-     * @param \DateTime $newTo
+     * @param integer $newTo The UNIX timestamp with the end date
+     *
+     * @return void
      */
     public function setNewTo($newTo)
     {
@@ -417,26 +490,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the product's variants.
      *
-     * @return int
-     */
-    public function getVoting()
-    {
-        return $this->voting;
-    }
-
-    /**
-     *
-     * @param int $voting
-     */
-    public function setVoting($voting)
-    {
-        $this->voting = $voting;
-    }
-
-    /**
-     *
-     * @return ArrayCollection<AppserverIo\Apps\Example\Entities\Product>
+     * @return \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Product> The product's variants
      */
     public function getVariants()
     {
@@ -444,8 +500,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Add's the passed product to the variants.
      *
-     * @param Product $product
+     * @param \AppserverIo\Apps\Example\Entities\Product $product The product to add to the variants
+     *
+     * @return void
      */
     public function addVariant($product)
     {
@@ -453,8 +512,9 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Return's the product images.
      *
-     * @return ArrayCollection
+     * @return \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\ProductImage> The product images
      */
     public function getImages()
     {
@@ -462,8 +522,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the product images.
      *
-     * @param ArrayCollection $images
+     * @param \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\ProductImage> $images The product images
+     *
+     * @return void
      */
     public function setImages($images)
     {
@@ -471,8 +534,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Add's the passed product image to the images.
      *
-     * @param ProductImage $image
+     * @param \AppserverIo\Apps\Example\Entities\ProductImage $image The product image to add
+     *
+     * @return void
      */
     public function addImage($image)
     {
@@ -480,8 +546,11 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Remove's the passed product image from the product.
      *
-     * @param ProductImage $image
+     * @param \AppserverIo\Apps\Example\Entities\ProductImage $image The product image to remove
+     *
+     * @return void
      */
     public function removeImage($image)
     {
@@ -489,8 +558,10 @@ class Product extends AbstractEntity
     }
 
     /**
+     * Set's the passed product as parent product.
      *
-     * @param Product $parentProduct
+     * @param \AppserverIo\Apps\Example\Entities\Product $parentProduct The parent product to set
+     *
      * @return void
      */
     public function setParentProduct($parentProduct)

@@ -25,11 +25,11 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * Doctrine entity that represents a cart item.
  *
- * @author Tim Wagner <tw@appserver.io>
+ * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
- * @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link https://github.com/appserver-io-apps/example
- * @link http://www.appserver.io
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      https://github.com/appserver-io-apps/example
+ * @link      http://www.appserver.io
  *
  * @ORM\Entity
  * @ORM\Table(name="cart_item")
@@ -39,8 +39,9 @@ class CartItem extends AbstractEntity
 {
 
     /**
+     * The unique ID of this entity.
      *
-     * @var int $id
+     * @var integer
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(name="id", type="integer", nullable=false)
@@ -50,8 +51,9 @@ class CartItem extends AbstractEntity
     protected $id;
 
     /**
+     * The ID of the cart the item is bound to.
      *
-     * @var int $cartId
+     * @var integer
      * @ORM\Column(name="cart_id", type="integer", nullable=false)
      * @JMS\Expose
      * @JMS\Type("integer")
@@ -59,26 +61,9 @@ class CartItem extends AbstractEntity
     protected $cartId;
 
     /**
+     * The product ID the cart item is bound to.
      *
-     * @var float $price
-     * @ORM\Column(name="price", type="float", nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("double")
-     */
-    protected $price;
-
-    /**
-     *
-     * @var int $quantity
-     * @ORM\Column(name="quantity", type="integer", nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("integer")
-     */
-    protected $quantity;
-
-    /**
-     *
-     * @var int $productId
+     * @var integer
      * @ORM\Column(name="product_id", type="integer", nullable=false)
      * @JMS\Expose
      * @JMS\Type("integer")
@@ -86,9 +71,30 @@ class CartItem extends AbstractEntity
     protected $productId;
 
     /**
-     * OWNING SIDE
+     * The price of the cart item.
      *
-     * @var \AppserverIo\Apps\Example\Entities @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Cart", inversedBy="cartItems")
+     * @var integer
+     * @ORM\Column(name="price", type="integer", nullable=false)
+     * @JMS\Expose
+     * @JMS\Type("integer")
+     */
+    protected $price;
+
+    /**
+     * The number of items added to the cart.
+     *
+     * @var integer
+     * @ORM\Column(name="quantity", type="integer", nullable=false)
+     * @JMS\Expose
+     * @JMS\Type("integer")
+     */
+    protected $quantity;
+
+    /**
+     * The cart this cart item is bound to.
+     *
+     * @var \AppserverIo\Apps\Example\Entities\Cart
+     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Cart", inversedBy="cartItems")
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
      * @JMS\Expose
      * @JMS\Type("AppserverIo\Apps\Example\Entities\Cart")
@@ -96,8 +102,9 @@ class CartItem extends AbstractEntity
     protected $cart;
 
     /**
+     * The product this cart item is bound to.
      *
-     * @var \AppserverIo\Apps\Example\Entities\Product $product
+     * @var \AppserverIo\Apps\Example\Entities\Product
      * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      * @JMS\Expose
@@ -105,23 +112,18 @@ class CartItem extends AbstractEntity
      */
     protected $product;
 
+    /**
+     * Initializes the cart item instance.
+     */
     public function __construct()
     {
         $this->updateCreatedUpdatedDate();
     }
 
     /**
+     * Return's the unique cart item ID.
      *
-     * @return int
-     */
-    public function setId($id)
-    {
-        return $this->id = $id;
-    }
-
-    /**
-     *
-     * @return int
+     * @return integer The unique cart item ID
      */
     public function getId()
     {
@@ -129,8 +131,21 @@ class CartItem extends AbstractEntity
     }
 
     /**
+     * Set's the unique cart item ID.
      *
-     * @return int
+     * @param integer $id The unique cart item ID
+     *
+     * @return void
+     */
+    public function setId($id)
+    {
+        return $this->id = $id;
+    }
+
+    /**
+     * Return's the ID of the cart the item is bound to.
+     *
+     * @return integer The cart ID the item is bound to
      */
     public function getCartId()
     {
@@ -138,8 +153,11 @@ class CartItem extends AbstractEntity
     }
 
     /**
+     * Set's the ID of the cart the item is bound to.
      *
-     * @param int $cartId
+     * @param integer $cartId The cart ID the item is bound to
+     *
+     * @return void
      */
     public function setCartId($cartId)
     {
@@ -147,44 +165,9 @@ class CartItem extends AbstractEntity
     }
 
     /**
+     * Return's the product ID the cart item is bound to.
      *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     *
-     * @param float $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    /**
-     *
-     * @return int
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     *
-     * @param int $quantity
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-    }
-
-    /**
-     *
-     * @return int
+     * @return integer The product ID the cart item is bound to
      */
     public function getProductId()
     {
@@ -192,8 +175,11 @@ class CartItem extends AbstractEntity
     }
 
     /**
+     * Set's the product ID the cart item is bound to.
      *
-     * @param int $productId
+     * @param integer $productId The product ID the cart item is bound to
+     *
+     * @return void
      */
     public function setProductId($productId)
     {
@@ -201,8 +187,53 @@ class CartItem extends AbstractEntity
     }
 
     /**
+     * Return's the price of the cart item.
      *
-     * @return Cart
+     * @return integer The cart item's price.
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set's the price of the cart item.
+     *
+     * @param integer $price The cart item's price
+     *
+     * @return void
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * Return's the number of items added to the cart.
+     *
+     * @return integer The number of items added to the cart
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set's the number of items added to the cart.
+     *
+     * @param integer $quantity The number of items added to the cart
+     *
+     * @return void
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * Return's the cart this cart item is bound to.
+     *
+     * @return \AppserverIo\Apps\Example\Entities\Cart The cart the cart item is bound to
      */
     public function getCart()
     {
@@ -210,8 +241,11 @@ class CartItem extends AbstractEntity
     }
 
     /**
+     * Set's the cart this cart item is bound to.
      *
-     * @param Cart $cart
+     * @param \AppserverIo\Apps\Example\Entities\Cart $cart The cart the cart item is bound to
+     *
+     * @return void
      */
     public function setCart($cart)
     {
@@ -219,8 +253,9 @@ class CartItem extends AbstractEntity
     }
 
     /**
+     * Return's the product this cart item is bound to.
      *
-     * @return \AppserverIo\Apps\Example\Entities\Product
+     * @return \AppserverIo\Apps\Example\Entities\Product The product the cart item is bound to
      */
     public function getProduct()
     {
@@ -228,8 +263,11 @@ class CartItem extends AbstractEntity
     }
 
     /**
+     * Set's the product this cart item is bound to.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Product $product
+     * @param \AppserverIo\Apps\Example\Entities\Product $product The product the cart item is bound to
+     *
+     * @return void
      */
     public function setProduct($product)
     {
