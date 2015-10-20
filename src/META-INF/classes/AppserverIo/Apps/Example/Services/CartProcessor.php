@@ -149,7 +149,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
         $cart = $this->cart;
 
         // try to load an existing cart item
-        $existingItem = $this->loadExistingItem($cartItem);
+        $existingItem = $this->loadExistingCartItem($cartItem);
 
         // query whether we found an existing item or not
         if (empty($existingItem) === false) {
@@ -269,7 +269,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
      *
      * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item containing the product ID of the cart item to return
      *
-     * @return \AppserverIo\Apps\Example\Entities\CartItem The requested cart item
+     * @return \AppserverIo\Apps\Example\Entities\CartItem|null The requested cart item or null
      */
     private function loadExistingCartItem($cartItem)
     {
