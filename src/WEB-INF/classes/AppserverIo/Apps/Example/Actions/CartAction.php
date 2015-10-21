@@ -116,9 +116,6 @@ class CartAction extends DispatchAction
         // start the session
         ViewHelper::singleton()->getLoginSession($servletRequest, true)->start();
 
-        // initialize the cart for this session-ID
-        $this->getCartProcessor()->initCart(ViewHelper::singleton()->getLoginSession($servletRequest)->getId());
-
         // create a new cart item from the passed product-ID
         $cartItem = new CartItem();
         $cartItem->setQuantity(1);
