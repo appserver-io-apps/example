@@ -39,15 +39,6 @@ interface CartProcessorInterface
     public function getCartContents();
 
     /**
-     * Initializes the cart for the passed session-ID.
-     *
-     * @param string $sessionId The session-ID to initialize the cart with
-     *
-     * @return void
-     */
-    public function initCart($sessionId);
-
-    /**
      * Returns the cart instance.
      *
      * @return \AppserverIo\Apps\Example\Entities\Cart The cart instance

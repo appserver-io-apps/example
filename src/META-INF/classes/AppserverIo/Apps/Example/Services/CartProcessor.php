@@ -59,22 +59,14 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
      * Dummy implementation for demonstration purposes.
      *
      * @return void
-     * @PostDetach
+     * @PostConstruct
      */
-    public function postDetach()
+    public function postConstruct()
     {
-        try {
-            // ATTENTION: This is necessary to let Doctrine manage the entity.
-            //            When not merged, proxy classes are returned to the
-            //            view and no autoloader is aware how to resolve the
-            //            class definitions!!
-            $this->cart = $this->getEntityManager()->merge($this->cart);
 
-            // call the parent method
-            parent::postDetach();
-
-        } catch (\Exception $e) {
-            // @TODO Still to implement
+        // create a new cart if not available
+        if ($this->cart == null) {
+            $this->cart = new Cart();
         }
     }
 
@@ -99,44 +91,6 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     }
 
     /**
-     * Initializes the cart for the passed session-ID.
-     *
-     * @param string $sessionId The session-ID to initialize the cart with
-     *
-     * @return void
-     */
-    public function initCart($sessionId)
-    {
-
-        // ceck if the cart is initialized and contains items => probably this method is called wrong
-        if ($this->cart instanceof Cart && $this->cart->getCartItems()->count() > 0) {
-            return;
-        }
-
-        // try to load the session from the DB => AppServer has crashed or restarted
-        $entityManager = $this->getEntityManager();
-
-        /** @var \Doctrine\ORM\EntityRepository $cartRepository */
-        $cartRepository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Cart');
-        $storedCart = $cartRepository->findOneBySessionId($sessionId);
-
-        if ($storedCart instanceof Cart) {
-            $this->cart = $storedCart;
-        } else {
-            // create a new cart
-            $cart = new Cart();
-            $cart->setSessionId($sessionId);
-
-            // persist the cart
-            $entityManager->persist($cart);
-            $entityManager->flush();
-
-            // set the created cart
-            $this->cart = $cart;
-        }
-    }
-
-    /**
      * Adds the passed cart item to the cart.
      *
      * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be added
@@ -144,9 +98,6 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
      */
     public function addCartItem($cartItem)
     {
-
-        // create a local copy of the cart
-        $cart = $this->cart;
 
         // try to load an existing cart item
         $existingItem = $this->loadExistingCartItem($cartItem);
@@ -157,13 +108,6 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
         } else {
             $this->createNewCartItem($cartItem);
         }
-
-        // save the cart
-        $this->getEntityManager()->persist($cart);
-        $this->getEntityManager()->flush();
-
-        // set the cart back to the member
-        $this->cart = $cart;
     }
 
     /**
@@ -182,10 +126,6 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
         // load and remove the cart item
         $existingItem = $this->loadExistingCartItem($cartItem);
         $cart->removeCartItem($existingItem);
-
-        // save the cart
-        $this->getEntityManager()->persist($cart);
-        $this->getEntityManager()->flush();
 
         // set the cart back to the member
         $this->cart = $cart;
@@ -213,10 +153,6 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
             throw new BadRequestException('Item does not exist', 404);
         }
 
-        // save the cart
-        $this->getEntityManager()->persist($cart);
-        $this->getEntityManager()->flush();
-
         // set the cart back to the member
         $this->cart = $cart;
     }
@@ -233,7 +169,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     {
 
         // load the product
-        /** @var Product $product */
+        /** @var \AppserverIo\Apps\Example\Entities\Product $product */
         $product = $this->entityManager->find('AppserverIo\Apps\Example\Entities\Product', $cartItem->getProductId());
 
         // query whether the product is available or not
@@ -260,7 +196,8 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
      */
     private function updateExistingCartItem($existingItem, $cartItem)
     {
-        /** @var CartItem $existingItem  */
+        // update the quantity of the new cart item
+        /** @var \AppserverIo\Apps\Example\Entities\CartItem $existingItem  */
         $existingItem->setQuantity($existingItem->getQuantity() + $cartItem->getQuantity());
     }
 
@@ -273,6 +210,8 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
      */
     private function loadExistingCartItem($cartItem)
     {
+        // compare the cart item product ID's to find an existing one
+        /** @var \AppserverIo\Apps\Example\Entities\CartItem $existingItem  */
         foreach ($this->cart->getCartItems() as $storedCartItem) {
             if ($storedCartItem->getProductId() == $cartItem->getProductId()) {
                 return $storedCartItem;
