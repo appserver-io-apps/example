@@ -73,7 +73,8 @@ class Cart extends AbstractEntity
     /**
      * The cart items the cart contain's.
      *
-     * @var ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem> @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\CartItem", mappedBy="cart", cascade={"detach", "persist", "remove"})
+     * @var ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem>
+     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\CartItem", mappedBy="cart", cascade={"detach", "persist", "remove"})
      * @JMS\Expose
      * @JMS\Type("ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem>")
      * @JMS\Accessor(setter="setCartItems")
