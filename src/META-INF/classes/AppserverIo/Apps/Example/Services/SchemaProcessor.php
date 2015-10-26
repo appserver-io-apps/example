@@ -154,7 +154,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             $entityManager = $this->getEntityManager();
 
             // create the default credentials
-            foreach ($this->users  as $username => $password) {
+            foreach ($this->users as $username => $password) {
                 // set user data and save it
                 $user = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\User');
                 $user->setEmail(sprintf('%s@appserver.io', $username));
