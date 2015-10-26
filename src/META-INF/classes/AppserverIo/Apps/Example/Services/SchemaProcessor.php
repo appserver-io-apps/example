@@ -47,6 +47,24 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     protected $providerInterface;
 
     /**
+     * A list with default credentials for login testing.
+     *
+     * @var array
+     */
+    protected $users = array(
+        'appserver'    => 'appserver.i0',
+        'appserver_01' => 'appserver.i0',
+        'appserver_02' => 'appserver.i0',
+        'appserver_03' => 'appserver.i0',
+        'appserver_04' => 'appserver.i0',
+        'appserver_05' => 'appserver.i0',
+        'appserver_06' => 'appserver.i0',
+        'appserver_07' => 'appserver.i0',
+        'appserver_08' => 'appserver.i0',
+        'appserver_09' => 'appserver.i0'
+    );
+
+    /**
      * The default username.
      *
      * @var string
@@ -124,7 +142,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     }
 
     /**
-     * Creates the default credentials to login.
+     * Creates some default credentials to login.
      *
      * @return void
      */
@@ -135,20 +153,23 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             // load the entity manager
             $entityManager = $this->getEntityManager();
 
-            // set user data and save it
-            $user = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\User');
-            $user->setEmail('info@appserver.io');
-            $user->setUsername(SchemaProcessor::DEFAULT_USERNAME);
-            $user->setUserLocale('en_US');
-            $user->setPassword(md5('appserver.i0'));
-            $user->setEnabled(true);
-            $user->setRate(1000);
-            $user->setContractedHours(160);
-            $user->setLdapSynced(false);
-            $user->setSyncedAt(time());
+            // create the default credentials
+            foreach ($this->users  as $username => $password) {
+                // set user data and save it
+                $user = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\User');
+                $user->setEmail(sprintf('%s@appserver.io', $username));
+                $user->setUsername($username);
+                $user->setUserLocale('en_US');
+                $user->setPassword(md5($password));
+                $user->setEnabled(true);
+                $user->setRate(1000);
+                $user->setContractedHours(160);
+                $user->setLdapSynced(false);
+                $user->setSyncedAt(time());
 
-            // persist the user
-            $entityManager->persist($user);
+                // persist the user
+                $entityManager->persist($user);
+            }
 
             // flush the entity manager
             $entityManager->flush();
