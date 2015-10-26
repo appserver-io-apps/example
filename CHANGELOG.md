@@ -1,3 +1,33 @@
+# Version 2.0.3
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add more default credentials and query username after successfull login in JMeter tests
+
+# Version 2.0.2
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Fixed cart functionality
+
+# Version 2.0.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Fixed invalid add to cart functionality
+
 # Version 2.0.0
 
 ## Bugfixes
