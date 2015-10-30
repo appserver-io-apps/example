@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\CartItem
+ * AppserverIo\Apps\Example\Entities\Impl\CartItem
  *
  * NOTICE OF LICENSE
  *
@@ -17,10 +17,11 @@
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-namespace AppserverIo\Apps\Example\Entities;
+namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use AppserverIo\Apps\Example\Entities\AbstractEntity;
 
 /**
  * Doctrine entity that represents a cart item.
@@ -93,22 +94,22 @@ class CartItem extends AbstractEntity
     /**
      * The cart this cart item is bound to.
      *
-     * @var \AppserverIo\Apps\Example\Entities\Cart
-     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Cart", inversedBy="cartItems")
+     * @var \AppserverIo\Apps\Example\Entities\Impl\Cart
+     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Cart", inversedBy="cartItems")
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
      * @JMS\Expose
-     * @JMS\Type("AppserverIo\Apps\Example\Entities\Cart")
+     * @JMS\Type("AppserverIo\Apps\Example\Entities\Impl\Cart")
      */
     protected $cart;
 
     /**
      * The product this cart item is bound to.
      *
-     * @var \AppserverIo\Apps\Example\Entities\Product
-     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Product")
+     * @var \AppserverIo\Apps\Example\Entities\Impl\Product
+     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      * @JMS\Expose
-     * @JMS\Type("AppserverIo\Apps\Example\Entities\Product")
+     * @JMS\Type("AppserverIo\Apps\Example\Entities\Impl\Product")
      */
     protected $product;
 
@@ -233,7 +234,7 @@ class CartItem extends AbstractEntity
     /**
      * Return's the cart this cart item is bound to.
      *
-     * @return \AppserverIo\Apps\Example\Entities\Cart The cart the cart item is bound to
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Cart The cart the cart item is bound to
      */
     public function getCart()
     {
@@ -243,7 +244,7 @@ class CartItem extends AbstractEntity
     /**
      * Set's the cart this cart item is bound to.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Cart $cart The cart the cart item is bound to
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Cart $cart The cart the cart item is bound to
      *
      * @return void
      */
@@ -255,7 +256,7 @@ class CartItem extends AbstractEntity
     /**
      * Return's the product this cart item is bound to.
      *
-     * @return \AppserverIo\Apps\Example\Entities\Product The product the cart item is bound to
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Product The product the cart item is bound to
      */
     public function getProduct()
     {
@@ -265,7 +266,7 @@ class CartItem extends AbstractEntity
     /**
      * Set's the product this cart item is bound to.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Product $product The product the cart item is bound to
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Product $product The product the cart item is bound to
      *
      * @return void
      */

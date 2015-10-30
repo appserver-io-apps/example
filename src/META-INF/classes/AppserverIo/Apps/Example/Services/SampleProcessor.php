@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Apps\Example\Entities\Sample;
+use AppserverIo\Apps\Example\Entities\Impl\Sample;
 
 /**
  * A singleton session bean implementation that handles the
@@ -104,15 +104,15 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
     public function load($id)
     {
         $entityManager = $this->getEntityManager();
-        return $entityManager->find('AppserverIo\Apps\Example\Entities\Sample', $id);
+        return $entityManager->find('AppserverIo\Apps\Example\Entities\Impl\Sample', $id);
     }
 
     /**
      * Persists the passed entity.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to persist
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Sample $entity The entity to persist
      *
-     * @return \AppserverIo\Apps\Example\Entities\Sample The persisted entity
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Sample The persisted entity
      */
     public function persist(Sample $entity)
     {
@@ -151,6 +151,23 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
     }
 
     /**
+     * Deletes all entities from the database.
+     *
+     * @return array An empty array
+     */
+    public function deleteAll()
+    {
+
+        // deletes all samples from the table
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('DELETE FROM AppserverIo\Apps\Example\Entities\Impl\Sample s WHERE s.sampleId > 0');
+        $query->execute();
+
+        // load and return all data
+        return $this->findAll();
+    }
+
+    /**
      * Returns an array with all existing entities.
      *
      * @param integer $limit  The maxium number of rows to return
@@ -162,7 +179,7 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
     {
         // load all entities
         $entityManager = $this->getEntityManager();
-        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Sample');
+        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Impl\Sample');
         return $repository->findBy(array(), array(), $limit, $offset);
     }
 
@@ -177,7 +194,7 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
     {
         // load the entities with the IDs passed as filter
         $entityManager = $this->getEntityManager();
-        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Sample');
+        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Impl\Sample');
         return $repository->findBy(array('sampleId' => $filter));
     }
 }

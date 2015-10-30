@@ -10,7 +10,7 @@
             
             <metadataConfiguration type="annotation">
                 <directories>
-                    <directory>/common/classes/AppserverIo/Apps/Example/Entities</directory>
+                    <directory>/common/classes/AppserverIo/Apps/Example/Entities/Impl</directory>
                 </directories>
 
                 <params>

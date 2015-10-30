@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\ProductImage
+ * AppserverIo\Apps\Example\Entities\Impl\ProductImage
  *
  * NOTICE OF LICENSE
  *
@@ -18,9 +18,10 @@
  * @link      http://www.appserver.io
  */
 
-namespace AppserverIo\Apps\Example\Entities;
+namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppserverIo\Apps\Example\Entities\AbstractEntity;
 
 /**
  * Doctrine entity that represents a assertion.
@@ -74,8 +75,8 @@ class ProductImage extends AbstractEntity
     /**
      * The product this product image is bound to.
      *
-     * @var \AppserverIo\Apps\Example\Entities\Product
-     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Product", inversedBy="images")
+     * @var \AppserverIo\Apps\Example\Entities\Impl\Product
+     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Product", inversedBy="images")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
@@ -179,7 +180,7 @@ class ProductImage extends AbstractEntity
     /**
      * Return's the product this cart item is bound to.
      *
-     * @return \AppserverIo\Apps\Example\Entities\Product The product the cart item is bound to
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Product The product the cart item is bound to
      */
     public function getProduct()
     {
@@ -189,7 +190,7 @@ class ProductImage extends AbstractEntity
     /**
      * Set's the product this cart item is bound to.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Product $product The product the cart item is bound to
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Product $product The product the cart item is bound to
      *
      * @return void
      */

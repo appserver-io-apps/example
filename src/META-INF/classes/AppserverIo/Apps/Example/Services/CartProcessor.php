@@ -19,9 +19,9 @@
  */
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Apps\Example\Entities\Cart;
-use AppserverIo\Apps\Example\Entities\Product;
-use AppserverIo\Apps\Example\Entities\CartItem;
+use AppserverIo\Apps\Example\Entities\Impl\Cart;
+use AppserverIo\Apps\Example\Entities\Impl\Product;
+use AppserverIo\Apps\Example\Entities\Impl\CartItem;
 
 /**
  * A stateful session bean implementation providing shopping cart functionality
@@ -41,14 +41,14 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     /**
      * The cart instance.
      *
-     * @var \AppserverIo\Apps\Example\Entities\Cart
+     * @var \AppserverIo\Apps\Example\Entities\Impl\Cart
      */
     protected $cart;
 
     /**
      * Returns the cart instance.
      *
-     * @return \AppserverIo\Apps\Example\Entities\Cart The cart instance
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Cart The cart instance
      */
     public function getCart()
     {
@@ -93,7 +93,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     /**
      * Adds the passed cart item to the cart.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be added
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item that has to be added
      * @return void
      */
     public function addCartItem($cartItem)
@@ -113,7 +113,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     /**
      * Removes the passed cart item from the cart.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be removed
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item that has to be removed
      *
      * @return void
      */
@@ -134,7 +134,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     /**
      * Updates the passed cart item.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be updated
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item that has to be updated
      * @return void
      */
     public function updateCartItem($cartItem)
@@ -160,7 +160,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     /**
      * Creates a new cart item.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item with the data
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item with the data
      *
      * @return void
      * @throws \Exception Is thrown if the product, the cart item is bound to, doesn't exists
@@ -169,8 +169,8 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     {
 
         // load the product
-        /** @var \AppserverIo\Apps\Example\Entities\Product $product */
-        $product = $this->entityManager->find('AppserverIo\Apps\Example\Entities\Product', $cartItem->getProductId());
+        /** @var \AppserverIo\Apps\Example\Entities\Impl\Product $product */
+        $product = $this->entityManager->find('AppserverIo\Apps\Example\Entities\Impl\Product', $cartItem->getProductId());
 
         // query whether the product is available or not
         if (empty($product)) {
@@ -189,29 +189,29 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
     /**
      * Update's an existing cart item with the data of the passed cart item.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $existingItem The existing cart item
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem     The cart item with the data to update
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $existingItem The existing cart item
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem     The cart item with the data to update
      *
      * @return void
      */
     private function updateExistingCartItem($existingItem, $cartItem)
     {
         // update the quantity of the new cart item
-        /** @var \AppserverIo\Apps\Example\Entities\CartItem $existingItem  */
+        /** @var \AppserverIo\Apps\Example\Entities\Impl\CartItem $existingItem  */
         $existingItem->setQuantity($existingItem->getQuantity() + $cartItem->getQuantity());
     }
 
     /**
      * Loads and returns the cart item with the product ID of the passed cart item.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item containing the product ID of the cart item to return
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item containing the product ID of the cart item to return
      *
-     * @return \AppserverIo\Apps\Example\Entities\CartItem|null The requested cart item or null
+     * @return \AppserverIo\Apps\Example\Entities\Impl\CartItem|null The requested cart item or null
      */
     private function loadExistingCartItem($cartItem)
     {
         // compare the cart item product ID's to find an existing one
-        /** @var \AppserverIo\Apps\Example\Entities\CartItem $existingItem  */
+        /** @var \AppserverIo\Apps\Example\Entities\Impl\CartItem $existingItem  */
         foreach ($this->cart->getCartItems() as $storedCartItem) {
             if ($storedCartItem->getProductId() == $cartItem->getProductId()) {
                 return $storedCartItem;

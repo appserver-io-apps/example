@@ -1,3 +1,13 @@
+# Version 2.0.4
+
+## Bugfixes
+
+* Refactoring Entity folder structure to have AbstractEntity in a separater folder to avoid fatal error in Doctrine class loading
+
+## Features
+
+* Add JMeter testsuite for testing session persistence
+
 # Version 2.0.3
 
 ## Bugfixes

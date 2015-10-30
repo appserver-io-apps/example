@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Product
+ * AppserverIo\Apps\Example\Entities\Impl\Product
  *
  * NOTICE OF LICENSE
  *
@@ -17,12 +17,13 @@
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-namespace AppserverIo\Apps\Example\Entities;
+namespace AppserverIo\Apps\Example\Entities\Impl;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Search\Mapping\Annotations as MAP;
 use JMS\Serializer\Annotation as JMS;
+use Doctrine\Search\Mapping\Annotations as MAP;
+use Doctrine\Common\Collections\ArrayCollection;
+use AppserverIo\Apps\Example\Entities\AbstractEntity;
 
 /**
  * Doctrine entity that represents a assertion.
@@ -199,32 +200,32 @@ class Product extends AbstractEntity
     /**
      * The product's product images.
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\ProductImages> $images
-     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\ProductImage", mappedBy="product")
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\ProductImages> $images
+     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\ProductImage", mappedBy="product")
      * @JMS\Expose
      * @JMS\MaxDepth(2)
      * @JMS\Groups({"search"})
-     * @JMS\Type("ArrayCollection<AppserverIo\Apps\Example\Entities\ProductImage>")
+     * @JMS\Type("ArrayCollection<AppserverIo\Apps\Example\Entities\Impl\ProductImage>")
      */
     protected $images;
 
     /**
      * The product variants.
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\ProductImages> $productVariants
-     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Product", mappedBy="parentProduct")
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\ProductImages> $productVariants
+     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Product", mappedBy="parentProduct")
      * @JMS\Expose
      * @JMS\MaxDepth(2)
      * @JMS\Groups({"search"})
-     * @JMS\Type("ArrayCollection<AppserverIo\Apps\Example\Entities\Product>")
+     * @JMS\Type("ArrayCollection<AppserverIo\Apps\Example\Entities\Impl\Product>")
      */
     protected $productVariants;
 
     /**
      * The parent product.
      *
-     * @var \AppserverIo\Apps\Example\Entities\Product $parentProduct
-     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Product", inversedBy="productVariants")
+     * @var \AppserverIo\Apps\Example\Entities\Impl\Product $parentProduct
+     * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Product", inversedBy="productVariants")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected $parentProduct;
@@ -492,7 +493,7 @@ class Product extends AbstractEntity
     /**
      * Return's the product's variants.
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Product> The product's variants
+     * @return \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\Product> The product's variants
      */
     public function getVariants()
     {
@@ -502,7 +503,7 @@ class Product extends AbstractEntity
     /**
      * Add's the passed product to the variants.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Product $product The product to add to the variants
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Product $product The product to add to the variants
      *
      * @return void
      */
@@ -514,7 +515,7 @@ class Product extends AbstractEntity
     /**
      * Return's the product images.
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\ProductImage> The product images
+     * @return \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\ProductImage> The product images
      */
     public function getImages()
     {
@@ -524,7 +525,7 @@ class Product extends AbstractEntity
     /**
      * Set's the product images.
      *
-     * @param \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\ProductImage> $images The product images
+     * @param \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\ProductImage> $images The product images
      *
      * @return void
      */
@@ -536,7 +537,7 @@ class Product extends AbstractEntity
     /**
      * Add's the passed product image to the images.
      *
-     * @param \AppserverIo\Apps\Example\Entities\ProductImage $image The product image to add
+     * @param \AppserverIo\Apps\Example\Entities\Impl\ProductImage $image The product image to add
      *
      * @return void
      */
@@ -548,7 +549,7 @@ class Product extends AbstractEntity
     /**
      * Remove's the passed product image from the product.
      *
-     * @param \AppserverIo\Apps\Example\Entities\ProductImage $image The product image to remove
+     * @param \AppserverIo\Apps\Example\Entities\Impl\ProductImage $image The product image to remove
      *
      * @return void
      */
@@ -560,7 +561,7 @@ class Product extends AbstractEntity
     /**
      * Set's the passed product as parent product.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Product $parentProduct The parent product to set
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Product $parentProduct The parent product to set
      *
      * @return void
      */

@@ -48,7 +48,7 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
     /**
      * The user, logged into the system.
      *
-     * @var \AppserverIo\Apps\Example\Entities\User $user
+     * @var \AppserverIo\Apps\Example\Entities\Impl\User $user
      */
     protected $user;
 
@@ -74,7 +74,7 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
 
         // load the entity manager and the user repository
         $entityManager = $this->getEntityManager();
-        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\User');
+        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Impl\User');
 
         // try to load the user
         $user = $repository->findOneBy(array('username' => $username));
@@ -94,7 +94,7 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
     /**
      * Returns the user actually logged into the system.
      *
-     * @return \AppserverIo\Apps\Example\Entities\User|null The user instance
+     * @return \AppserverIo\Apps\Example\Entities\Impl\User|null The user instance
      */
     public function getUserViewDataOfLoggedIn()
     {
@@ -109,7 +109,7 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
      *
      * @param string $username The username of the user to return the data for
      *
-     * @return \AppserverIo\Apps\Example\Entities\User The user logged into the system
+     * @return \AppserverIo\Apps\Example\Entities\Impl\User The user logged into the system
      * @throws \AppserverIo\Apps\Example\Exceptions\FoundInvalidUserException Is thrown if no user has been logged into the system or the username doesn't match
      * @see \AppserverIo\Apps\Example\Services\UserProcessor::login()
      */
@@ -125,7 +125,7 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
         if ($this->user == null) {
             // load the entity manager and the user repository
             $entityManager = $this->getEntityManager();
-            $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\User');
+            $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Impl\User');
 
             // reload the user from the repository
             $this->user = $repository->findOneBy(array('username' => $username));
