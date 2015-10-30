@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Apps\Example\Entities\Sample;
+use AppserverIo\Apps\Example\Entities\Impl\Sample;
 
 /**
  * A singleton session bean implementation that handles the
@@ -61,6 +61,13 @@ interface SampleProcessorInterface
      * @return array An array with all existing entities
      */
     public function delete($id);
+
+    /**
+     * Deletes all entities from the database.
+     *
+     * @return array An empty array
+     */
+    public function deleteAll();
 
     /**
      * Returns an array with all existing entities.

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Rule
+ * AppserverIo\Apps\Example\Entities\Impl\Rule
  *
  * NOTICE OF LICENSE
  *
@@ -18,9 +18,10 @@
  * @link      http://www.appserver.io
  */
 
-namespace AppserverIo\Apps\Example\Entities;
+namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppserverIo\Apps\Example\Entities\AbstractEntity;
 
 /**
  * Doctrine entity that represents a rule.

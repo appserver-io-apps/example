@@ -21,8 +21,8 @@
 namespace AppserverIo\Apps\Example\MessageBeans;
 
 use AppserverIo\Psr\Pms\MessageInterface;
-use AppserverIo\Apps\Example\Entities\Sample;
 use AppserverIo\Psr\Naming\InitialContext;
+use AppserverIo\Apps\Example\Entities\Impl\Impl\Sample;
 use AppserverIo\Messaging\AbstractMessageListener;
 
 /**

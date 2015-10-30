@@ -22,7 +22,7 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Entities\Sample;
+use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -182,5 +182,23 @@ class IndexAction extends DispatchAction
             // if no name has been specified, add an error message
             $this->addFieldError(RequestKeys::NAME, 'Please add a name!');
         }
+    }
+
+    /**
+     * Deletes all samples from the database.
+     *
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
+     *
+     * @return string|null The action result
+     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
+     *
+     * @Action(name="/deleteAll")
+     */
+    public function deleteAllAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
+    {
+
+        // remove all samples from the database and append an empty array to the request attributes
+        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->deleteAll());
     }
 }

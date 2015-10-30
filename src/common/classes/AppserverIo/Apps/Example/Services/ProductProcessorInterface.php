@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Apps\Example\Entities\Product;
+use AppserverIo\Apps\Example\Entities\Impl\Product;
 
 /**
  * A singleton session bean implementation that handles the
@@ -47,9 +47,9 @@ interface ProductProcessorInterface
     /**
      * Persists the passed entity.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Product $entity The entity to persist
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Product $entity The entity to persist
      *
-     * @return \AppserverIo\Apps\Example\Entities\Product The persisted entity
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Product The persisted entity
      */
     public function persist(Product $entity);
 

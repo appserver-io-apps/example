@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Cart
+ * AppserverIo\Apps\Example\Entities\Impl\Cart
  *
  * NOTICE OF LICENSE
  *
@@ -17,11 +17,12 @@
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-namespace AppserverIo\Apps\Example\Entities;
+namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppserverIo\Apps\Example\Entities\AbstractEntity;
 
 /**
  * Doctrine entity that represents a cart.
@@ -73,10 +74,10 @@ class Cart extends AbstractEntity
     /**
      * The cart items the cart contain's.
      *
-     * @var ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem>
-     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\CartItem", mappedBy="cart", cascade={"detach", "persist", "remove"})
+     * @var ArrayCollection<AppserverIo\Apps\Example\Entities\Impl\CartItem>
+     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\CartItem", mappedBy="cart", cascade={"detach", "persist", "remove"})
      * @JMS\Expose
-     * @JMS\Type("ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem>")
+     * @JMS\Type("ArrayCollection<AppserverIo\Apps\Example\Entities\Impl\CartItem>")
      * @JMS\Accessor(setter="setCartItems")
      */
     protected $cartItems;
@@ -125,7 +126,7 @@ class Cart extends AbstractEntity
     /**
      * Return's the Collection with the cart's cart items.
      *
-     * @return ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem> The cart items
+     * @return ArrayCollection<AppserverIo\Apps\Example\Entities\Impl\CartItem> The cart items
      */
     public function getCartItems()
     {
@@ -135,7 +136,7 @@ class Cart extends AbstractEntity
     /**
      * Add's the cart items of the passed collection to the cart.
      *
-     * @param ArrayCollection<AppserverIo\Apps\Example\Entities\CartItem> $cartItems The cart items to add
+     * @param ArrayCollection<AppserverIo\Apps\Example\Entities\Impl\CartItem> $cartItems The cart items to add
      *
      * @return void
      */
@@ -146,7 +147,7 @@ class Cart extends AbstractEntity
         $this->cartItems = $cartItems;
 
         // set the cart for each cart item
-        /** @var \AppserverIo\Apps\Example\Entities\CartItem $cartItem */
+        /** @var \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem */
         foreach ($this->cartItems as $cartItem) {
             $cartItem->setCart($this);
         }
@@ -155,7 +156,7 @@ class Cart extends AbstractEntity
     /**
      * Add's the passed cart item to the cart.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item to add
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item to add
      *
      * @return void
      */
@@ -168,7 +169,7 @@ class Cart extends AbstractEntity
     /**
      * Remove's the passed cart item from the cart.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item to remove
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item to remove
      *
      * @return void
      */

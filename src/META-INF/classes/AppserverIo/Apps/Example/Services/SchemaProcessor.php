@@ -21,7 +21,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use Doctrine\ORM\Tools\SchemaTool;
-use AppserverIo\Apps\Example\Entities\Product;
+use AppserverIo\Apps\Example\Entities\Impl\Product;
 
 /**
  * A singleton session bean implementation that handles the
@@ -121,7 +121,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             // create 10 products
             for ($i = 1; $i < 11; $i++) {
                 // set user data and save it
-                $product = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Product');
+                $product = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\Product');
                 $product->setName("Product-$i");
                 $product->setStatus(Product::STATUS_ACTIVE);
                 $product->setUrlKey("product-$i");
@@ -156,7 +156,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             // create the default credentials
             foreach ($this->users as $username => $password) {
                 // set user data and save it
-                $user = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\User');
+                $user = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\User');
                 $user->setEmail(sprintf('%s@appserver.io', $username));
                 $user->setUsername($username);
                 $user->setUserLocale('en_US');

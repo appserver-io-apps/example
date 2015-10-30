@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\User
+ * AppserverIo\Apps\Example\Entities\Impl\User
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * @link      http://www.appserver.io
  */
 
-namespace AppserverIo\Apps\Example\Entities;
+namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -110,7 +110,7 @@ class User
     protected $syncedAt;
 
     /**
-     * @var \AppserverIo\Apps\Example\Entities\Sample
+     * @var \AppserverIo\Apps\Example\Entities\Impl\Sample
      *
      * @ORM\ManyToOne(targetEntity="Sample", inversedBy="users", cascade={"all"}, fetch="EAGER")
      * @ORM\JoinColumn(name="sampleIdFk", referencedColumnName="sampleId")

@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Apps\Example\Entities\Product;
+use AppserverIo\Apps\Example\Entities\Impl\Product;
 
 /**
  * A singleton session bean implementation that handles the
@@ -47,15 +47,15 @@ class ProductProcessor extends AbstractProcessor implements ProductProcessorInte
     public function load($id)
     {
         $entityManager = $this->getEntityManager();
-        return $entityManager->find('AppserverIo\Apps\Example\Entities\Product', $id);
+        return $entityManager->find('AppserverIo\Apps\Example\Entities\Impl\Product', $id);
     }
 
     /**
      * Persists the passed entity.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Product $entity The entity to persist
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Product $entity The entity to persist
      *
-     * @return \AppserverIo\Apps\Example\Entities\Product The persisted entity
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Product The persisted entity
      */
     public function persist(Product $entity)
     {
@@ -105,7 +105,7 @@ class ProductProcessor extends AbstractProcessor implements ProductProcessorInte
     {
         // load all entities
         $entityManager = $this->getEntityManager();
-        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Product');
+        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Impl\Product');
         return $repository->findBy(array(), array(), $limit, $offset);
     }
 }

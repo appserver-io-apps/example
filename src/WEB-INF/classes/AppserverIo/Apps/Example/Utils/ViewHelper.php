@@ -20,9 +20,9 @@
 
 namespace AppserverIo\Apps\Example\Utils;
 
-use AppserverIo\Apps\Example\Entities\Sample;
-use AppserverIo\Apps\Example\Entities\Product;
-use AppserverIo\Apps\Example\Entities\CartItem;
+use AppserverIo\Apps\Example\Entities\Impl\Sample;
+use AppserverIo\Apps\Example\Entities\Impl\Product;
+use AppserverIo\Apps\Example\Entities\Impl\CartItem;
 use AppserverIo\Apps\Example\Exceptions\LoginException;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 
@@ -92,7 +92,7 @@ class ViewHelper
     /**
      * Creates and returns the URL to open the dialog to edit the passed entity.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to create the edit link for
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Sample $entity The entity to create the edit link for
      *
      * @return string The URL to open the edit dialog
      */
@@ -104,7 +104,7 @@ class ViewHelper
     /**
      * Creates and returns the URL that has to be invoked to delete the passed entity.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to create the deletion link for
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Sample $entity The entity to create the deletion link for
      *
      * @return string The URL with the deletion link
      */
@@ -146,7 +146,7 @@ class ViewHelper
     /**
      * Creates and returns the URL that has to be invoked to add the passed entity to the cart.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Product $entity The entity to create the add to cart link for
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Product $entity The entity to create the add to cart link for
      *
      * @return string The URL with the add to cart link
      */
@@ -158,7 +158,7 @@ class ViewHelper
     /**
      * Creates and returns the URL that has to be invoked to delete the passed entity from the cart.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $entity The entity to create the deletion link for
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $entity The entity to create the deletion link for
      *
      * @return string The URL with the deletion link
      */

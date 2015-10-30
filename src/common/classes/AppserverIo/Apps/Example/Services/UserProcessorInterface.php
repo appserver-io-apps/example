@@ -47,7 +47,7 @@ interface UserProcessorInterface
     /**
      * Returns the user actually logged into the system.
      *
-     * @return \AppserverIo\Apps\Example\Entities\User|null The user instance
+     * @return \AppserverIo\Apps\Example\Entities\Impl\User|null The user instance
      */
     public function getUserViewDataOfLoggedIn();
 
@@ -59,7 +59,7 @@ interface UserProcessorInterface
      *
      * @param string $username The username of the user to return the data for
      *
-     * @return \AppserverIo\Apps\Example\Entities\User The user logged into the system
+     * @return \AppserverIo\Apps\Example\Entities\Impl\User The user logged into the system
      * @throws \AppserverIo\Apps\Example\Exceptions\FoundInvalidUserException Is thrown if no user has been logged into the system or the username doesn't match
      * @see \AppserverIo\Apps\Example\Services\UserProcessor::login()
      */
