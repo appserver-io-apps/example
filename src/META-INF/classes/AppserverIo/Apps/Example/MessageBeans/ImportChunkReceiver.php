@@ -22,8 +22,8 @@ namespace AppserverIo\Apps\Example\MessageBeans;
 
 use AppserverIo\Psr\Pms\MessageInterface;
 use AppserverIo\Psr\Naming\InitialContext;
-use AppserverIo\Apps\Example\Entities\Impl\Impl\Sample;
 use AppserverIo\Messaging\AbstractMessageListener;
+use AppserverIo\Apps\Example\Entities\Impl\Sample;
 
 /**
  * An message receiver that imports data chunks into a database.
