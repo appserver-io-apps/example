@@ -2,7 +2,7 @@
 
 ## Bugfixes
 
-* None
+* Fixed invalid lookup name for QueueSender in AnnotatedServlet
 
 ## Features
 
