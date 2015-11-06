@@ -70,6 +70,14 @@
                     <injection-target-method>injectTimerService</injection-target-method>
                 </injection-target>
             </res-ref>
+            <persistence-unit-ref>
+                <description>Reference to a persistence unit</description>
+                <persistence-unit-res-ref-name>ExampleEntityManager</persistence-unit-ref-name>
+                <injection-target>
+                    <injection-target-class>Doctrine\ORM\EntityManagerInterface</injection-target-class>
+                    <injection-target-property>entityManager</injection-target-method>
+                </injection-target>
+            </persistence-unit-ref>
             -->
         </session>
         <message-driven>

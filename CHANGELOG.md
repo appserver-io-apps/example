@@ -1,3 +1,13 @@
+# Version 2.0.5
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add dummy Persistence Unit configuration to deployment descriptor
+
 # Version 2.0.4
 
 ## Bugfixes
