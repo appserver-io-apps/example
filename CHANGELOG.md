@@ -1,3 +1,13 @@
+# Version 2.0.6
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Securing Web Application
+
 # Version 2.0.5
 
 ## Bugfixes

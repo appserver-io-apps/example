@@ -163,6 +163,9 @@ class LoginAction extends BaseAction implements Validateable
         try {
             // start the session, because we need a session-ID for our stateful session bean
             $session = ViewHelper::singleton()->getLoginSession($servletRequest, true);
+
+            // the cookie should be usable via HTTP only
+            $session->setHttpOnly();
             $session->start();
 
             // try to login, using the session bean

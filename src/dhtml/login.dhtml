@@ -92,7 +92,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
         <form class="form-center" role="form" action="index.do/login" method="post">
             <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="<?php echo RequestKeys::USERNAME ?>">
-            <input type="password" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>">
+            <input type="password" autocomplete="off" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>">
             <label class="checkbox">
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
