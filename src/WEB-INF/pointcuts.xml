@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pointcuts xmlns="http://www.appserver.io/appserver">
-
+     
     <pointcut>
         <pointcut-name>allActions</pointcut-name>
         <pointcut-pattern>call(AppserverIo\Apps\Example\Actions\*->*Action())</pointcut-pattern>
@@ -11,6 +11,13 @@
         <pointcut-pattern>call(AppserverIo\Apps\Example\Actions\*->perform())</pointcut-pattern>
     </pointcut>
 
+    <!--
+     | DO NOT CHANGE THE ORDER OF THE POINTCUTS!
+     |
+     | The order the pointcuts are registered is important to make sure they'll be executed
+     | in the correct order. Do not change it, until you know what you're doing here!!!!!!!
+     |-->
+
     <advice>
         <advice-aspect>\AppserverIo\Routlt\Interceptors\ParamsInterceptor</advice-aspect>
         <advice-name>intercept</advice-name>
@@ -34,7 +41,7 @@
         <advice-name>intercept</advice-name>
         <advice-type>Around</advice-type>
         <advice-pointcuts>
-            <pointcut-name>allPerformMethods</pointcut-name>
+            <pointcut-name>allActions</pointcut-name>
         </advice-pointcuts>
     </advice>
 
@@ -61,7 +68,7 @@
         <advice-name>intercept</advice-name>
         <advice-type>Around</advice-type>
         <advice-pointcuts>
-            <pointcut-name>allActions</pointcut-name>
+            <pointcut-name>allPerformMethods</pointcut-name>
         </advice-pointcuts>
     </advice>
 
