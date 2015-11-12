@@ -2,7 +2,7 @@
 
 ## Bugfixes
 
-* None
+* Fixed invalid pointcut order to enable action validation
 
 ## Features
 
