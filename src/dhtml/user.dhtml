@@ -115,7 +115,7 @@ if ($entity = $servletRequest->getAttribute(RequestKeys::VIEW_DATA)) {
             <input type="checkbox" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::ENABLED ?>" value="<?php echo $enabled ?>" />
             <input type="checkbox" class="form-control" required="" autofocus="" name="<?php echo RequestKeys::LDAP_SYNCED ?>" value="<?php echo $ldapSynced ?>" />
             <input type="text" class="form-control" placeholder="Synched At" required="" autofocus="" name="<?php echo RequestKeys::SYNCED_AT ?>" value="<?php echo $syncedAt ?>" />
-            <input type="password" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>" value="<?php echo $password ?>" />
+            <input type="password" class="form-control" autocomplete="off" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>" value="<?php echo $password ?>" />
             <button class="btn btn-lg btn-info btn-block" type="submit">Save</button>
         </form>
 
