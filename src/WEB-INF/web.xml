@@ -19,7 +19,7 @@
         <session-cookie-domain>localhost</session-cookie-domain>
         <session-cookie-path>/</session-cookie-path>
         <session-cookie-secure>false</session-cookie-secure>
-        <session-http-only>false</session-http-only>
+        <session-cookie-http-only>false</session-cookie-http-only>
         -->
         
     </session-config>
