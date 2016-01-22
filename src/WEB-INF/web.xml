@@ -133,29 +133,5 @@
         <servlet-name>routlt</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
-    <security>
-        <url-pattern>/dhtml/basic.dhtml*</url-pattern>
-        <auth>
-            <auth-type>Basic</auth-type>
-            <realm>test</realm>
-            <adapter-type>htpasswd</adapter-type>
-            <options>
-                <file>WEB-INF/htpasswd</file>
-            </options>
-        </auth>
-    </security>
-
-    <security>
-        <url-pattern>/dhtml/digest.dhtml*</url-pattern>
-        <auth>
-            <auth-type>Digest</auth-type>
-            <realm>Digest-Example-Realm</realm>
-            <adapter-type>htdigest</adapter-type>
-            <options>
-                <file>WEB-INF/htdigest</file>
-            </options>
-        </auth>
-    </security>
     
 </web-app>
