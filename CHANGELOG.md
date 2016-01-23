@@ -1,3 +1,13 @@
+# Version 2.1.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactoring for new security subsystem
+
 # Version 2.0.6
 
 ## Bugfixes

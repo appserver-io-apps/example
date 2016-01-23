@@ -4,6 +4,7 @@
         <servers>
             <server name="http">
                 <virtualHosts>
+                    <!-- an example for a virtual host configuration -->
                     <virtualHost name="example.local www.example.local">
                         <params>
                             <param name="admin" type="string">info@appserver.io</param>
@@ -15,22 +16,36 @@
                         <accesses>
                             <access type="allow">
                                 <params>
-                                    <param name="X_REQUEST_URI" type="string">^.*
-                                    </param>
+                                    <param name="X_REQUEST_URI" type="string">^.*</param>
                                 </params>
                             </access>
                         </accesses>
-                        <!-- An example how to modify response headers -->
-                        <!--
+                        <!-- an example for basic or digest auth for the server -->
+                        <authentications>
+                            <authentication uri="^\/dhtml\/basic.dhtml.*">
+                                <params>
+                                    <param name="type" type="string">\AppserverIo\Http\Authentication\BasicAuthentication</param>
+                                    <param name="realm" type="string">PhpWebServer Basic Authentication System</param>
+                                    <param name="file" type="string">webapps/example/WEB-INF/htpasswd</param>
+                                </params>
+                            </authentication>
+                            <authentication uri="^\/dhtml\/digest.dhtml.*">
+                                <params>
+                                    <param name="type" type="string">\AppserverIo\Http\Authentication\DigestAuthentication</param>
+                                    <param name="realm" type="string">Digest-Example-Realm</param>
+                                    <param name="adapter-type" type="string">htdigest</param>
+                                    <param name="file" type="string">webapps/example/WEB-INF/htdigest</param>
+                                </params>
+                            </authentication>
+                        </authentications>
+                        <!-- an example how to modify response headers -->
                         <headers>
                             <header type="response" name="Server" value="My Own Server" override="true"/>
                             <header type="response" name="X-Powered-By" value="example.local"/>
                         </headers>
-                        -->
-                        <!-- An example to activate a the auto index functionality on a custom directory -->
-                        <!--
+                        <!-- an example to activate the auto index functionality on a custom directory -->
                         <locations>
-                            <location condition="^\/META-INF\/.*">
+                            <location condition="^\/static\/.*">
                                 <headers>
                                     <header type="response" name="X-Powered-By" value="autoIndex" append="true"/>
                                 </headers>
@@ -39,7 +54,6 @@
                                 </params>
                             </location>
                         </locations>
-                        -->
                     </virtualHost>
                 </virtualHosts>
             </server>

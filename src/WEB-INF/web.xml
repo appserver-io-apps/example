@@ -12,14 +12,13 @@
         <!--
         <session-save-path>/tmp</session-save-path>
         <garbage-collection-probability>0.1</garbage-collection-probability>
-        <session-save-path>60</session-save-path>
         <session-maximum-age>0</session-maximum-age>
         <session-inactivity-timeout>1440</session-inactivity-timeout>
         <session-cookie-lifetime>86400</session-cookie-lifetime>
         <session-cookie-domain>localhost</session-cookie-domain>
         <session-cookie-path>/</session-cookie-path>
         <session-cookie-secure>false</session-cookie-secure>
-        <session-http-only>false</session-http-only>
+        <session-cookie-http-only>false</session-cookie-http-only>
         -->
         
     </session-config>
@@ -134,29 +133,5 @@
         <servlet-name>routlt</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
-    <security>
-        <url-pattern>/dhtml/basic.dhtml*</url-pattern>
-        <auth>
-            <auth-type>Basic</auth-type>
-            <realm>test</realm>
-            <adapter-type>htpasswd</adapter-type>
-            <options>
-                <file>WEB-INF/htpasswd</file>
-            </options>
-        </auth>
-    </security>
-
-    <security>
-        <url-pattern>/dhtml/digest.dhtml*</url-pattern>
-        <auth>
-            <auth-type>Digest</auth-type>
-            <realm>Digest-Example-Realm</realm>
-            <adapter-type>htdigest</adapter-type>
-            <options>
-                <file>WEB-INF/htdigest</file>
-            </options>
-        </auth>
-    </security>
     
 </web-app>
