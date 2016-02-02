@@ -20,6 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Utils;
 
+use AppserverIo\Psr\Security\PrincipalInterface;
 use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
 use AppserverIo\Apps\Example\Entities\Impl\CartItem;
@@ -189,22 +190,7 @@ class ViewHelper
      */
     public function isLoggedIn(HttpServletRequestInterface $servletRequest)
     {
-
-        // try to load the session
-        $session = $this->getLoginSession($servletRequest);
-
-        // if we can't find a session, something went wrong
-        if ($session == null) {
-            return false;
-        }
-
-        // if we can't find a username, also something went wrong
-        if ($session->hasKey(SessionKeys::USERNAME) === false) {
-            return false;
-        }
-
-        // return the name of the registered user
-        return true;
+        return $servletRequest->getUserPrincipal() instanceof PrincipalInterface;
     }
 
     /**
@@ -218,21 +204,16 @@ class ViewHelper
     public function getUsername(HttpServletRequestInterface $servletRequest)
     {
 
-        // try to load the session
-        $session = $this->getLoginSession($servletRequest);
+        // try to load the user principal
+        $userPrincipal = $servletRequest->getUserPrincipal();
 
         // if we can't find a session, something went wrong
-        if ($session == null) {
-            throw new LoginException(sprintf('Can\'t find session %s', $servletRequest->getRequestedSessionName()));
-        }
-
-        // if we can't find a username, also something went wrong
-        if ($session->hasKey(SessionKeys::USERNAME) === false) {
+        if ($userPrincipal == null) {
             throw new LoginException('Session has no user registered');
         }
 
         // return the name of the registered user
-        return $session->getData(SessionKeys::USERNAME);
+        return $userPrincipal->getUsername()->stringValue();
     }
 
     /**

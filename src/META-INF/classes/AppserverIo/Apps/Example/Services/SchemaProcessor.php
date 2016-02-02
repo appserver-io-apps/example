@@ -22,6 +22,8 @@ namespace AppserverIo\Apps\Example\Services;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
+use AppserverIo\Collections\ArrayList;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * A singleton session bean implementation that handles the
@@ -52,16 +54,18 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      * @var array
      */
     protected $users = array(
-        'appserver'    => 'appserver.i0',
-        'appserver_01' => 'appserver.i0',
-        'appserver_02' => 'appserver.i0',
-        'appserver_03' => 'appserver.i0',
-        'appserver_04' => 'appserver.i0',
-        'appserver_05' => 'appserver.i0',
-        'appserver_06' => 'appserver.i0',
-        'appserver_07' => 'appserver.i0',
-        'appserver_08' => 'appserver.i0',
-        'appserver_09' => 'appserver.i0'
+        array('appserver', 'appserver.i0', array('Employee')),
+        array('appserver_01', 'appserver.i0', array('Employee')),
+        array('appserver_02', 'appserver.i0', array('Employee')),
+        array('appserver_03', 'appserver.i0', array('Employee')),
+        array('appserver_04', 'appserver.i0', array('Employee')),
+        array('appserver_05', 'appserver.i0', array('Employee')),
+        array('appserver_06', 'appserver.i0', array('Employee')),
+        array('appserver_07', 'appserver.i0', array('Employee')),
+        array('appserver_08', 'appserver.i0', array('Employee')),
+        array('appserver_09', 'appserver.i0', array('Employee')),
+        array('manager', 'appserver.i0', array('Manager')),
+        array('sales', 'appserver.i0', array('Sales'))
     );
 
     /**
@@ -154,7 +158,11 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             $entityManager = $this->getEntityManager();
 
             // create the default credentials
-            foreach ($this->users as $username => $password) {
+            foreach ($this->users as $userData) {
+
+                // extract the user data
+                list ($username, $password, $roleNames) = $userData;
+
                 // set user data and save it
                 $user = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\User');
                 $user->setEmail(sprintf('%s@appserver.io', $username));
@@ -166,6 +174,20 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
                 $user->setContractedHours(160);
                 $user->setLdapSynced(false);
                 $user->setSyncedAt(time());
+
+                // create a collection to store the user's roles
+                $roles = new ArrayCollection();
+
+                // create the user's roles
+                foreach ($roleNames as $roleName) {
+                    $role = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\Role');
+                    $role->setUser($user);
+                    $role->setName($roleName);
+                    $roles->add($role);
+                }
+
+                // set the user's roles
+                $user->setRoles($roles);
 
                 // persist the user
                 $entityManager->persist($user);

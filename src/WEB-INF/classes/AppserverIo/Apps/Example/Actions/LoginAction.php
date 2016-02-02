@@ -135,6 +135,7 @@ class LoginAction extends BaseAction implements Validateable
     public function validate()
     {
 
+        /*
         // check if the necessary params has been specified and are valid
         if ($this->getUsername() == null) {
             $this->addFieldError(RequestKeys::USERNAME, sprintf('Please enter a valid %s', RequestKeys::USERNAME));
@@ -144,6 +145,7 @@ class LoginAction extends BaseAction implements Validateable
         if ($this->getPassword() == null) {
             $this->addFieldError(RequestKeys::PASSWORD, sprintf('Please enter a valid %s', RequestKeys::PASSWORD));
         }
+        */
     }
 
     /**
@@ -160,6 +162,8 @@ class LoginAction extends BaseAction implements Validateable
     {
 
         try {
+
+            /*
             // start the session, because we need a session-ID for our stateful session bean
             $session = ViewHelper::singleton()->getLoginSession($servletRequest, true);
 
@@ -172,6 +176,7 @@ class LoginAction extends BaseAction implements Validateable
 
             // if successfully then add the username to the session and redirect to the overview
             $session->putData(SessionKeys::USERNAME, $username);
+            */
 
         } catch (LoginException $e) {
             // invalid login credentials

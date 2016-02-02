@@ -100,14 +100,14 @@ class RequestKeys
      *
      * @return string
      */
-    const USERNAME = 'username';
+    const USERNAME = 'p_username';
 
     /**
      * The key for a 'password'.
      *
      * @return string
      */
-    const PASSWORD = 'password';
+    const PASSWORD = 'p_password';
 
     /**
      * The key for a 'filename'.
