@@ -39,10 +39,11 @@ class SessionKeys
     {
     }
 
+
     /**
-     * The key for a 'username'.
+     * The key for the form errors stored in the session.
      *
-     * @return string
+     * @var string
      */
-    const USERNAME = 'username';
+    const FORM_ERRORS = 'appserver_io.apps.example.utils.form_errors';
 }

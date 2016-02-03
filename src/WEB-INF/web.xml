@@ -170,6 +170,7 @@
         <form-login-config>
             <form-login-page>/dhtml/login.dhtml</form-login-page>
             <form-error-page>/dhtml/login.dhtml</form-error-page>
+            <form-login-callback>AppserverIo\Apps\Example\Authenticator\Callback\LoginErrorCallback</form-login-callback>
         </form-login-config>
     </login-config>
 

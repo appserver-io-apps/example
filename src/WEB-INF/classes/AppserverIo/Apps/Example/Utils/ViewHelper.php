@@ -20,6 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Utils;
 
+use AppserverIo\Apps\Example\Utils\SessionKeys;
 use AppserverIo\Psr\Security\PrincipalInterface;
 use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
@@ -76,6 +77,26 @@ class ViewHelper
 
         // return the instance
         return ViewHelper::$instance;
+    }
+
+    /**
+     * Load the login errors from the session.
+     *
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest The request instance
+     *
+     * @return \AppserverIo\Collections\CollectionInterface|null The collection with the error messages
+     */
+    public function getLoginErrors(HttpServletRequestInterface $servletRequest)
+    {
+
+        // query whether or not we've a session instance
+        if ($session = $servletRequest->getSession()) {
+            if ($session->hasKey(SessionKeys::FORM_ERRORS)) {
+                $loginErrors = $session->getData(SessionKeys::FORM_ERRORS);
+                $session->removeData(SessionKeys::FORM_ERRORS);
+                return $loginErrors;
+            }
+        }
     }
 
     /**
