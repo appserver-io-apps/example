@@ -21,6 +21,7 @@
 namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Doctrine entity that represents a user.
@@ -116,6 +117,22 @@ class User
      * @ORM\JoinColumn(name="sampleIdFk", referencedColumnName="sampleId")
      */
     protected $sample;
+
+    /**
+     * The user's roles.
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\Roles> $roles
+     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Role", mappedBy="user", cascade={"persist"})
+     */
+    protected $roles;
+
+    /**
+     * Initialize the user instance.
+     */
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
     /**
      * Returns the value of the class member userId.
@@ -357,5 +374,27 @@ class User
     public function setSyncedAt($syncedAt = null)
     {
         $this->syncedAt = $syncedAt;
+    }
+
+    /**
+     * Set's the user's roles.
+     *
+     * @param \Doctrine\Common\Collections\ArrayCollection $roles The user's roles
+     *
+     * @return void
+     */
+    public function setRoles(ArrayCollection $roles)
+    {
+        $this->roles = $roles;
+    }
+
+    /**
+     * Return's the user's roles.
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection The roles
+     */
+    public function getRoles()
+    {
+        return $this->roles;
     }
 }

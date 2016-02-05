@@ -55,7 +55,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
-                    <li class="active"><a href="dhtml/login.dhtml"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
+                    <li class="active"><a href="index.do/user"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Account</a></li>
                     <li><a href="dhtml/upload.dhtml"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
                     <li><a href="index.do/import"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Import</a></li>
                     <li><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
@@ -74,7 +74,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
     <div class="container content">
 
-        <?php if ($errorMessages = $servletRequest->getAttribute(RequestKeys::ERROR_MESSAGES)): ?>
+        <?php if ($errorMessages = ViewHelper::singleton()->getLoginErrors($servletRequest)): ?>
             <div class="alert alert-danger">
                 <?php foreach ($errorMessages as $errorMessage): ?>
                     <?php echo $errorMessage ?><br/>
@@ -90,7 +90,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
         <h1>Please sign in</h1>
 
-        <form class="form-center" role="form" action="index.do/login" method="post">
+        <form class="form-center" role="form" action="p_security_check.do" method="post">
             <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="<?php echo RequestKeys::USERNAME ?>">
             <input type="password" autocomplete="off" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>">
             <label class="checkbox">

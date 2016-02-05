@@ -39,6 +39,8 @@ class Role
 {
 
     /**
+     * The unique role ID.
+     *
      * @var int
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -47,22 +49,37 @@ class Role
     protected $roleId;
 
     /**
+     * The parent role ID.
+     *
      * @var integer
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $roleIdFk;
 
     /**
+     * The ID of the user the role is bound to.
+     *
      * @var integer
      * @ORM\Column(type="integer")
      */
     protected $userIdFk;
 
     /**
+     * The role name.
+     *
      * @var string
      * @ORM\Column(type="string")
      */
     protected $name;
+
+    /**
+     * The user the role is bound to.
+     *
+     * @var \AppserverIo\Apps\Example\Entities\Impl\User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="roles", cascade={"all"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="userIdFk", referencedColumnName="userId")
+     */
+    protected $user;
 
     /**
      * Returns the value of the class member roleId.
@@ -109,9 +126,31 @@ class Role
     }
 
     /**
-     * Returns the value of the class member userIdFk.
+     * Set's the user the role is bound to.
      *
-     * @return integer Holds the value of the class member userIdFk
+     * @return \AppserverIo\Apps\Example\Entities\Impl\User $user The user
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set's the user the role is bound to.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\Impl\User $user The user
+     *
+     * @return void
+     */
+    public function setUser($user = null)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Returns the value for the class member userIdFk.
+     *
+     * @return integer Holds the value for the class member userIdFk
      */
     public function getUserIdFk()
     {

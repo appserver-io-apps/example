@@ -62,10 +62,6 @@ class LogoutAction extends BaseAction
      */
     public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-
-        // destroy the session and reset the cookie
-        if ($session = ViewHelper::singleton()->getLoginSession($servletRequest)) {
-            $session->destroy('Explicit logout requested by: ' . ViewHelper::singleton()->getUsername($servletRequest));
-        }
+        $servletRequest->logout();
     }
 }
