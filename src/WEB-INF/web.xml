@@ -134,31 +134,28 @@
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
-    <!-- define a Security Constraint that gives unlimited access to index and login page -->
-    <security-constraint>
-        <display-name>Index and Login Page</display-name>
-        <web-resource-collection>
-            <web-resource-name>Index and Login Page</web-resource-name>
-            <url-pattern>/index.do*</url-pattern>
-            <url-pattern>/helloWorld.do</url-pattern>
-            <url-pattern>/dhtml/login.dhtml</url-pattern>
-        </web-resource-collection>
-    </security-constraint>
-
     <!-- define a Security Constraint on this application -->
     <security-constraint>
-        <display-name>All other resources</display-name>
+        <display-name>The user profile</display-name>
         <web-resource-collection>
-            <web-resource-name>Protect the whole application</web-resource-name>
-            <url-pattern>/*</url-pattern>
+            <web-resource-name>Protect the user profile</web-resource-name>
+            <url-pattern>/index.do/user*</url-pattern>
             <http-method>POST</http-method>
             <http-method>GET</http-method>
         </web-resource-collection>
         <auth-constraint>
-            <description>Enable access for Sales and Manager roles</description>
-            <role-name>Manager</role-name>
-            <role-name>Sales</role-name>
+            <description>Enable profile access for the customer role</description>
+            <role-name>Customer</role-name>
         </auth-constraint>
+    </security-constraint>
+
+    <!-- define a Security Constraint that gives unlimited access to index and login page -->
+    <security-constraint>
+        <display-name>All other resources</display-name>
+        <web-resource-collection>
+            <web-resource-name>All other resources</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
     </security-constraint>
 
     <!-- define the Login Configuration for this application -->
@@ -173,16 +170,12 @@
 
     <!-- security roles referenced by this web application -->
     <security-role>
-        <role-name>Manager</role-name>
-        <description>The mananger role</description>
+        <role-name>Guest</role-name>
+        <description>The guest role</description>
     </security-role>
     <security-role>
-        <role-name>Sales</role-name>
-        <description>The sales role</description>
-    </security-role>
-    <security-role>
-        <role-name>Employee</role-name>
-        <description>The employee role</description>
+        <role-name>Customer</role-name>
+        <description>The customer role</description>
     </security-role>
 
     <!-- define an optional error page -->

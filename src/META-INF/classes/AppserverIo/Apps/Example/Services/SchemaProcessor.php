@@ -54,18 +54,17 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      * @var array
      */
     protected $users = array(
-        array('appserver', 'appserver.i0', array('Employee')),
-        array('appserver_01', 'appserver.i0', array('Employee')),
-        array('appserver_02', 'appserver.i0', array('Employee')),
-        array('appserver_03', 'appserver.i0', array('Employee')),
-        array('appserver_04', 'appserver.i0', array('Employee')),
-        array('appserver_05', 'appserver.i0', array('Employee')),
-        array('appserver_06', 'appserver.i0', array('Employee')),
-        array('appserver_07', 'appserver.i0', array('Employee')),
-        array('appserver_08', 'appserver.i0', array('Employee')),
-        array('appserver_09', 'appserver.i0', array('Employee')),
-        array('manager', 'appserver.i0', array('Manager')),
-        array('sales', 'appserver.i0', array('Sales'))
+        array('appserver', 'appserver.i0', array('Customer')),
+        array('appserver_01', 'appserver.i0', array('Customer')),
+        array('appserver_02', 'appserver.i0', array('Customer')),
+        array('appserver_03', 'appserver.i0', array('Customer')),
+        array('appserver_04', 'appserver.i0', array('Customer')),
+        array('appserver_05', 'appserver.i0', array('Customer')),
+        array('appserver_06', 'appserver.i0', array('Customer')),
+        array('appserver_07', 'appserver.i0', array('Customer')),
+        array('appserver_08', 'appserver.i0', array('Customer')),
+        array('appserver_09', 'appserver.i0', array('Customer')),
+        array('guest', 'appserver.i0', array('Guest'))
     );
 
     /**

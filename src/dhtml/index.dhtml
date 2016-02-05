@@ -67,7 +67,7 @@ if ($entity = $servletRequest->getAttribute(RequestKeys::VIEW_DATA)) {
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="index.do"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Home</a></li>
-                    <li><a href="dhtml/login.dhtml"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Login</a></li>
+                    <li><a href="index.do/user"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;Account</a></li>
                     <li><a href="dhtml/upload.dhtml"><span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;&nbsp;Upload</a></li>
                     <li><a href="index.do/import"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;Import</a></li>
                     <li><a href="index.do/product"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;Products</a></li>
