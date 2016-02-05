@@ -20,7 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Utils;
 
-use AppserverIo\Apps\Example\Utils\SessionKeys;
+use AppserverIo\Psr\Security\Utils\Constants;
 use AppserverIo\Psr\Security\PrincipalInterface;
 use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
@@ -91,9 +91,9 @@ class ViewHelper
 
         // query whether or not we've a session instance
         if ($session = $servletRequest->getSession()) {
-            if ($session->hasKey(SessionKeys::FORM_ERRORS)) {
-                $loginErrors = $session->getData(SessionKeys::FORM_ERRORS);
-                $session->removeData(SessionKeys::FORM_ERRORS);
+            if ($session->hasKey(Constants::FORM_ERRORS)) {
+                $loginErrors = $session->getData(Constants::FORM_ERRORS);
+                $session->removeData(Constants::FORM_ERRORS);
                 return $loginErrors;
             }
         }

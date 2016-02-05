@@ -139,9 +139,8 @@
         <display-name>Index and Login Page</display-name>
         <web-resource-collection>
             <web-resource-name>Index and Login Page</web-resource-name>
+            <url-pattern>/index.do*</url-pattern>
             <url-pattern>/helloWorld.do</url-pattern>
-            <url-pattern>/index.do/login</url-pattern>
-            <url-pattern>/index.do/logout</url-pattern>
             <url-pattern>/dhtml/login.dhtml</url-pattern>
         </web-resource-collection>
     </security-constraint>
@@ -156,10 +155,9 @@
             <http-method>GET</http-method>
         </web-resource-collection>
         <auth-constraint>
-            <description>Enable access for all roles</description>
+            <description>Enable access for Sales and Manager roles</description>
             <role-name>Manager</role-name>
             <role-name>Sales</role-name>
-            <role-name>Employee</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -170,7 +168,6 @@
         <form-login-config>
             <form-login-page>/dhtml/login.dhtml</form-login-page>
             <form-error-page>/dhtml/login.dhtml</form-error-page>
-            <form-login-callback>AppserverIo\Apps\Example\Authenticator\Callback\LoginErrorCallback</form-login-callback>
         </form-login-config>
     </login-config>
 

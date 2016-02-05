@@ -128,9 +128,9 @@ class Role
     /**
      * Set's the user the role is bound to.
      *
-     * @return \AppserverIo\Apps\Example\Entities\Impl\User The user
+     * @return \AppserverIo\Apps\Example\Entities\Impl\User $user The user
      */
-    public function getUser(User $user)
+    public function getUser()
     {
         return $this->user;
     }

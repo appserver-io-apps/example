@@ -54,6 +54,9 @@
                                 </params>
                             </location>
                         </locations>
+                        <environmentVariables>
+                            <environmentVariable condition="" definition="LOGGER_ACCESS=example/Access" />
+                        </environmentVariables>
                     </virtualHost>
                 </virtualHosts>
             </server>

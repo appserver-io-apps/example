@@ -90,7 +90,7 @@ use AppserverIo\Apps\Example\Utils\RequestKeys;
 
         <h1>Please sign in</h1>
 
-        <form class="form-center" role="form" action="index.do/p_security_check" method="post">
+        <form class="form-center" role="form" action="p_security_check.do" method="post">
             <input type="text" class="form-control" placeholder="Username" required="" autofocus="" name="<?php echo RequestKeys::USERNAME ?>">
             <input type="password" autocomplete="off" class="form-control" placeholder="Password" required="" name="<?php echo RequestKeys::PASSWORD ?>">
             <label class="checkbox">

@@ -159,7 +159,6 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
 
             // create the default credentials
             foreach ($this->users as $userData) {
-
                 // extract the user data
                 list ($username, $password, $roleNames) = $userData;
 
