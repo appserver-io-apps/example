@@ -1,3 +1,23 @@
+# Version 2.1.2
+
+## Bugfixes
+
+* Switch back to sqlite database
+
+## Features
+
+* None
+
+# Version 2.1.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactoring for new security subsystem
+
 # Version 2.1.0
 
 ## Bugfixes
