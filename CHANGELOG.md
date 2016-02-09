@@ -1,3 +1,13 @@
+# Version 2.1.3
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add preAttach() and preDestroy() methods to close database connection
+
 # Version 2.1.2
 
 ## Bugfixes
