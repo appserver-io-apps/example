@@ -51,4 +51,26 @@ abstract class AbstractPersistenceProcessor extends AbstractProcessor
     {
         return $this->entityManager;
     }
+
+    /**
+     * Close the entity manager's connection before destroying the bean.
+     *
+     * @return void
+     * @PreDestroy
+     */
+    public function preDestroy()
+    {
+        $this->getEntityManager()->getConnection()->close();
+    }
+
+    /**
+     * Close the entity manager's connection before re-attaching it to the container.
+     *
+     * @return void
+     * @PreAttach
+     */
+    public function preAttach()
+    {
+        $this->getEntityManager()->getConnection()->close();
+    }
 }
