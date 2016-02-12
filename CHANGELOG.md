@@ -1,3 +1,13 @@
+# Version 2.1.4
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add application specific system logger to context.xml file
+
 # Version 2.1.3
 
 ## Bugfixes
