@@ -4,55 +4,6 @@
     type="AppserverIo\Appserver\Application\Application"
     xmlns="http://www.appserver.io/appserver">
 
-    <classLoaders>
-        <classLoader
-            name="DgClassLoader"
-            interface="ClassLoaderInterface"
-            type="AppserverIo\Appserver\Core\DgClassLoader"
-            factory="AppserverIo\Appserver\Core\DgClassLoaderFactory">
-            <params>
-                <param name="environment" type="string">production</param>
-                <param name="enforcementLevel" type="integer">7</param>
-                <param name="typeSafety" type="boolean">1</param>
-                <param name="processing" type="string">exception</param>
-            </params>
-            <directories>
-                <directory enforced="true">/common/classes</directory>
-                <directory enforced="true">/WEB-INF/classes</directory>
-                <directory enforced="true">/META-INF/classes</directory>
-            </directories>
-        </classLoader>
-    </classLoaders>
-
-    <loggers>
-        <logger channelName="access" name="Access" type="\AppserverIo\Logger\Logger">
-            <handlers>
-                <handler type="\AppserverIo\Logger\Handlers\CustomFileHandler">
-                    <formatter type="\AppserverIo\Logger\Formatters\StandardFormatter">
-                        <params>
-                            <param name="format" type="string">%4$s</param>
-                        </params>
-                    </formatter>
-                    <params>
-                        <param name="logFile" type="string">var/log/example-access.log</param>
-                        <param name="logLevel" type="string">info</param>
-                    </params>
-                </handler>
-            </handlers>
-        </logger>
-        <logger channelName="system" name="System" type="\AppserverIo\Logger\Logger">
-            <handlers>
-                <handler type="\AppserverIo\Logger\Handlers\CustomFileHandler">
-                    <formatter type="\AppserverIo\Logger\Formatters\StandardFormatter"/>
-                    <params>
-                        <param name="logFile" type="string">var/log/example-errors.log</param>
-                        <param name="logLevel" type="string">info</param>
-                    </params>
-                </handler>
-            </handlers>
-        </logger>
-    </loggers>
-
     <managers>
         <manager
             name="ObjectManagerInterface"
