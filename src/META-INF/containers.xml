@@ -5,7 +5,7 @@
             <server name="http*">
                 <virtualHosts>
                     <!-- an example for a virtual host configuration -->
-                    <virtualHost name="${webapp.name}.local www.${webapp.name}.local">
+                    <virtualHost name="${webapp.name}.dev www.${webapp.name}.dev">
                         <params>
                             <param name="admin" type="string">info@appserver.io</param>
                             <param name="documentRoot" type="string">${host.appBase.dir}/${webapp.name}</param>
@@ -41,7 +41,7 @@
                         <!-- an example how to modify response headers -->
                         <headers>
                             <header type="response" name="Server" value="My Own Server" override="true"/>
-                            <header type="response" name="X-Powered-By" value="${webapp.name}.local"/>
+                            <header type="response" name="X-Powered-By" value="${webapp.name}.dev"/>
                         </headers>
                         <!-- an example to activate the auto index functionality on a custom directory -->
                         <locations>

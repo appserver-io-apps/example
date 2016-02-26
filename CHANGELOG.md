@@ -1,3 +1,13 @@
+# Version 2.1.5
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Use configuration variables introduces with appserver v1.1.1-alpha5 in context.xml/containers.xml file
+
 # Version 2.1.4
 
 ## Bugfixes

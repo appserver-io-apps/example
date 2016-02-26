@@ -20,8 +20,6 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Psr\Application\ApplicationInterface;
-
 /**
  * Abstract processor implementation that provides a Doctrine ORM entity manager.
  *
