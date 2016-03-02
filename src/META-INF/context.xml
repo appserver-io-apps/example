@@ -25,7 +25,7 @@
                         <loginModules>
                             <loginModule type="AppserverIo\Appserver\ServletEngine\Security\Auth\Spi\DatabasePDOLoginModule" flag="required">
                                 <params>
-                                    <param name="lookupName" type="string">php:env/combined-appserver/ds/appserver.io-example-application</param>
+                                    <param name="lookupName" type="string">php:env/${container.name}/ds/appserver.io-example-application</param>
                                     <param name="principalsQuery" type="string">select password from user where username = ?</param>
                                     <param name="rolesQuery" type="string">select r.name, 'Roles' from role r inner join user p on r.userIdFk = p.userId where p.username = ?</param>
                                     <param name="hashAlgorithm" type="string">SHA-512</param>

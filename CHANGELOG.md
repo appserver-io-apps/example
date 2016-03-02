@@ -1,3 +1,13 @@
+# Version 2.1.6
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Replace hardcoded container name in login module's datasource lookup with variable
+
 # Version 2.1.5
 
 ## Bugfixes
