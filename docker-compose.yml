@@ -1,0 +1,20 @@
+app:
+  restart: always
+  build: .
+  volumes:
+     - /opt/appserver/webapps:/opt/appserver/webapps/example
+webserver:
+  restart: always
+  image: wagner83104/webserver:master
+  volumes:
+    - /opt/appserver/webapps:/opt/appserver/webapps/example
+message-queue:
+  restart: always
+  image: wagner83104/message-queue:master
+  volumes:
+    - /opt/appserver/webapps:/opt/appserver/webapps/example
+ssh-server:
+  restart: always
+  image: wagner83104/ssh-server:master
+  volumes:
+    - /opt/appserver/webapps:/opt/appserver/webapps/example
