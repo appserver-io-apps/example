@@ -24,7 +24,7 @@ RUN cd /tmp/example && \
 ################################################################################
 
 RUN mkdir /opt/appserver/webapps
-RUN ln -s /tmp/example/src /opt/appserver/webapps/example
+RUN mv /tmp/example/src /opt/appserver/webapps/example
 
 ################################################################################
 
