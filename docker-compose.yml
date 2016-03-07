@@ -1,16 +1,8 @@
 appdata:
-  image: tianon/true
-  volumes:
-    - /var/lib/mysql                                                # creates a volume /var/lib/mysql in the appdata container
-    - /opt/appserver/webapps/example:/opt/appserver/webapps/example # creates a volume /opt/appserver/webapps and mounts the host volume
-
-deployment:
   restart: always
   image: wagner83104/dist:1.1.1-alpha7
-  volumes_from:
-    - appdata
   volumes:
-    - /Users/wagnert/Workspace/appserver.io/example/deploy:/opt/appserver/deploy
+    - /opt/appserver/webapps/example
 
 webserver:
   restart: always
@@ -26,15 +18,13 @@ servlet-engine:
   restart: always
   image: wagner83104/dist:1.1.1-alpha7
   links:
+    - mysql
     - message-queue
     - persistence-container
-  links:
-    - mysql
   volumes_from:
     - appdata
   volumes:
     - ./docker/opt/appserver/etc/appserver/servlet-engine.xml:/opt/appserver/etc/appserver/appserver.xml
-    - ./docker/opt/appserver/webapps/example/META-INF/appserver-ds.xml:/opt/appserver/webapps/example/META-INF/appserver-ds.xml
 
 message-queue:
   restart: always
@@ -45,7 +35,6 @@ message-queue:
     - appdata
   volumes:
     - ./docker/opt/appserver/etc/appserver/message-queue.xml:/opt/appserver/etc/appserver/appserver.xml
-    - ./docker/opt/appserver/webapps/example/META-INF/appserver-ds.xml:/opt/appserver/webapps/example/META-INF/appserver-ds.xml
 
 persistence-container:
   restart: always
@@ -56,7 +45,6 @@ persistence-container:
     - appdata
   volumes:
     - ./docker/opt/appserver/etc/appserver/persistence-container.xml:/opt/appserver/etc/appserver/appserver.xml
-    - ./docker/opt/appserver/webapps/example/META-INF/appserver-ds.xml:/opt/appserver/webapps/example/META-INF/appserver-ds.xml
 
 mysql:
   image: mysql:5.6
