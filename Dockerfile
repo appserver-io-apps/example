@@ -3,7 +3,7 @@
 ################################################################################
 
 # base image
-FROM wagner83104/servlet-engine:master
+FROM wagner83104/dist:1.1.1-alpha7
 
 ################################################################################
 
@@ -18,13 +18,10 @@ COPY src/ /tmp/example/src/
 ################################################################################
 
 # install composer dependencies
-RUN cd /tmp/example && \
-    composer install --prefer-dist --no-dev --no-interaction --optimize-autoloader
-
-################################################################################
-
-RUN mkdir /opt/appserver/webapps
-RUN mv /tmp/example/src /opt/appserver/webapps/example
+RUN cd /tmp/example \
+    && composer install --prefer-dist --no-dev --no-interaction --optimize-autoloader \
+    && mkdir /opt/appserver/webapps \
+    && cp -r /tmp/example/src/ /opt/appserver/webapps/example/
 
 ################################################################################
 
