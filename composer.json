@@ -11,6 +11,7 @@
 		"jms/serializer" : "0.16.*"
 	},
 	"require-dev" : {
+		"codegyre/robo": "*",
 		"appserver-io/phar" : "~1.0",
 		"appserver-io/build" : "~1.0",
 		"appserver-io/messaging" : "~1.0",

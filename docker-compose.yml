@@ -1,11 +1,12 @@
 appdata:
-  restart: always
   image: wagner83104/dist:1.1.1-alpha7
+  container_name: appdata
   volumes:
-    - /opt/appserver/webapps/example
+    - /opt/appserver/webapps
 
 webserver:
   restart: always
+  container_name: webserver
   image: wagner83104/dist:1.1.1-alpha7
   links:
     - mysql
@@ -16,6 +17,7 @@ webserver:
 
 servlet-engine:
   restart: always
+  container_name: servlet-engine
   image: wagner83104/dist:1.1.1-alpha7
   links:
     - mysql
@@ -28,6 +30,7 @@ servlet-engine:
 
 message-queue:
   restart: always
+  container_name: message-queue
   image: wagner83104/dist:1.1.1-alpha7
   links:
     - persistence-container
@@ -38,6 +41,7 @@ message-queue:
 
 persistence-container:
   restart: always
+  container_name: persistence-container
   image: wagner83104/dist:1.1.1-alpha7
   links:
     - mysql
