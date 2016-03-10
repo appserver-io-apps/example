@@ -1,5 +1,6 @@
 appdata:
-  image: wagner83104/dist:1.1.1-alpha7
+  restart: always
+  build: ./docker
   container_name: appdata
   volumes:
     - /opt/appserver/webapps
@@ -7,7 +8,7 @@ appdata:
 webserver:
   restart: always
   container_name: webserver
-  image: wagner83104/dist:1.1.1-alpha7
+  build: ./docker
   links:
     - mysql
   volumes_from:
@@ -18,7 +19,7 @@ webserver:
 servlet-engine:
   restart: always
   container_name: servlet-engine
-  image: wagner83104/dist:1.1.1-alpha7
+  build: ./docker
   links:
     - mysql
     - message-queue
@@ -31,7 +32,7 @@ servlet-engine:
 message-queue:
   restart: always
   container_name: message-queue
-  image: wagner83104/dist:1.1.1-alpha7
+  build: ./docker
   links:
     - persistence-container
   volumes_from:
@@ -42,7 +43,7 @@ message-queue:
 persistence-container:
   restart: always
   container_name: persistence-container
-  image: wagner83104/dist:1.1.1-alpha7
+  build: ./docker
   links:
     - mysql
   volumes_from:
@@ -51,11 +52,11 @@ persistence-container:
     - ./docker/opt/appserver/etc/appserver/persistence-container.xml:/opt/appserver/etc/appserver/appserver.xml
 
 mysql:
+  restart: always
+  container_name: mysql
   image: mysql:5.6
   environment:
     MYSQL_ROOT_PASSWORD: 'appserver.i0'
     MYSQL_USER: 'appserver'
     MYSQL_PASSWORD: 'appserver.i0'
     MYSQL_DATABASE: 'appserver_ApplicationServer'
-  volumes_from:
-    - appdata

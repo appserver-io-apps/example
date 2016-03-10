@@ -19,19 +19,17 @@
      | a real production environment!
      |-->
 
-    <!--
     <datasource name="appserver.io-example-application">
         <database>
             <driver>pdo_mysql</driver>
             <user>appserver</user>
             <password>appserver.i0</password>
             <databaseName>appserver_ApplicationServer</databaseName>
-            <databaseHost>127.0.0.1</databaseHost>
+            <databaseHost>mysql</databaseHost>
         </database>
     </datasource>
-    -->
 
-    <datasource name="appserver.io-example-application">
+    <!-- datasource name="appserver.io-example-application">
         <database>
             <driver>pdo_sqlite</driver>
             <user>appserver</user>
@@ -39,6 +37,6 @@
             <path>META-INF/data/appserver_ApplicationServer.sqlite</path>
             <memory>false</memory>
         </database>
-    </datasource>
+    </datasource -->
 
 </datasources>

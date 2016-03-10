@@ -8,7 +8,8 @@
         <param name="allowApplicationConfiguration" type="boolean">true</param>
     </params>
 
-    <containers><container
+    <containers>
+        <container
                 name="system-container"
                 type="AppserverIo\Appserver\Core\GenericContainer"
                 factory="AppserverIo\Appserver\Core\GenericContainerFactory">
@@ -178,6 +179,7 @@
                     </fileHandlers>
 
                 </server>
+            </servers>
         </container>
 
     </containers>

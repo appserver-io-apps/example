@@ -10,6 +10,10 @@ use Lurker\Event\FilesystemEvent;
 class RoboFile extends \Robo\Tasks
 {
 
+    protected $containers = array(
+        'appdata'
+    );
+
     /**
      * Deploy's the source files to the docker containers.
      *
@@ -17,7 +21,10 @@ class RoboFile extends \Robo\Tasks
      */
     public function deploy()
     {
-        $this->taskExec('docker cp src appdata:/opt/appserver/webapps/example/')->run();
+
+        foreach ($this->containers as $container) {
+            $this->taskExec("docker cp src $container:/opt/appserver/webapps/example/")->run();
+        }
     }
 
     /**
@@ -30,24 +37,28 @@ class RoboFile extends \Robo\Tasks
         $this->taskWatch()
             ->monitor('src', function(FilesystemEvent $event) {
 
-                $relativePath = str_replace(__DIR__ . '/src/', '', $event->getResource());
+                foreach ($this->containers as $container) {
 
-                $this->taskExec(
-                    sprintf(
-                        'docker exec -t appdata mkdir -p /opt/appserver/webapps/example/%s',
-                        dirname($relativePath)
-                    )
-                )->run();
+                    $relativePath = str_replace(__DIR__ . '/src/', '', $event->getResource());
+
+                    $this->taskExec(
+                        sprintf(
+                            'docker exec -t %s mkdir -p /opt/appserver/webapps/example/%s',
+                            $container,
+                            dirname($relativePath)
+                        )
+                    )->run();
 
 
-                $this->taskExec(
-                    sprintf(
-                        'docker cp %s appdata:/opt/appserver/webapps/example/%s',
-                        $event->getResource(),
-                        $relativePath
-                    )
-                )->run();
-
+                    $this->taskExec(
+                        sprintf(
+                            'docker cp %s %s:/opt/appserver/webapps/example/%s',
+                            $event->getResource(),
+                            $container,
+                            $relativePath
+                        )
+                    )->run();
+                }
             }
 
         )->run();

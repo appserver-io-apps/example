@@ -9,8 +9,7 @@
     </params>
 
     <containers>
-
-    <containers><container
+        <container
                 name="system-container"
                 type="AppserverIo\Appserver\Core\GenericContainer"
                 factory="AppserverIo\Appserver\Core\GenericContainerFactory">
