@@ -41,6 +41,42 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
 {
 
     /**
+     * The queue sender for sending the import message.
+     *
+     * @var AppserverIo\Messaging\QueueSender
+     * @Resource(name="import", type="pms/import")
+     */
+    protected $importSender;
+
+    /**
+     * The queue sender for sending the message to create an interval timer.
+     *
+     * @var AppserverIo\Messaging\QueueSender
+     * @Resource(name="createAIntervalTimer", type="pms/createAIntervalTimer")
+     */
+    protected $createAIntervalTimerSender;
+
+    /**
+     * Returns the queue sender for sending the import message.
+     *
+     * @return @var AppserverIo\Messaging\QueueSender The queue sender
+     */
+    protected function getImportSender()
+    {
+        return $this->importSender;
+    }
+
+    /**
+     * Returns the queue sender for sending the message to create an interval timer.
+     *
+     * @return @var AppserverIo\Messaging\QueueSender The queue sender
+     */
+    protected function getCreateAIntervalTimerSender()
+    {
+        return $this->createAIntervalTimerSender;
+    }
+
+    /**
      * Returns an ArrayObject with the CSV files that can be imported.
      *
      * @return \ArrayObject An array with the name of CSV files that can be imported
@@ -85,17 +121,11 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
             // load the application name
             $applicationName = $this->getApplication()->getName();
 
-            // initialize the connection and the session
-            $queue = MessageQueue::createQueue('pms/createAIntervalTimer');
-            $connection = QueueConnectionFactory::createQueueConnection($applicationName);
-            $session = $connection->createQueueSession();
-            $sender = $session->createSender($queue);
-
             // initialize the message with the name of the directory we want to watch
             $message = new StringMessage(ini_get('upload_tmp_dir'));
 
             // create a new message and send it
-            $sender->send($message, false);
+            $this->getCreateAIntervalTimerSender()->send($message, false);
         }
     }
 
@@ -124,16 +154,10 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
         // load the application name
         $applicationName = $this->getApplication()->getName();
 
-        // initialize the connection and the session
-        $queue = MessageQueue::createQueue('pms/import');
-        $connection = QueueConnectionFactory::createQueueConnection($applicationName);
-        $session = $connection->createQueueSession();
-        $sender = $session->createSender($queue);
-
         // initialize the message with the name of the file to import the data from
         $message = new StringMessage(ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR . $filename);
 
         // create a new message and send it
-        $sender->send($message, false);
+        $this->getImportSender()->send($message, false);
     }
 }

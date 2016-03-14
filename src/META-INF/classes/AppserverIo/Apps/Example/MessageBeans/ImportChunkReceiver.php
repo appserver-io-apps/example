@@ -40,11 +40,22 @@ class ImportChunkReceiver extends AbstractMessageListener
 {
 
     /**
-     * The proxy class we need to connect to the persistence container.
+     * The CartProcessor instance to handle the sample functionality.
      *
-     * @var string
+     * @var \AppserverIo\Apps\Example\Services\SampleProcessor
+     * @EnterpriseBean
      */
-    const PROXY_CLASS = 'SampleProcessor';
+    protected $sampleProcessor;
+
+    /**
+     * Returns the SampleProcessor instance to handle the sample funcionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getSampleProcessor()
+    {
+        return $this->sampleProcessor;
+    }
 
     /**
      * Will be invoked when a new message for this message bean will be available.
@@ -65,8 +76,8 @@ class ImportChunkReceiver extends AbstractMessageListener
         $initialContext = new InitialContext();
         $initialContext->injectApplication($this->getApplication());
 
-        // lookup and return the requested bean proxy
-        $processor = $initialContext->lookup(ImportChunkReceiver::PROXY_CLASS);
+        // load sample processor proxy
+        $sampleProcessor = $this->getSampleProcessor();
 
         // read in message chunk data
         $chunkData = $message->getMessage();
@@ -81,7 +92,7 @@ class ImportChunkReceiver extends AbstractMessageListener
             $entity->setName(trim($firstname . ', ' . $lastname));
 
             // store the entity in the database
-            $processor->persist($entity);
+            $sampleProcessor->persist($entity);
         }
 
         // update the message monitor for this message

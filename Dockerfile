@@ -3,7 +3,7 @@
 ################################################################################
 
 # base image
-FROM wagner83104/dist:1.1.1-alpha7
+FROM wagner83104/dist:1.1.1-alpha8
 
 ################################################################################
 
@@ -12,8 +12,8 @@ MAINTAINER Tim Wagner <tw@appserver.io>
 
 ################################################################################
 
-COPY composer.json /tmp/example/
-COPY src/ /tmp/example/src/
+# add the sources to a temporary folder
+ADD . /tmp/example
 
 ################################################################################
 
@@ -21,7 +21,7 @@ COPY src/ /tmp/example/src/
 RUN cd /tmp/example \
     && composer install --prefer-dist --no-dev --no-interaction --optimize-autoloader \
     && mkdir /opt/appserver/webapps \
-    && cp -r /tmp/example/src/ /opt/appserver/webapps/example/
+    && mv /tmp/example/src /opt/appserver/webapps/example
 
 ################################################################################
 

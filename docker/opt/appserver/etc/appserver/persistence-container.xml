@@ -126,7 +126,7 @@
                     <params>
                         <param name="admin" type="string">info@appserver.io</param>
                         <param name="transport" type="string">tcp</param>
-                        <param name="address" type="string">127.0.0.1</param>
+                        <param name="address" type="string">0.0.0.0</param>
                         <param name="port" type="integer">8585</param>
                         <param name="workerNumber" type="integer">4</param>
                         <param name="workerAcceptMin" type="integer">3</param>

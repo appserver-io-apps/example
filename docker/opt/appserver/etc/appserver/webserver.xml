@@ -174,6 +174,7 @@
                         <!-- FileHandler Modules -->
                         <module type="\AppserverIo\WebServer\Modules\CoreModule"/>
                         <module type="\AppserverIo\WebServer\Modules\FastCgiModule"/>
+                        <module type="\AppserverIo\Appserver\ServletEngine\ServletEngine"/>
                         <module type="\AppserverIo\WebServer\Modules\ProxyModule"/>
                         <!-- RESPONSE_PRE hook -->
                         <module type="\AppserverIo\WebServer\Modules\HeaderModule"/>
@@ -183,16 +184,18 @@
                     <fileHandlers>
                         <fileHandler name="fastcgi" extension=".php">
                             <params>
-                                <param name="host" type="string">127.0.0.1</param>
+                                <param name="host" type="string">php-fcgi</param>
                                 <param name="port" type="integer">9010</param>
                             </params>
                         </fileHandler>
                         <fileHandler name="fastcgi" extension=".phtml">
                             <params>
-                                <param name="host" type="string">127.0.0.1</param>
+                                <param name="host" type="string">php-fcgi</param>
                                 <param name="port" type="integer">9010</param>
                             </params>
                         </fileHandler>
+                        <fileHandler name="servlet" extension=".dhtml" />
+                        <fileHandler name="servlet" extension=".do" />
                     </fileHandlers>
 
                 </server>
@@ -259,6 +262,7 @@
                         <!-- FileHandler Modules -->
                         <module type="\AppserverIo\WebServer\Modules\CoreModule"/>
                         <module type="\AppserverIo\WebServer\Modules\FastCgiModule"/>
+                        <module type="\AppserverIo\Appserver\ServletEngine\ServletEngine"/>
                         <module type="\AppserverIo\WebServer\Modules\ProxyModule"/>
                         <!-- RESPONSE_PRE hook -->
                         <module type="\AppserverIo\WebServer\Modules\HeaderModule"/>
@@ -268,16 +272,18 @@
                     <fileHandlers>
                         <fileHandler name="fastcgi" extension=".php">
                             <params>
-                                <param name="host" type="string">127.0.0.1</param>
+                                <param name="host" type="string">php-fcgi</param>
                                 <param name="port" type="integer">9010</param>
                             </params>
                         </fileHandler>
                         <fileHandler name="fastcgi" extension=".phtml">
                             <params>
-                                <param name="host" type="string">127.0.0.1</param>
+                                <param name="host" type="string">php-fcgi</param>
                                 <param name="port" type="integer">9010</param>
                             </params>
                         </fileHandler>
+                        <fileHandler name="servlet" extension=".dhtml" />
+                        <fileHandler name="servlet" extension=".do" />
                     </fileHandlers>
 
                 </server>

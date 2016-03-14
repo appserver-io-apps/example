@@ -21,7 +21,6 @@ class RoboFile extends \Robo\Tasks
      */
     public function deploy()
     {
-
         foreach ($this->containers as $container) {
             $this->taskExec("docker cp src $container:/opt/appserver/webapps/example/")->run();
         }
@@ -34,6 +33,7 @@ class RoboFile extends \Robo\Tasks
      */
     public function watch()
     {
+
         $this->taskWatch()
             ->monitor('src', function(FilesystemEvent $event) {
 
@@ -48,7 +48,6 @@ class RoboFile extends \Robo\Tasks
                             dirname($relativePath)
                         )
                     )->run();
-
 
                     $this->taskExec(
                         sprintf(

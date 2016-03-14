@@ -42,6 +42,24 @@ class ImportReceiver extends AbstractMessageListener
 {
 
     /**
+     * The queue sender for sending the import message.
+     *
+     * @var AppserverIo\Messaging\QueueSender
+     * @Resource(name="importChunk", type="pms/importChunk")
+     */
+    protected $importChunkSender;
+
+    /**
+     * Returns the queue sender for sending the import message.
+     *
+     * @return @var AppserverIo\Messaging\QueueSender The queue sender
+     */
+    protected function getImportChunkSender()
+    {
+        return $this->importChunkSender;
+    }
+
+    /**
      * Will be invoked when a new message for this message bean will be available.
      *
      * @param \AppserverIo\Psr\Pms\MessageInterface $message   A message this message bean is listen for
@@ -65,18 +83,12 @@ class ImportReceiver extends AbstractMessageListener
         // load the application name
         $applicationName = $this->getApplication()->getName();
 
-        // initialize the connection and the session
-        $queue = MessageQueue::createQueue('pms/importChunk');
-        $connection = QueueConnectionFactory::createQueueConnection($applicationName);
-        $session = $connection->createQueueSession();
-        $sender = $session->createSender($queue);
-
         // init chunk data
         $chunkSize = 100;
 
         // if data contains less entries than chunk size
         if (sizeof($importData) <= $chunkSize) {
-            return $sender->send(new ArrayMessage($importData), false);
+            return $this->getImportChunkSender()->send(new ArrayMessage($importData), false);
         }
 
         // prepare the variables we need for chunking
@@ -103,7 +115,7 @@ class ImportReceiver extends AbstractMessageListener
                 // send chunked data message
                 $message = new ArrayMessage($chunkData);
                 $message->setPriority(PriorityMedium::get());
-                $send = $sender->send($message, false);
+                $send = $this->getImportChunkSender()->send($message, false);
 
                 // reset chunk data
                 $chunkData = array();
