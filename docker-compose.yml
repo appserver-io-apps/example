@@ -1,0 +1,74 @@
+version: '2'
+
+services: 
+  appdata:
+    restart: always
+    container_name: appdata
+    build: .
+    depends_on:
+      - mysql
+    volumes:
+      - /opt/appserver/tmp
+      - /opt/appserver/webapps
+      - ./docker/opt/appserver/webapps/example/META-INF/epb.xml:/opt/appserver/webapps/example/META-INF/epb.xml
+      - ./docker/opt/appserver/webapps/example/META-INF/appserver-ds.xml:/opt/appserver/webapps/example/META-INF/appserver-ds.xml
+      - ./docker/opt/appserver/webapps/example/META-INF/epb-client.properties:/opt/appserver/webapps/example/META-INF/epb-client.properties
+      - ./docker/opt/appserver/webapps/example/META-INF/pms-client.properties:/opt/appserver/webapps/example/META-INF/pms-client.properties
+      - ./docker/opt/appserver/webapps/example/WEB-INF/epb-client.properties:/opt/appserver/webapps/example/WEB-INF/epb-client.properties
+    command: "bin/php -dappserver.php_sapi=appserver -f server.php -- -w"
+    entrypoint: ""
+
+  webserver:
+    restart: always
+    container_name: webserver
+    image: wagner83104/dist:1.1.1-alpha8
+    volumes_from:
+      - appdata
+    volumes:
+      - ./docker/opt/appserver/etc/appserver/webserver.xml:/opt/appserver/etc/appserver/appserver.xml
+    command: "bin/php -dappserver.php_sapi=appserver -f server.php"
+    entrypoint: ""
+
+  message-queue:
+    restart: always
+    container_name: message-queue
+    image: wagner83104/dist:1.1.1-alpha8
+    volumes_from:
+      - appdata
+    volumes:
+      - ./docker/opt/appserver/etc/appserver/message-queue.xml:/opt/appserver/etc/appserver/appserver.xml
+    command: "bin/php -dappserver.php_sapi=appserver -f server.php"
+    entrypoint: ""
+
+  persistence-container:
+    restart: always
+    container_name: persistence-container
+    image: wagner83104/dist:1.1.1-alpha8
+    volumes_from:
+      - appdata
+    volumes:
+      - ./docker/opt/appserver/etc/appserver/persistence-container.xml:/opt/appserver/etc/appserver/appserver.xml
+    command: "bin/php -dappserver.php_sapi=appserver -f server.php"
+    entrypoint: ""
+
+  php-fcgi:
+    restart: always
+    container_name: php-fcgi
+    image: wagner83104/dist:1.1.1-alpha8
+    volumes_from:
+      - appdata
+    volumes:
+      - ./docker/opt/appserver/etc/php-fpm.conf:/opt/appserver/etc/php-fpm.conf
+      - ./docker/opt/appserver/etc/appserver/webserver.xml:/opt/appserver/etc/appserver/appserver.xml
+    command: "sbin/php-fpm -F --php-ini etc/php-fpm-fcgi.ini --fpm-config etc/php-fpm.conf --allow-to-run-as-root"
+    entrypoint: ""
+
+  mysql:
+    restart: always
+    container_name: mysql
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: 'appserver.i0'
+      MYSQL_USER: 'appserver'
+      MYSQL_PASSWORD: 'appserver.i0'
+      MYSQL_DATABASE: 'appserver_ApplicationServer'

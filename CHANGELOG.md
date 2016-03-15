@@ -1,3 +1,13 @@
+# Version 2.1.7
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Refactoring Docker integration + switch to DI for MQ senders
+
 # Version 2.1.6
 
 ## Bugfixes

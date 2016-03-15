@@ -39,13 +39,6 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
 {
 
     /**
-     * The default username.
-     *
-     * @var string
-     */
-    const DEFAULT_USERNAME = 'appserver';
-
-    /**
      * The user, logged into the system.
      *
      * @var \AppserverIo\Apps\Example\Entities\Impl\User $user
