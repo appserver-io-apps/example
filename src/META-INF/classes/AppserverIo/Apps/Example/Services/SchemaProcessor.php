@@ -68,13 +68,6 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     );
 
     /**
-     * The default username.
-     *
-     * @var string
-     */
-    const DEFAULT_USERNAME = 'appserver';
-
-    /**
      * Example method that should be invoked after constructor.
      *
      * @return void
@@ -104,9 +97,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
         // load the class definitions
         $classes = $entityManager->getMetadataFactory()->getAllMetadata();
 
-        // drop the schema if it already exists and create it new
-        $schemaTool->dropSchema($classes);
-        $schemaTool->createSchema($classes);
+        // create or update the schema
+        $schemaTool->updateSchema($classes);
     }
 
     /**
@@ -121,10 +113,18 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             // load the entity manager
             $entityManager = $this->getEntityManager();
 
+            // load the product repository
+            $repository = $entityManager->getRepository($className = '\AppserverIo\Apps\Example\Entities\Impl\Product');
+
             // create 10 products
             for ($i = 1; $i < 11; $i++) {
+                // query whether or not, the product has already been created
+                if ($repository->findOneByProductNumber($i)) {
+                    continue;
+                }
+
                 // set user data and save it
-                $product = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\Product');
+                $product = $this->providerInterface->newInstance($className);
                 $product->setName("Product-$i");
                 $product->setStatus(Product::STATUS_ACTIVE);
                 $product->setUrlKey("product-$i");
@@ -135,6 +135,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
                 // persist the user
                 $entityManager->persist($product);
             }
+
             // flush the entity manager
             $entityManager->flush();
 
@@ -156,13 +157,21 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             // load the entity manager
             $entityManager = $this->getEntityManager();
 
+            // load the user repository
+            $repository = $entityManager->getRepository($className = '\AppserverIo\Apps\Example\Entities\Impl\User');
+
             // create the default credentials
             foreach ($this->users as $userData) {
                 // extract the user data
                 list ($username, $password, $roleNames) = $userData;
 
+                // query whether or not, the user has already been created
+                if ($repository->findOneByUsername($username)) {
+                    continue;
+                }
+
                 // set user data and save it
-                $user = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\User');
+                $user = $this->providerInterface->newInstance($className);
                 $user->setEmail(sprintf('%s@appserver.io', $username));
                 $user->setUsername($username);
                 $user->setUserLocale('en_US');
