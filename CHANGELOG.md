@@ -1,3 +1,13 @@
+# Version 2.1.8
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Update to appserver.io Docker version 1.1.1-alpha9
+
 # Version 2.1.7
 
 ## Bugfixes
