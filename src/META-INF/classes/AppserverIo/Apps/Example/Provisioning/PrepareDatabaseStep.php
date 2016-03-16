@@ -82,13 +82,10 @@ class PrepareDatabaseStep extends AbstractStep
                 $retry = false;
 
             } catch (\Exception $e) {
+                // raise the retry count
+                $retryCount++;
                 // query whether or not we've reached the maximum retry count
-                if (PrepareDatabaseStep::MAX_RETRIES > ++$retryCount) {
-                    // log a message and stop retrying
-                    $this->getApplication()->getInitialContext()->getSystemLogger()->error($e->__toString());
-                    $retry = false;
-
-                } else {
+                if ($retryCount < PrepareDatabaseStep::MAX_RETRIES) {
                     // sleep for an increasing number of seconds
                     sleep($retryCount + 1);
                     // debug log the exeception
@@ -96,9 +93,15 @@ class PrepareDatabaseStep extends AbstractStep
                         sprintf(
                             'Failed %d (of %d) times to run provisioning step %s',
                             $retryCount,
-                            PrepareDatabaseStep::MAX_RETRIES
+                            PrepareDatabaseStep::MAX_RETRIES,
+                            __CLASS__
                         )
                     );
+
+                } else {
+                    // log a message and stop retrying
+                    $this->getApplication()->getInitialContext()->getSystemLogger()->error($e->__toString());
+                    $retry = false;
                 }
             }
 

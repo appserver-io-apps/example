@@ -109,40 +109,34 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     public function createDefaultProducts()
     {
 
-        try {
-            // load the entity manager
-            $entityManager = $this->getEntityManager();
+        // load the entity manager
+        $entityManager = $this->getEntityManager();
 
-            // load the product repository
-            $repository = $entityManager->getRepository($className = '\AppserverIo\Apps\Example\Entities\Impl\Product');
+        // load the product repository
+        $repository = $entityManager->getRepository($className = '\AppserverIo\Apps\Example\Entities\Impl\Product');
 
-            // create 10 products
-            for ($i = 1; $i < 11; $i++) {
-                // query whether or not, the product has already been created
-                if ($repository->findOneByProductNumber($i)) {
-                    continue;
-                }
-
-                // set user data and save it
-                $product = $this->providerInterface->newInstance($className);
-                $product->setName("Product-$i");
-                $product->setStatus(Product::STATUS_ACTIVE);
-                $product->setUrlKey("product-$i");
-                $product->setProductNumber($i);
-                $product->setSalesPrice($i);
-                $product->setDescription("Description of Product-$i");
-
-                // persist the user
-                $entityManager->persist($product);
+        // create 10 products
+        for ($i = 1; $i < 11; $i++) {
+            // query whether or not, the product has already been created
+            if ($repository->findOneByProductNumber($i)) {
+                continue;
             }
 
-            // flush the entity manager
-            $entityManager->flush();
+            // set user data and save it
+            $product = $this->providerInterface->newInstance($className);
+            $product->setName("Product-$i");
+            $product->setStatus(Product::STATUS_ACTIVE);
+            $product->setUrlKey("product-$i");
+            $product->setProductNumber($i);
+            $product->setSalesPrice($i);
+            $product->setDescription("Description of Product-$i");
 
-        } catch (\Exception $e) {
-            // log the exception
-            $this->getInitialContext()->getSystemLogger()->error($e->__toString());
+            // persist the user
+            $entityManager->persist($product);
         }
+
+        // flush the entity manager
+        $entityManager->flush();
     }
 
     /**
@@ -153,59 +147,53 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     public function createDefaultCredentials()
     {
 
-        try {
-            // load the entity manager
-            $entityManager = $this->getEntityManager();
+        // load the entity manager
+        $entityManager = $this->getEntityManager();
 
-            // load the user repository
-            $repository = $entityManager->getRepository($className = '\AppserverIo\Apps\Example\Entities\Impl\User');
+        // load the user repository
+        $repository = $entityManager->getRepository($className = '\AppserverIo\Apps\Example\Entities\Impl\User');
 
-            // create the default credentials
-            foreach ($this->users as $userData) {
-                // extract the user data
-                list ($username, $password, $roleNames) = $userData;
+        // create the default credentials
+        foreach ($this->users as $userData) {
+            // extract the user data
+            list ($username, $password, $roleNames) = $userData;
 
-                // query whether or not, the user has already been created
-                if ($repository->findOneByUsername($username)) {
-                    continue;
-                }
-
-                // set user data and save it
-                $user = $this->providerInterface->newInstance($className);
-                $user->setEmail(sprintf('%s@appserver.io', $username));
-                $user->setUsername($username);
-                $user->setUserLocale('en_US');
-                $user->setPassword(md5($password));
-                $user->setEnabled(true);
-                $user->setRate(1000);
-                $user->setContractedHours(160);
-                $user->setLdapSynced(false);
-                $user->setSyncedAt(time());
-
-                // create a collection to store the user's roles
-                $roles = new ArrayCollection();
-
-                // create the user's roles
-                foreach ($roleNames as $roleName) {
-                    $role = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\Role');
-                    $role->setUser($user);
-                    $role->setName($roleName);
-                    $roles->add($role);
-                }
-
-                // set the user's roles
-                $user->setRoles($roles);
-
-                // persist the user
-                $entityManager->persist($user);
+            // query whether or not, the user has already been created
+            if ($repository->findOneByUsername($username)) {
+                continue;
             }
 
-            // flush the entity manager
-            $entityManager->flush();
+            // set user data and save it
+            $user = $this->providerInterface->newInstance($className);
+            $user->setEmail(sprintf('%s@appserver.io', $username));
+            $user->setUsername($username);
+            $user->setUserLocale('en_US');
+            $user->setPassword(md5($password));
+            $user->setEnabled(true);
+            $user->setRate(1000);
+            $user->setContractedHours(160);
+            $user->setLdapSynced(false);
+            $user->setSyncedAt(time());
 
-        } catch (\Exception $e) {
-            // log the exception
-            $this->getInitialContext()->getSystemLogger()->error($e->__toString());
+            // create a collection to store the user's roles
+            $roles = new ArrayCollection();
+
+            // create the user's roles
+            foreach ($roleNames as $roleName) {
+                $role = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\Role');
+                $role->setUser($user);
+                $role->setName($roleName);
+                $roles->add($role);
+            }
+
+            // set the user's roles
+            $user->setRoles($roles);
+
+            // persist the user
+            $entityManager->persist($user);
         }
+
+        // flush the entity manager
+        $entityManager->flush();
     }
 }
