@@ -41,7 +41,7 @@ class PrepareDatabaseStep extends AbstractStep
      *
      * @var integer
      */
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 5;
 
     /**
      * Executes the functionality for this step, in this case the execution of
