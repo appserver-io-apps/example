@@ -21,7 +21,7 @@ services:
   webserver:
     restart: always
     container_name: webserver
-    image: wagner83104/dist:1.1.1-alpha9
+    image: wagner83104/dist:1.1.1-alpha10
     volumes_from:
       - appdata
     volumes:
@@ -32,7 +32,7 @@ services:
   message-queue:
     restart: always
     container_name: message-queue
-    image: wagner83104/dist:1.1.1-alpha9
+    image: wagner83104/dist:1.1.1-alpha10
     volumes_from:
       - appdata
     volumes:
@@ -43,7 +43,7 @@ services:
   persistence-container:
     restart: always
     container_name: persistence-container
-    image: wagner83104/dist:1.1.1-alpha9
+    image: wagner83104/dist:1.1.1-alpha10
     volumes_from:
       - appdata
     volumes:
@@ -54,7 +54,7 @@ services:
   php-fcgi:
     restart: always
     container_name: php-fcgi
-    image: wagner83104/dist:1.1.1-alpha9
+    image: wagner83104/dist:1.1.1-alpha10
     volumes_from:
       - appdata
     volumes:

@@ -197,7 +197,6 @@
                         <!-- FileHandler Modules -->
                         <module type="\AppserverIo\WebServer\Modules\CoreModule"/>
                         <module type="\AppserverIo\Appserver\MessageQueue\MessageQueueModule" />
-                        <module type="\AppserverIo\WebServer\Modules\ProxyModule"/>
                         <!-- RESPONSE_PRE hook -->
                         <module type="\AppserverIo\WebServer\Modules\HeaderModule"/>
                         <module type="\AppserverIo\WebServer\Modules\DeflateModule"/>
