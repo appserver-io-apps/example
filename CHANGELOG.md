@@ -1,3 +1,13 @@
+# Version 2.1.10
+
+## Bugfixes
+
+* Bugfix for missing parameter in debug message of wait for DB loop
+
+## Features
+
+* None
+
 # Version 2.1.9
 
 ## Bugfixes
