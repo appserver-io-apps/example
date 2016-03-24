@@ -3,6 +3,7 @@
 /instance-src
 /src/vendor
 /src/components
+/src/META-INF/data/appserver_ApplicationServer.sqlite
 /.idea
 /.buildpath
 /.project
