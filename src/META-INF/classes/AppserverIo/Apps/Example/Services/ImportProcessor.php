@@ -77,6 +77,16 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
     }
 
     /**
+     * Return's the temporary upload directory specified in the php.ini.
+     *
+     * @return string The temporary upload directory
+     */
+    protected function getUploadTmpDir()
+    {
+        return $this->getApplication()->getBaseDirectory(DIRECTORY_SEPARATOR . ini_get('upload_tmp_dir'));
+    }
+
+    /**
      * Returns an ArrayObject with the CSV files that can be imported.
      *
      * @return \ArrayObject An array with the name of CSV files that can be imported
@@ -88,7 +98,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
         $overviewData = new \ArrayObject();
 
         // init file iterator on deployment directory
-        $fileIterator = new \FilesystemIterator(ini_get('upload_tmp_dir'));
+        $fileIterator = new \FilesystemIterator($this->getUploadTmpDir());
 
         // Iterate through all phar files and extract them to tmp dir
         foreach (new \RegexIterator($fileIterator, '/^.*\\.csv$/') as $importFile) {
@@ -113,7 +123,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
         // save file to appservers upload tmp folder with tmpname
         $fileToUpload->init();
         $fileToUpload->write(
-            tempnam(ini_get('upload_tmp_dir'), 'example_upload_') . '.' . pathinfo($fileToUpload->getFilename(), PATHINFO_EXTENSION)
+            tempnam($this->getUploadTmpDir(), 'example_upload_') . '.' . pathinfo($fileToUpload->getFilename(), PATHINFO_EXTENSION)
         );
 
         // check if we should watch the directory for periodic import
@@ -122,7 +132,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
             $applicationName = $this->getApplication()->getName();
 
             // initialize the message with the name of the directory we want to watch
-            $message = new StringMessage(ini_get('upload_tmp_dir'));
+            $message = new StringMessage($this->getUploadTmpDir());
 
             // create a new message and send it
             $this->getCreateAIntervalTimerSender()->send($message, false);
@@ -138,7 +148,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
      */
     public function delete($filename)
     {
-        unlink(ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR . $filename);
+        unlink($this->getUploadTmpDir() . DIRECTORY_SEPARATOR . $filename);
     }
 
     /**
@@ -155,7 +165,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
         $applicationName = $this->getApplication()->getName();
 
         // initialize the message with the name of the file to import the data from
-        $message = new StringMessage(ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR . $filename);
+        $message = new StringMessage($this->getUploadTmpDir() . DIRECTORY_SEPARATOR . $filename);
 
         // create a new message and send it
         $this->getImportSender()->send($message, false);
