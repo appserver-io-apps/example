@@ -16,7 +16,7 @@
 		"appserver-io/build" : "~1.0",
 		"appserver-io/messaging" : "~1.0",
 		"appserver-io/lang" : "~1.0",
-		"appserver-io/properties" : "dev-master as 1.1.0",
+		"appserver-io/properties" : "~2.0",
 		"appserver-io-psr/mop" : "~1.0",
 		"appserver-io-psr/epb" : "~1.0",
 		"appserver-io-psr/servlet" : "~1.0",
@@ -36,12 +36,6 @@
 		}, {
 			"name" : "Bernhard Wick",
 			"email" : "bw@appserver.io"
-		}
-	],
-	"repositories" : [{
-			"type" : "git",
-			"url" : "/Users/wagnert/Workspace/properties",
-			"name" : "appserver-io/properties"
 		}
 	]
 }

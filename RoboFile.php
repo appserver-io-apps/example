@@ -17,18 +17,6 @@ class RoboFile extends \Robo\Tasks
 
     protected $result = null;
 
-    protected $srcDir = 'src';
-
-    protected $vendorDir = 'src/vendor';
-
-    protected $baseDir = '/opt/appserver';
-
-    protected $deployDir = '/opt/appserver/webapps/example';
-
-    protected $configurationFile = __DIR__ . '/etc/appserver/appserver.xml';
-
-    protected $bootstrapFile = '/opt/appserver/etc/appserver/conf.d/bootstrap-runner.xml';
-
     protected $containers = array(
         'appdata'
     );
@@ -43,7 +31,7 @@ class RoboFile extends \Robo\Tasks
         $this->properties->setProperty('base.dir', '/opt/appserver');
         $this->properties->setProperty('deploy.dir', '${base.dir}/webapps/example');
         $this->properties->setProperty('configuration.file', __DIR__ . '/etc/appserver/appserver.xml');
-        $this->properties->setProperty('bootstrap.file', __DIR__ . '/opt/appserver/etc/appserver/conf.d/bootstrap-runner.xml');
+        $this->properties->setProperty('bootstrap.file', '${base.dir}/etc/appserver/conf.d/bootstrap-runner.xml');
 
         $this->properties->merge(Properties::create()->load(__DIR__ . '/build.properties'));
         $this->properties->merge(Properties::create()->load(__DIR__ . '/build.default.properties'));
@@ -78,7 +66,7 @@ class RoboFile extends \Robo\Tasks
 
     public function runTests()
     {
-        $this->taskPHPUnit(sprintf('%s/vendor/bin/phpunit', $this->srcDir))
+        $this->taskPHPUnit(sprintf('%s/bin/phpunit', $this->properties->getProperty('vendor.dir')))
              ->bootstrap('bootstrap.php')
              ->configFile('phpunit.xml')
              ->run();
@@ -86,16 +74,16 @@ class RoboFile extends \Robo\Tasks
 
     public function runSpec()
     {
-        $this->taskPhpspec(sprintf('%2/vendor/bin/phpspec', $this->srcDir))
+        $this->taskPhpspec(sprintf('%s/bin/phpspec', $this->properties->getProperty('vendor.dir')))
              ->format('pretty')
-             ->config('src/WEB-INF/phpspec.yml.dist')
+             ->config(sprintf('%s/WEB-INF/phpspec.yml.dist', $this->properties->getProperty('src.dir')))
              ->noInteraction()
              ->run();
     }
 
     public function deploy()
     {
-        $this->taskCopyDir([$this->srcDir => '/opt/appserver/webapps/example'])->run();
+        $this->taskCopyDir([$this->properties->getProperty('src.dir') => $this->properties->getProperty('deploy.dir')])->run();
     }
 
     public function rsync()
@@ -103,11 +91,11 @@ class RoboFile extends \Robo\Tasks
 
         $this->taskRsync()
              ->fromPath('src/')
-             ->toPath('/opt/appserver/webapps/example')
+             ->toPath($this->properties->getProperty('deploy.dir'))
              ->recursive()
              ->excludeVcs()
              ->checksum()
-             ->exclude(sprintf('%s/*', $this->vendorDir))
+             ->exclude(sprintf('%s/*', $this->properties->getProperty('vendor.dir')))
              ->wholeFile()
              ->verbose()
              ->progress()
@@ -130,8 +118,8 @@ class RoboFile extends \Robo\Tasks
     {
 
         $this->serverProcess = $this->taskExec('php /opt/appserver/server.php')
-                                    ->arg(sprintf('-b=%s', $this->bootstrapFile))
-                                    ->arg(sprintf('-c=%s', $this->configurationFile))
+                                    ->arg(sprintf('-b=%s', $this->properties->getProperty('bootstrap.file')))
+                                    ->arg(sprintf('-c=%s', $this->properties->getProperty('configuration.file')))
                                     ->dir($this->srcDir)
                                     ->background()
                                     ->run();
@@ -142,7 +130,7 @@ class RoboFile extends \Robo\Tasks
 
         $this->start();
 
-        $this->taskWatch()->monitor($this->srcDir, function(FilesystemEvent $event) {
+        $this->taskWatch()->monitor($this->properties->getProperty('src.dir'), function(FilesystemEvent $event) {
 
             $this->stop();
             $this->start();
@@ -158,7 +146,7 @@ class RoboFile extends \Robo\Tasks
     public function dockerDeploy()
     {
         foreach ($this->containers as $container) {
-            $this->taskExec("docker cp src $container:/opt/appserver/webapps/example/")->run();
+            $this->taskExec(sprintf("docker cp src $container:%s/", $this->properties->getProperty('deploy.dir')))->run();
         }
     }
 
@@ -216,17 +204,19 @@ class RoboFile extends \Robo\Tasks
 
                     $this->taskExec(
                         sprintf(
-                            'docker exec -t %s mkdir -p /opt/appserver/webapps/example/%s',
+                            'docker exec -t %s mkdir -p %s/%s',
                             $container,
+                            $this->properties->getProperty('deploy.dir'),
                             dirname($relativePath)
                         )
                     )->run();
 
                     $this->taskExec(
                         sprintf(
-                            'docker cp %s %s:/opt/appserver/webapps/example/%s',
+                            'docker cp %s %s:%s/%s',
                             $event->getResource(),
                             $container,
+                            $this->properties->getProperty('deploy.dir'),
                             $relativePath
                         )
                     )->run();
