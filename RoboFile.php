@@ -30,6 +30,7 @@ class RoboFile extends \Robo\Tasks
         $this->properties->setProperty('vendor.dir', '${src.dir}/vendor');
         $this->properties->setProperty('base.dir', '/opt/appserver');
         $this->properties->setProperty('deploy.dir', '${base.dir}/webapps/example');
+        $this->properties->setProperty('target.dir', __DIR__ . '/target');
         $this->properties->setProperty('configuration.file', __DIR__ . '/etc/appserver/appserver.xml');
         $this->properties->setProperty('bootstrap.file', '${base.dir}/etc/appserver/conf.d/bootstrap-runner.xml');
 
@@ -57,10 +58,29 @@ class RoboFile extends \Robo\Tasks
              ->run();
     }
 
-    public function semver()
+    public function semverCompare()
     {
+
+        $this->taskDeleteDir($this->properties->getProperty('target.dir'))->run();
+        $this->taskFileSystemStack()->mkdir($this->properties->getProperty('target.dir'));
+
+        $this->taskGitStack()
+             ->cloneRepo('git@github.com:wagnert/example.git', sprintf('%s/example', $this->properties->getProperty('target.dir')))
+             ->stopOnFail()
+             ->pull('origin', '2.1.11')
+             ->run();
+
+        $this->taskExec(sprintf('%s/bin/php-semver-checker', $this->properties->getProperty('vendor.dir')))
+             ->arg('compare')
+             ->arg('.')
+             ->arg(sprintf('%s/example', $this->properties->getProperty('target.dir')))
+             ->arg(sprintf('--to-json=%s/semver.json', $this->properties->getProperty('target.dir')))
+             ->run();
+
+        $semver = json_decode(file_get_contents(sprintf('%s/semver.json', $this->properties->getProperty('target.dir'))));
+
         $this->taskSemVer('.semver')
-             ->increment()
+             ->increment(strtolower($semver->level))
              ->run();
     }
 

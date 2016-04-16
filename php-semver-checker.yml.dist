@@ -1,0 +1,4 @@
+allow-detached: true
+details: true 
+exclude-before: src/vendor
+exclude-after: src/vendor
