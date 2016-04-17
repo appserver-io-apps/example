@@ -1,0 +1,7 @@
+suites:
+    default:
+        namespace: AppserverIo\Apps\Example
+        src_path: src/WEB-INF/classes
+        spec_path: src/WEB-INF
+
+bootstrap: bootstrap.php

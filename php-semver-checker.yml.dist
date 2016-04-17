@@ -1,0 +1,4 @@
+allow-detached: true
+details: true 
+exclude-before: RoboFile.php,src/vendor
+exclude-after: RoboFile.php,src/vendor
