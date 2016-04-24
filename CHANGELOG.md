@@ -1,3 +1,13 @@
+# Version 2.1.13
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Remove demo container implementation
+
 # Version 2.1.12
 
 ## Bugfixes
