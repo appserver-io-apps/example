@@ -1,3 +1,13 @@
+# Version 2.1.12
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Update to latest appserver.io Docker version
+
 # Version 2.1.11
 
 ## Bugfixes
