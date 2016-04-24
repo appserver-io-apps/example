@@ -1,7 +1,7 @@
 <?php
 
 /**
- * \AppserverIo\Apps\Example\Modules\ProfileModule
+ * \AppserverIo\Apps\Example\Servers\MyServer
  *
  * NOTICE OF LICENSE
  *

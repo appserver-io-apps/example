@@ -65,7 +65,7 @@
 
     <container
             name="${webapp.name}-container"
-            type="AppserverIo\SingleApp\Core\SimpleContainer"
+            type="AppserverIo\Appserver\Core\GenericContainer"
             factory="AppserverIo\Appserver\Core\GenericContainerFactory">
 
         <classLoaders>
@@ -86,7 +86,7 @@
             <![CDATA[This is an example of a webserver container that handles http requests in common way]]>
         </description>
 
-        <deployment type="AppserverIo\SingleApp\Core\SimpleDeployment" />
+        <deployment type="AppserverIo\Appserver\Core\GenericDeployment" />
 
         <host name="localhost" appBase="webapps" deployBase="deploy" tmpBase="var/tmp/localhost" />
 
