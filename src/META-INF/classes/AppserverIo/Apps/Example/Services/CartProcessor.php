@@ -35,7 +35,7 @@ use AppserverIo\Apps\Example\Entities\Impl\CartItem;
  *
  * @Stateful
  */
-class CartProcessor extends AbstractProcessor implements CartProcessorInterface
+class CartProcessor extends AbstractPersistenceProcessor implements CartProcessorInterface
 {
 
     /**
@@ -170,7 +170,7 @@ class CartProcessor extends AbstractProcessor implements CartProcessorInterface
 
         // load the product
         /** @var \AppserverIo\Apps\Example\Entities\Impl\Product $product */
-        $product = $this->entityManager->find('AppserverIo\Apps\Example\Entities\Impl\Product', $cartItem->getProductId());
+        $product = $this->getEntityManager()->find('AppserverIo\Apps\Example\Entities\Impl\Product', $cartItem->getProductId());
 
         // query whether the product is available or not
         if (empty($product)) {
