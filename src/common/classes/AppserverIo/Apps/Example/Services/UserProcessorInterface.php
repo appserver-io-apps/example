@@ -45,6 +45,13 @@ interface UserProcessorInterface
     public function login($username, $password);
 
     /**
+     * Logout the user and removes the SFSB instance from the container.
+     *
+     * @return void
+     */
+    public function logout();
+
+    /**
      * Returns the user actually logged into the system.
      *
      * @return \AppserverIo\Apps\Example\Entities\Impl\User|null The user instance
