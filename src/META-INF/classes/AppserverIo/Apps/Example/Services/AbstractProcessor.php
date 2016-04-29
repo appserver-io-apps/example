@@ -35,14 +35,6 @@ abstract class AbstractProcessor
 {
 
     /**
-     * The Doctrine EntityManager instance.
-     *
-     * @var \Doctrine\ORM\EntityManagerInterface
-     * @PersistenceUnit(unitName="ExampleEntityManager")
-     */
-    protected $entityManager;
-
-    /**
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
@@ -124,16 +116,6 @@ abstract class AbstractProcessor
     public function getApplication()
     {
         return $this->application;
-    }
-
-    /**
-     * Return's the initialized Doctrine entity manager.
-     *
-     * @return \Doctrine\ORM\EntityManagerInterface The initialized Doctrine entity manager
-     */
-    public function getEntityManager()
-    {
-        return $this->entityManager;
     }
 
     /**

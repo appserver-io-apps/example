@@ -28,6 +28,11 @@
             <pre-attach>
                 <lifecycle-callback-method>preAttach</lifecycle-callback-method>
             </pre-attach>
+            <!--
+            <remove-method>
+                <method-name>logout</method-name>
+            </remove-method>
+            -->
         </session>
         <session>
             <session-type>Stateless</session-type>

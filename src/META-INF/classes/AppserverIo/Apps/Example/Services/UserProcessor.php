@@ -85,6 +85,17 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
     }
 
     /**
+     * Logout the user and removes the SFSB instance from the container.
+     *
+     * @return void
+     * @Remove
+     */
+    public function logout()
+    {
+        $this->user = null;
+    }
+
+    /**
      * Returns the user actually logged into the system.
      *
      * @return \AppserverIo\Apps\Example\Entities\Impl\User|null The user instance

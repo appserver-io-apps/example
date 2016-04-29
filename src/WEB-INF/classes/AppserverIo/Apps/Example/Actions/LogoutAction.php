@@ -52,6 +52,24 @@ class LogoutAction extends BaseAction
 {
 
     /**
+     * The UserProcessor instance to handle the user functionality.
+     *
+     * @var \AppserverIo\Apps\Example\Services\UserProcessor
+     * @EnterpriseBean
+     */
+    protected $userProcessor;
+
+    /**
+     * Returns the ImportProcessor instance to handle the user functionality.
+     *
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
+     */
+    public function getUserProcessor()
+    {
+        return $this->userProcessor;
+    }
+
+    /**
      * Action that destroys the session and log the user out.
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
@@ -62,6 +80,7 @@ class LogoutAction extends BaseAction
      */
     public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
+        $this->getUserProcessor()->logout();
         $servletRequest->logout();
     }
 }

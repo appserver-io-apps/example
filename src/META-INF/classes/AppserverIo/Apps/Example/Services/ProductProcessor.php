@@ -34,7 +34,7 @@ use AppserverIo\Apps\Example\Entities\Impl\Product;
  *
  * @Stateless
  */
-class ProductProcessor extends AbstractProcessor implements ProductProcessorInterface
+class ProductProcessor extends AbstractPersistenceProcessor implements ProductProcessorInterface
 {
 
     /**

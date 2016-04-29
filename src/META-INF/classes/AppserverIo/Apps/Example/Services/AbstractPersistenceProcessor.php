@@ -58,7 +58,11 @@ abstract class AbstractPersistenceProcessor extends AbstractProcessor
      */
     public function preDestroy()
     {
-        $this->getEntityManager()->getConnection()->close();
+        if ($entityManager = $this->getEntityManager()) {
+            if ($connection = $entityManager->getConnection()) {
+                $connection->close();
+            }
+        }
     }
 
     /**
@@ -69,6 +73,10 @@ abstract class AbstractPersistenceProcessor extends AbstractProcessor
      */
     public function preAttach()
     {
-        $this->getEntityManager()->getConnection()->close();
+        if ($entityManager = $this->getEntityManager()) {
+            if ($connection = $entityManager->getConnection()) {
+                $connection->close();
+            }
+        }
     }
 }
