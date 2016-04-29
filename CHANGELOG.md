@@ -1,3 +1,14 @@
+# Version 2.1.14
+
+## Bugfixes
+
+* Remove unnecessary module implementation
+* Refactoring processor hierarchy
+
+## Features
+
+* Remove demo container implementation
+
 # Version 2.1.13
 
 ## Bugfixes
