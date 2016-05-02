@@ -74,7 +74,7 @@ class AnnotatedServlet extends HttpServlet
      * The queue session to send a message with.
      *
      * @var \AppserverIo\Messaging\QueueSession
-     * @Resource(lookup="php:global/example/pms/createASingleActionTimer")
+     * @Resource(name="createASingleActionTimer", type="pms/createASingleActionTimer")
      */
     protected $queueSender;
 
