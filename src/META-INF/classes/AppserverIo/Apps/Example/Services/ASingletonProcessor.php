@@ -48,6 +48,22 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     protected $application;
 
     /**
+     * The Doctrine EntityManager instance.
+     *
+     * @var \Doctrine\ORM\EntityManagerInterface
+     * @PersistenceUnit(unitName="ExampleEntityManager")
+     */
+    protected $entityManager;
+
+    /**
+     * The system logger implementation.
+     *
+     * @var \AppserverIo\Logger\Logger
+     * @Resource(lookup="php:global/log/System")
+     */
+    protected $systemLogger;
+
+    /**
      * A counter how often the instance has been invoked.
      *
      * @var integer
@@ -83,6 +99,26 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     }
 
     /**
+     * Return's the initialized Doctrine entity manager.
+     *
+     * @return \Doctrine\ORM\EntityManagerInterface The initialized Doctrine entity manager
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
+
+    /**
+     * Return's the system logger instance.
+     *
+     * @return \AppserverIo\Logger\Logger The sytsem logger instance
+     */
+    public function getSystemLogger()
+    {
+        return $this->systemLogger;
+    }
+
+    /**
      * Returns the initial context instance.
      *
      * @return \AppserverIo\Appserver\Application\Interfaces\ContextInterface The initial context instance
@@ -99,6 +135,17 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      */
     public function raiseCounter()
     {
+
+        // load the entity manager and the user repository
+        $entityManager = $this->getEntityManager();
+        $repository = $entityManager->getRepository('AppserverIo\Apps\Example\Entities\Impl\User');
+
+        // try to load the user and log the found name
+        if ($user = $repository->findOneBy(array('username' => 'appserver'))) {
+            $this->getSystemLogger()->info(sprintf('Found user with username: %s', $user->getUsername()));
+        }
+
+        // raise the counter
         return $this->counter++;
     }
 
