@@ -127,6 +127,9 @@ class AnnotatedServlet extends HttpServlet
             )
         );
 
+        // try to load the default user (for dummy purposes only)
+        $this->aSingletonProcessor->loadUser();
+
         // add the servlet name to the response
         $servletResponse->appendBodyStream($this->getServletConfig()->getServletName());
     }

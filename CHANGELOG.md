@@ -1,3 +1,13 @@
+# Version 2.1.16
+
+## Bugfixes
+
+* Fixed invalid usage of EM when startup SSB
+
+## Features
+
+* None
+
 # Version 2.1.15
 
 ## Bugfixes

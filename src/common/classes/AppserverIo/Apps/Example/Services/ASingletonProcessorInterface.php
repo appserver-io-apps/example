@@ -31,4 +31,18 @@ namespace AppserverIo\Apps\Example\Services;
  */
 interface ASingletonProcessorInterface
 {
+
+    /**
+     * Raises the invokation counter by one.
+     *
+     * @return integer Raises and returns the counter
+     */
+    public function raiseCounter();
+
+    /**
+     * Loads the default user for dummy purposes only.
+     *
+     * @return void
+     */
+    public function loadUser();
 }

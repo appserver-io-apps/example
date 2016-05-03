@@ -135,6 +135,16 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      */
     public function raiseCounter()
     {
+        return $this->counter++;
+    }
+
+    /**
+     * Loads the default user for dummy purposes only.
+     *
+     * @return void
+     */
+    public function loadUser()
+    {
 
         // load the entity manager and the user repository
         $entityManager = $this->getEntityManager();
@@ -144,9 +154,6 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
         if ($user = $repository->findOneBy(array('username' => 'appserver'))) {
             $this->getSystemLogger()->info(sprintf('Found user with username: %s', $user->getUsername()));
         }
-
-        // raise the counter
-        return $this->counter++;
     }
 
     /**
