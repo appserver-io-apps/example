@@ -1,3 +1,13 @@
+# Version 2.1.15
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add entity manager to SSB to test proxy integration
+
 # Version 2.1.14
 
 ## Bugfixes
