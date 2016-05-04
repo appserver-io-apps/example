@@ -1,3 +1,13 @@
+# Version 2.1.17
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add OPCache GUI as DHTML servlet
+
 # Version 2.1.16
 
 ## Bugfixes
