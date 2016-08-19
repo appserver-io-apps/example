@@ -102,7 +102,7 @@ class CartAction extends DispatchAction
      * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
-     * @Action(name="/addToCart")
+     * @Action(name="/addToCart(/(?<productId>\d+))?$")
      */
     public function addToCartAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
