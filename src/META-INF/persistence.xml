@@ -34,7 +34,7 @@
                 </params>
             </metadataConfiguration>
 
-            <datasource name="csv-importer-application"/>
+            <datasource name="appserver.io-example-application"/>
 
         </persistenceUnit>
 

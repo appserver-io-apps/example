@@ -59,6 +59,16 @@
                         </environmentVariables>
                     </virtualHost>
                 </virtualHosts>
+                <accesses>
+                    <access type="allow">
+                        <params>
+                            <param name="X_REQUEST_URI" type="string">^\/${webapp.name}\/.*</param>
+                        </params>
+                    </access>
+                </accesses>
+                <environmentVariables>
+                    <environmentVariable condition="^\/${webapp.name}\/.*" definition="LOGGER_ACCESS=${container.name}/${webapp.name}/Access" />
+                </environmentVariables>
             </server>
         </servers>
     </container>
