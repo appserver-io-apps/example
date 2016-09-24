@@ -7,6 +7,9 @@
 ## Features
 
 * Switch to appserver.io version 1.1.3
+* Removed Composer dependency to Rout.Lt, because 1.1.3 comes bundled with latest Rout.Lt version
+* Add classes to reproduce issue [#881](https://github.com/appserver-io/appserver/issues/881)
+* Refactor shopping cart action to use latest Rout.Lt 2.2.0+ features
 
 # Version 2.1.17
 

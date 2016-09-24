@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Entities\Impl\CartItem;
@@ -102,7 +101,7 @@ class CartAction extends DispatchAction
      * @throws \Exception
      * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
-     * @Action(name="/addToCart(/(?<productId>\d+))?$")
+     * @Action(name="/addToCart/:productId", restrictions={{"productId", "\d+"}})
      */
     public function addToCartAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -136,7 +135,7 @@ class CartAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/delete")
+     * @Action(name="/delete/:productId", restrictions={{"productId", "\d+"}})
      */
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
