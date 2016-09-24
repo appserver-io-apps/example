@@ -174,7 +174,7 @@ class ViewHelper
      */
     public function getAddToCartLink(Product $entity)
     {
-        return sprintf('index.do/cart/addToCart?%s=%d', RequestKeys::PRODUCT_ID, $entity->getId());
+        return sprintf('index.do/cart/addToCart/%d', $entity->getId());
     }
 
     /**
@@ -186,7 +186,7 @@ class ViewHelper
      */
     public function getDeleteCartItemLink(CartItem $entity)
     {
-        return sprintf('index.do/cart/delete?%s=%d', RequestKeys::PRODUCT_ID, $entity->getProductId());
+        return sprintf('index.do/cart/delete/%d', $entity->getProductId());
     }
 
     /**

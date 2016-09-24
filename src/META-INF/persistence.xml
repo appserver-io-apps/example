@@ -3,33 +3,38 @@
 
     <persistenceUnits>
 
-        <persistenceUnit name="ExampleEntityManager"
+        <persistenceUnit 
+            name="ExampleEntityManager"
             interface="Doctrine\ORM\EntityManagerInterface"
             type="Doctrine\ORM\EntityManager"
-            factory="AppserverIo\Appserver\PersistenceContainer\Doctrine\EntityManagerFactory">
-            
-            <metadataConfiguration type="annotation">
-                <directories>
-                    <directory>/common/classes/AppserverIo/Apps/Example/Entities/Impl</directory>
-                </directories>
-
-                <params>
-                    <param name="isDevMode" type="boolean">true</param>
-                    <param name="useSimpleAnnotationReader" type="boolean">false</param>
-                    <param name="proxyDir" type="string">false</param>
-                </params>
-
-            </metadataConfiguration>
-
-            <datasource name="appserver.io-example-application"/>
+            factory="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\EntityManagerFactory">
 
             <annotationRegistries>
-                <annotationRegistry namespace="JMS\Serializer\Annotation">
+                <annotationRegistry
+                    type="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\AnnotationRegistries\FileAnnotationRegistry" 
+                    file="${base.dir}/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php" />
+                <annotationRegistry 
+                    type="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\AnnotationRegistries\NamespaceAnnotationRegistry"
+                    namespace="JMS\Serializer\Annotation">
                     <directories>
-                        <directory>/vendor/jms/serializer/src</directory>
+                        <directory>${webapp.dir}/vendor/jms/serializer/src</directory>
                     </directories>
                 </annotationRegistry>
             </annotationRegistries>
+
+            <metadataConfiguration factory="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\DriverFactories\AnnotationDriverFactory">
+                <directories>
+                    <directory>${webapp.dir}/common/classes/AppserverIo/Apps/Example/Entities/Impl</directory>
+                </directories>
+                <params>
+                    <param name="proxyNamespace" type="string">AppserverIo\Apps\Example</param>
+                    <param name="proxyDir" type="string">${webapp.cache.dir}</param>
+                    <param name="useSimpleAnnotationReader" type="boolean">false</param>
+                    <param name="autoGenerateProxyClasses" constant="true" type="integer">Doctrine\Common\Proxy\AbstractProxyFactory::AUTOGENERATE_FILE_NOT_EXISTS</param>
+                </params>
+            </metadataConfiguration>
+
+            <datasource name="appserver.io-example-application"/>
 
         </persistenceUnit>
 
