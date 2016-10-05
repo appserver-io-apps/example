@@ -24,8 +24,8 @@ services:
     container_name: webserver
     image: appserver/dist
     ports:
-      - 9080:80
-      - 9443:443
+      - 9080:9080
+      - 9443:9443
     volumes_from:
       - appdata
     volumes:

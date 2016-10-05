@@ -153,7 +153,7 @@
                         <param name="admin" type="string">info@appserver.io</param>
                         <param name="transport" type="string">tcp</param>
                         <param name="address" type="string">0.0.0.0</param>
-                        <param name="port" type="integer">80</param>
+                        <param name="port" type="integer">9080</param>
                         <param name="workerNumber" type="integer">16</param>
                         <param name="workerAcceptMin" type="integer">3</param>
                         <param name="workerAcceptMax" type="integer">8</param>
@@ -243,7 +243,7 @@
                         <param name="workerAcceptMax" type="integer">8</param>
                         <param name="transport" type="string">ssl</param>
                         <param name="address" type="string">0.0.0.0</param>
-                        <param name="port" type="integer">443</param>
+                        <param name="port" type="integer">9443</param>
                         <param name="certPath" type="string">etc/appserver/server.pem</param>
                         <param name="passphrase" type="string"></param>
                         <param name="documentRoot" type="string">webapps</param>
