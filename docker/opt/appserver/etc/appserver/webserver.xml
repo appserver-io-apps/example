@@ -113,8 +113,6 @@
                         <module type="\AppserverIo\WebServer\Modules\DeflateModule"/>
                         <!-- RESPONSE_POST hook -->
                         <!-- module type="\AppserverIo\Appserver\Core\Modules\ProfileModule"/ -->
-                        <!-- REQUEST_PRE/RESPONSE_POST hook -->
-                        <!-- module type="\AppserverIo\Appserver\Core\Modules\BlackfireModule"/ -->
                     </modules>
 
                     <fileHandlers>
@@ -155,7 +153,7 @@
                         <param name="admin" type="string">info@appserver.io</param>
                         <param name="transport" type="string">tcp</param>
                         <param name="address" type="string">0.0.0.0</param>
-                        <param name="port" type="integer">9080</param>
+                        <param name="port" type="integer">80</param>
                         <param name="workerNumber" type="integer">16</param>
                         <param name="workerAcceptMin" type="integer">3</param>
                         <param name="workerAcceptMax" type="integer">8</param>
@@ -202,7 +200,7 @@
                         <!-- FileHandler Modules -->
                         <!-- FileHandler Modules -->
                         <module type="\AppserverIo\WebServer\Modules\CoreModule"/>
-                        <module type="\AppserverIo\WebServer\Modules\FastCgiModule"/>
+                        <module type="\AppserverIo\WebServer\Modules\FcgiModule"/>
                         <module type="\AppserverIo\Appserver\ServletEngine\ServletEngine"/>
                         <module type="\AppserverIo\WebServer\Modules\ProxyModule"/>
                         <!-- RESPONSE_PRE hook -->
@@ -245,7 +243,7 @@
                         <param name="workerAcceptMax" type="integer">8</param>
                         <param name="transport" type="string">ssl</param>
                         <param name="address" type="string">0.0.0.0</param>
-                        <param name="port" type="integer">9443</param>
+                        <param name="port" type="integer">443</param>
                         <param name="certPath" type="string">etc/appserver/server.pem</param>
                         <param name="passphrase" type="string"></param>
                         <param name="documentRoot" type="string">webapps</param>
@@ -290,7 +288,7 @@
                         <module type="\AppserverIo\WebServer\Modules\AutoIndexModule"/>
                         <!-- FileHandler Modules -->
                         <module type="\AppserverIo\WebServer\Modules\CoreModule"/>
-                        <module type="\AppserverIo\WebServer\Modules\FastCgiModule"/>
+                        <module type="\AppserverIo\WebServer\Modules\FcgiModule"/>
                         <module type="\AppserverIo\Appserver\ServletEngine\ServletEngine"/>
                         <module type="\AppserverIo\WebServer\Modules\ProxyModule"/>
                         <!-- RESPONSE_PRE hook -->

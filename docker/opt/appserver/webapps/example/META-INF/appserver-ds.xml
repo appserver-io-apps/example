@@ -26,6 +26,8 @@
             <password>appserver.i0</password>
             <databaseName>appserver_ApplicationServer</databaseName>
             <databaseHost>mysql</databaseHost>
+            <serverVersion>5.6</serverVersion>
+            <platform>Doctrine\DBAL\Platforms\MySQLPlatform</platform>
         </database>
     </datasource>
 

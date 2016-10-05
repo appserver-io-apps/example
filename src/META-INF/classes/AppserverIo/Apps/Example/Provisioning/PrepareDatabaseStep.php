@@ -69,6 +69,7 @@ class PrepareDatabaseStep extends AbstractStep
                 $schemaProcessor = $this->getApplication()->search('SchemaProcessor');
 
                 // create schema, default products + login credentials
+                $schemaProcessor->createDatabase();
                 $schemaProcessor->createSchema();
                 $schemaProcessor->createDefaultProducts();
                 $schemaProcessor->createDefaultCredentials();

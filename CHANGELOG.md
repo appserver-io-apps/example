@@ -1,3 +1,13 @@
+# Version 2.2.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Extend provisioning to also create a new database when using a MySQL
+
 # Version 2.2.0
 
 ## Bugfixes
