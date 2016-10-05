@@ -113,8 +113,6 @@
                         <module type="\AppserverIo\WebServer\Modules\DeflateModule"/>
                         <!-- RESPONSE_POST hook -->
                         <!-- module type="\AppserverIo\Appserver\Core\Modules\ProfileModule"/ -->
-                        <!-- REQUEST_PRE/RESPONSE_POST hook -->
-                        <!-- module type="\AppserverIo\Appserver\Core\Modules\BlackfireModule"/ -->
                     </modules>
 
                     <fileHandlers>
@@ -202,7 +200,7 @@
                         <!-- FileHandler Modules -->
                         <!-- FileHandler Modules -->
                         <module type="\AppserverIo\WebServer\Modules\CoreModule"/>
-                        <module type="\AppserverIo\WebServer\Modules\FastCgiModule"/>
+                        <module type="\AppserverIo\WebServer\Modules\FcgiModule"/>
                         <module type="\AppserverIo\Appserver\ServletEngine\ServletEngine"/>
                         <module type="\AppserverIo\WebServer\Modules\ProxyModule"/>
                         <!-- RESPONSE_PRE hook -->
@@ -290,7 +288,7 @@
                         <module type="\AppserverIo\WebServer\Modules\AutoIndexModule"/>
                         <!-- FileHandler Modules -->
                         <module type="\AppserverIo\WebServer\Modules\CoreModule"/>
-                        <module type="\AppserverIo\WebServer\Modules\FastCgiModule"/>
+                        <module type="\AppserverIo\WebServer\Modules\FcgiModule"/>
                         <module type="\AppserverIo\Appserver\ServletEngine\ServletEngine"/>
                         <module type="\AppserverIo\WebServer\Modules\ProxyModule"/>
                         <!-- RESPONSE_PRE hook -->
