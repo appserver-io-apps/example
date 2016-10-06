@@ -213,12 +213,14 @@
                             <params>
                                 <param name="host" type="string">php-fcgi</param>
                                 <param name="port" type="integer">9010</param>
+                                <param name="dnsServer" type="string">127.0.0.11</param>
                             </params>
                         </fileHandler>
                         <fileHandler name="fastcgi" extension=".phtml">
                             <params>
                                 <param name="host" type="string">php-fcgi</param>
                                 <param name="port" type="integer">9010</param>
+                                <param name="dnsServer" type="string">127.0.0.11</param>
                             </params>
                         </fileHandler>
                         <fileHandler name="servlet" extension=".dhtml" />
@@ -301,12 +303,14 @@
                             <params>
                                 <param name="host" type="string">php-fcgi</param>
                                 <param name="port" type="integer">9010</param>
+                                <param name="dnsServer" type="string">127.0.0.11</param>
                             </params>
                         </fileHandler>
                         <fileHandler name="fastcgi" extension=".phtml">
                             <params>
                                 <param name="host" type="string">php-fcgi</param>
                                 <param name="port" type="integer">9010</param>
+                                <param name="dnsServer" type="string">127.0.0.11</param>
                             </params>
                         </fileHandler>
                         <fileHandler name="servlet" extension=".dhtml" />
