@@ -1,3 +1,13 @@
+# Version 2.2.2
+
+## Bugfixes
+
+* Add missing DNS server IP in webserver.xml when starting example application with docker-compose
+
+## Features
+
+* None
+
 # Version 2.2.1
 
 ## Bugfixes
