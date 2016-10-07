@@ -1,3 +1,13 @@
+# Version 2.2.3
+
+## Bugfixes
+
+* Fixed invalid Platform class in appserver-ds.xml docker-compose configuration
+
+## Features
+
+* None
+
 # Version 2.2.2
 
 ## Bugfixes
