@@ -1,3 +1,15 @@
+# Version 2.2.4
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Add prePassivate + postActivate methods to ASingletonProcessor for demonstration
+* Switch to latest appserver-io-psr/epb version
+* Add classes directories to composer autoloader
+
 # Version 2.2.3
 
 ## Bugfixes

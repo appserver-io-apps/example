@@ -17,12 +17,22 @@
         "appserver-io/messaging": "~1.0",
         "appserver-io/properties": "~2.0",
         "appserver-io-psr/mop": "~1.0",
-        "appserver-io-psr/epb": "~1.0",
+        "appserver-io-psr/epb": "~3.0",
         "appserver-io-psr/servlet": "~1.0",
         "appserver-io-psr/security": "~1.0",
         "phpspec/phpspec": "~2.0",
         "herrera-io/phar-update": "2.0.0 as 1.0.3",
         "tomzx/php-semver-checker": "0.9.*"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "AppserverIo\\Apps\\Example" : [
+                "src/common/classes",
+                "src/META-INF/classes",
+                "src/WEB-INF/classes",
+                "tests/META-INF/classes"
+            ]
+        }
     },
     "config": {
         "vendor-dir": "src/vendor",
