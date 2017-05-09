@@ -52,14 +52,20 @@
                 <securityDomain name="example-realm">
                     <authConfig>
                         <loginModules>
-                            <loginModule type="AppserverIo\Appserver\ServletEngine\Security\Auth\Spi\DatabasePDOLoginModule" flag="required">
+                            <loginModule type="AppserverIo\Appserver\ServletEngine\Security\Auth\Spi\LdapLoginModule" flag="required">
                                 <params>
-                                    <param name="lookupName" type="string">php:env/${container.name}/ds/appserver.io-example-application</param>
-                                    <param name="principalsQuery" type="string">select password from user where username = ?</param>
-                                    <param name="rolesQuery" type="string">select r.name, 'Roles' from role r inner join user p on r.userIdFk = p.userId where p.username = ?</param>
-                                    <param name="hashAlgorithm" type="string">SHA-512</param>
-                                    <param name="hashEncoding" type="string">hex</param>
-                                    <param name="password-stacking" type="string">useFirstPass</param>
+                                    <param name="hashAlgorithm" type="string">null</param>
+                                    <param name="url" type="string">openldap</param>
+                                    <param name="port" type="string">389</param>
+
+                                    <param name="baseDN" type="string">dc=example,dc=org</param>
+                                    <param name="bindDN" type="string">cn=admin,dc=example,dc=org</param>
+                                    <param name="bindCredential" type="string">admin</param>
+                                    <param name="baseFilter" type="string">(&amp;(objectClass=person)(uid={0}))</param>
+
+                                    <param name="rolesDN" type="string">dc=example,dc=org</param>
+                                    <param name="roleFilter" type="string">memberUid={0}</param>
+                                    <param name="allowEmptyPasswords" type="string">false</param>
                                 </params>
                             </loginModule>
                         </loginModules>
