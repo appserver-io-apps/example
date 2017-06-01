@@ -89,6 +89,34 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     }
 
     /**
+     * Example method that will be invoked after the SSB has been detached from the container.
+     *
+     * @return void
+     * @PostDetach
+     */
+    public function postDetach()
+    {
+        // log a message for the @PostDetach method invokation
+        $this->getInitialContext()->getSystemLogger()->info(
+            sprintf('%s has successfully been invoked by @PostDetach annotation', __METHOD__)
+        );
+    }
+
+    /**
+     * Close the entity manager's connection before re-attaching it to the container.
+     *
+     * @return void
+     * @PreAttach
+     */
+    public function preAttach()
+    {
+        // log a message for the @PreAttach method invokation
+        $this->getInitialContext()->getSystemLogger()->info(
+            sprintf('%s has successfully been invoked by @PreAttach annotation', __METHOD__)
+        );
+    }
+
+    /**
      * The application instance providing the database connection.
      *
      * @return \AppserverIo\Psr\Application\ApplicationInterface The application instance
