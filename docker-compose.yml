@@ -76,3 +76,34 @@ services:
       MYSQL_USER: 'appserver'
       MYSQL_PASSWORD: 'appserver.i0'
       MYSQL_DATABASE: 'appserver_ApplicationServer'
+  openldap:
+    image: osixia/openldap:1.1.8
+    container_name: openldap
+    environment:
+      LDAP_TLS: 'true'
+      LDAP_TLS_CRT_FILENAME: 'fullchain.pem'
+      LDAP_TLS_KEY_FILENAME: 'privkey.pem'
+      LDAP_TLS_CA_CRT_FILENAME: 'fullchain.pem'
+      LDAP_BASE_DN: "dc=example,dc=org"
+      LDAP_TLS_CIPHER_SUITE: "NORMAL"
+      LDAP_TLS_VERIFY_CLIENT: "allow"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./docker/openldap/ldap:/var/lib/ldap
+      - ./docker/openldap/etc/ldap:/etc/ldap/slapd.d
+      - ./docker/openldap/container/service/slapd/asserts/certs:/container/service/slapd/assets/certs/
+    ports:
+      - "389:389"
+      - "639:639"
+    hostname: "openldap"
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS=false:
+    ports:
+      - "8080:80"
+    depends_on:
+      - openldap
