@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\TestProcessor
+ * AppserverIo\Apps\Example\Services\SomeTest
  *
  * NOTICE OF LICENSE
  *
@@ -21,42 +21,43 @@
 namespace AppserverIo\Apps\Example\Services;
 
 /**
- * A test processor implementation.
+ * A DI testing class
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
- *
- * @Stateful
  */
-class TestProcessor extends AbstractPersistenceProcessor
+class SomeTest
 {
 
     /**
-     * The stateful session bean instance.
+     * The randomizer to use.
      *
-     * @var \AppserverIo\Apps\Example\Services\AnotherProcessor
-     * @EnterpriseBean
+     * @var \AppserverIo\Apps\Example\Servlets\Randomizer
      */
-    protected $anotherProcessor;
+    protected $randomizer;
 
     /**
-     * The randomizer instance.
+     * Initialize the instance with the passed randomizer.
      *
-     * @var \AppserverIo\Apps\Example\Services\SomeTest
-     * @Inject(type="\AppserverIo\Apps\Example\Services\SomeTest")
+     * @param \AppserverIo\Apps\Example\Services\Randomizer $randomizer The randomizer instance
      */
-    protected $someTest;
-
-    /**
-     * Test method.
-     *
-     * @return string The result
-     */
-    public function doSomething()
+    public function __construct(Randomizer $randomizer)
     {
-        return $this->someTest->randomizeString($this->anotherProcessor->doSomething());
+        $this->randomizer = $randomizer;
+    }
+
+    /**
+     * Retur's a random string.
+     *
+     * @param string $string The string to randomize
+     *
+     * @return string The random string
+     */
+    public function randomizeString($string)
+    {
+        return $this->randomizer->randomize($string);
     }
 }

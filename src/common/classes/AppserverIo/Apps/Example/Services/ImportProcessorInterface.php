@@ -21,9 +21,6 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Lang\Boolean;
-use AppserverIo\Messaging\MessageQueue;
-use AppserverIo\Messaging\StringMessage;
-use AppserverIo\Messaging\QueueConnectionFactory;
 use AppserverIo\Psr\HttpMessage\PartInterface;
 
 /**

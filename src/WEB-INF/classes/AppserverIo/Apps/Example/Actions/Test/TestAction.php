@@ -21,9 +21,8 @@
 namespace AppserverIo\Apps\Example\Actions\Test;
 
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
+use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 

@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;

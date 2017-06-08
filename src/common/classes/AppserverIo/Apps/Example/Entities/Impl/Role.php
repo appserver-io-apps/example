@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppserverIo\Apps\Example\Entities\AbstractEntity;
 
 /**
  * Doctrine entity that represents a role.

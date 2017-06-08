@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\TestProcessor
+ * AppserverIo\Apps\Example\Services\SomeTest
  *
  * NOTICE OF LICENSE
  *
@@ -21,42 +21,26 @@
 namespace AppserverIo\Apps\Example\Services;
 
 /**
- * A test processor implementation.
+ * Another DI testing class.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
- *
- * @Stateful
  */
-class TestProcessor extends AbstractPersistenceProcessor
+class Randomizer
 {
 
     /**
-     * The stateful session bean instance.
+     * Retur's a random string.
      *
-     * @var \AppserverIo\Apps\Example\Services\AnotherProcessor
-     * @EnterpriseBean
-     */
-    protected $anotherProcessor;
-
-    /**
-     * The randomizer instance.
+     * @param string $string The string to randomize
      *
-     * @var \AppserverIo\Apps\Example\Services\SomeTest
-     * @Inject(type="\AppserverIo\Apps\Example\Services\SomeTest")
+     * @return string The random string
      */
-    protected $someTest;
-
-    /**
-     * Test method.
-     *
-     * @return string The result
-     */
-    public function doSomething()
+    public function randomize($string)
     {
-        return $this->someTest->randomizeString($this->anotherProcessor->doSomething());
+        return str_shuffle($string);
     }
 }
