@@ -42,14 +42,14 @@
                 <lifecycle-callback-method>initialize</lifecycle-callback-method>
             </post-construct>
             <!--
-            <class-ref>
-                <class-ref-name>UserProcessor</class-ref-name>
-                <class-ref-type>AppserverIo\Apps\Example\Services\SomeTest</class-ref-type>
+            <bean-ref>
+                <bean-ref-name>UserProcessor</bean-ref-name>
+                <bean-ref-type>AppserverIo\Apps\Example\Services\SomeTest</bean-ref-type>
                 <injection-target>
                     <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
                     <injection-target-property>userProcessor</injection-target-property>
                 </injection-target>
-            </class-ref>
+            </bean-ref>
             <epb-ref>
                 <epb-ref-name>UserProcessor</epb-ref-name>
                 <lookup-name>php:global/example/UserProcessor</lookup-name>
