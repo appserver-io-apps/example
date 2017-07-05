@@ -72,18 +72,25 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      * @var array
      */
     protected $users = array(
-        array('appserver', 'appserver.i0', array('Customer')),
-        array('appserver_01', 'appserver.i0', array('Customer')),
-        array('appserver_02', 'appserver.i0', array('Customer')),
-        array('appserver_03', 'appserver.i0', array('Customer')),
-        array('appserver_04', 'appserver.i0', array('Customer')),
-        array('appserver_05', 'appserver.i0', array('Customer')),
-        array('appserver_06', 'appserver.i0', array('Customer')),
-        array('appserver_07', 'appserver.i0', array('Customer')),
-        array('appserver_08', 'appserver.i0', array('Customer')),
-        array('appserver_09', 'appserver.i0', array('Customer')),
+        array('appserver', 'appserver.i0', 'salt', array('Customer')),
+        array('appserver_01', 'appserver.i0', 'salt01', array('Customer')),
+        array('appserver_02', 'appserver.i0', 'salt02', array('Customer')),
+        array('appserver_03', 'appserver.i0', 'salt03', array('Customer')),
+        array('appserver_04', 'appserver.i0', 'salt04', array('Customer')),
+        array('appserver_05', 'appserver.i0', 'salt05', array('Customer')),
+        array('appserver_06', 'appserver.i0', 'salt06', array('Customer')),
+        array('appserver_07', 'appserver.i0', 'salt07', array('Customer')),
+        array('appserver_08', 'appserver.i0', 'salt08', array('Customer')),
+        array('appserver_09', 'appserver.i0', 'salt09', array('Customer')),
         array('guest', 'appserver.i0', array('Guest'))
     );
+
+    /**
+     * The hash algorithm to hash the passwords with
+     *
+     * @var string
+     */
+    protected $hashAlgorithm;
 
     /**
      * Example method that should be invoked after constructor.
@@ -96,6 +103,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
         $this->getSystemLogger()->info(
             sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
         );
+        $this->hashAlgorithm = 'sha512';
     }
 
     /**
@@ -232,7 +240,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
         // create the default credentials
         foreach ($this->users as $userData) {
             // extract the user data
-            list ($username, $password, $roleNames) = $userData;
+            list ($username, $password, $salt, $roleNames) = $userData;
 
             // query whether or not, the user has already been created
             if ($repository->findOneByUsername($username)) {
@@ -244,7 +252,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             $user->setEmail(sprintf('%s@appserver.io', $username));
             $user->setUsername($username);
             $user->setUserLocale('en_US');
-            $user->setPassword(md5($password));
+            $user->setPassword(hash($this->hashAlgorithm, $salt . $password));
+            $user->setSalt($salt);
             $user->setEnabled(true);
             $user->setRate(1000);
             $user->setContractedHours(160);

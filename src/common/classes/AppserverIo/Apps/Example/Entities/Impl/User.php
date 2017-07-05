@@ -76,6 +76,13 @@ class User
     protected $password;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    protected $salt;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
@@ -396,5 +403,27 @@ class User
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    /**
+     * Returns the value of the class member salt.
+     *
+     * @return string Holds the value of the class member salt
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Sets the value for the class member salt.
+     *
+     * @param string $salt Holds the value for the class member salt
+     *
+     * @return void
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
     }
 }
