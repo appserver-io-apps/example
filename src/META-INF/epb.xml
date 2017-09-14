@@ -35,6 +35,19 @@
             -->
         </session>
         <session>
+            <session-type>Stateful</session-type>
+            <epb-name>TestProcessor</epb-name>
+            <epb-class>AppserverIo\Apps\Example\Services\TestProcessor</epb-class>
+            <bean-ref>
+                <bean-ref-name>SomeTest</bean-ref-name>
+                <bean-ref-type>AppserverIo\Apps\Example\Services\SomeTest</bean-ref-type>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Services\TestProcessor</injection-target-class>
+                    <injection-target-property>anotherTest</injection-target-property>
+                </injection-target>
+            </bean-ref>
+        </session>
+        <session>
             <session-type>Stateless</session-type>
             <epb-name>SampleProcessor</epb-name>
             <epb-class>AppserverIo\Apps\Example\Services\SampleProcessor</epb-class>
@@ -47,7 +60,7 @@
                 <bean-ref-type>AppserverIo\Apps\Example\Services\SomeTest</bean-ref-type>
                 <injection-target>
                     <injection-target-class>AppserverIo\Apps\Example\Services\SampleProcessor</injection-target-class>
-                    <injection-target-property>userProcessor</injection-target-property>
+                    <injection-target-property>someTest</injection-target-property>
                 </injection-target>
             </bean-ref>
             <epb-ref>

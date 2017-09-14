@@ -51,12 +51,27 @@ class TestProcessor extends AbstractPersistenceProcessor
     protected $someTest;
 
     /**
+     * A randomizer instance injected by the deployment descriptor.
+     *
+     * @var \AppserverIo\Apps\Example\Services\SomeTest
+     */
+    protected $anotherTest;
+
+    /**
      * Test method.
      *
      * @return string The result
      */
     public function doSomething()
     {
+
+        if ($this->anotherTest) {
+            error_log('Found anotherTest initialized!');
+            return $this->anotherTest->randomizeString($this->anotherProcessor->doSomething());
+        }
+
+        error_log('Found anotherTest NOT initialized!');
+
         return $this->someTest->randomizeString($this->anotherProcessor->doSomething());
     }
 }

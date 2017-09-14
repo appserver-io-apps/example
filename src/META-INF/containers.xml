@@ -8,6 +8,7 @@
                     <virtualHost name="${webapp.name}.dev www.${webapp.name}.dev">
                         <params>
                             <param name="admin" type="string">info@appserver.io</param>
+                            <param name="directoryIndex" type="string">pm.pdf</param>
                             <param name="documentRoot" type="string">${host.appBase.dir}/${webapp.name}</param>
                         </params>
                         <rewrites>
