@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Provisioning;
 
 use AppserverIo\Appserver\Provisioning\Steps\AbstractStep;
-use AppserverIo\Appserver\Core\Utilities\DirectoryKeys;
 
 /**
  * An step implementation that creates a database, login credentials and dummy

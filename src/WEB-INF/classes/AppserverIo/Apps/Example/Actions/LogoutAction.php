@@ -20,14 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Http\HttpProtocol;
 use AppserverIo\Routlt\BaseAction;
-use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Routlt\Util\Validateable;
-use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\RequestKeys;
-use AppserverIo\Apps\Example\Utils\SessionKeys;
-use AppserverIo\Apps\Example\Exceptions\LoginException;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 

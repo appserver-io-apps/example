@@ -5,19 +5,6 @@
     xmlns="http://www.appserver.io/appserver">
 
     <managers>
-        <manager
-            name="ObjectManagerInterface"
-            type="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManager"
-            factory="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManagerFactory">
-            <descriptors>
-                <descriptor>AppserverIo\Description\ServletDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\MessageDrivenBeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\StatefulSessionBeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\SingletonSessionBeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\StatelessSessionBeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Routlt\Description\PathDescriptor</descriptor>
-            </descriptors>
-        </manager>
         <manager name="AuthenticationManagerInterface" type="AppserverIo\Appserver\ServletEngine\Security\StandardAuthenticationManager" factory="AppserverIo\Appserver\ServletEngine\Security\StandardAuthenticationManagerFactory">
             <securityDomains>
                 <securityDomain name="example-realm">

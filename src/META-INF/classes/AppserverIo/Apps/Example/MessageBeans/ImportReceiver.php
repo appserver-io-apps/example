@@ -21,10 +21,8 @@
 namespace AppserverIo\Apps\Example\MessageBeans;
 
 use AppserverIo\Psr\Pms\MessageInterface;
-use AppserverIo\Messaging\MessageQueue;
 use AppserverIo\Messaging\ArrayMessage;
 use AppserverIo\Messaging\Utils\PriorityMedium;
-use AppserverIo\Messaging\QueueConnectionFactory;
 use AppserverIo\Messaging\AbstractMessageListener;
 
 /**

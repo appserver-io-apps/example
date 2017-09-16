@@ -54,6 +54,13 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
     protected $timerServiceContextInterface;
 
     /**
+     * A test class that has to be injected.
+     *
+     * @var \AppserverIo\Apps\Example\Services\SomeTest
+     */
+    protected $someTest;
+
+    /**
      * Example method that should be invoked after constructor.
      *
      * @return void
