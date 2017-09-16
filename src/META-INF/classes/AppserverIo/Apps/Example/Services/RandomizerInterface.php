@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Services\Randomizer
+ * AppserverIo\Apps\Example\Services\RandomizerInterface
  *
  * NOTICE OF LICENSE
  *
@@ -21,7 +21,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 /**
- * Another DI testing class.
+ * Interface for all randomizer implementations.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -29,7 +29,7 @@ namespace AppserverIo\Apps\Example\Services;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-class Randomizer implements RandomizerInterface
+interface RandomizerInterface
 {
 
     /**
@@ -39,8 +39,5 @@ class Randomizer implements RandomizerInterface
      *
      * @return string The random string
      */
-    public function randomize($string)
-    {
-        return str_shuffle($string);
-    }
+    public function randomize($string);
 }

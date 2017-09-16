@@ -150,7 +150,7 @@ class CartProcessor extends AbstractPersistenceProcessor implements CartProcesso
         if (empty($existingItem) === false) {
             $this->updateExistingCartItem($existingItem, $cartItem);
         } else {
-            throw new BadRequestException('Item does not exist', 404);
+            throw new \Exception('Item does not exist', 404);
         }
 
         // set the cart back to the member

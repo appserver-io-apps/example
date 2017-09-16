@@ -35,16 +35,16 @@ class SomeTest
     /**
      * The randomizer to use.
      *
-     * @var \AppserverIo\Apps\Example\Servlets\Randomizer
+     * @var \AppserverIo\Apps\Example\Services\Randomizer
      */
     protected $randomizer;
 
     /**
      * Initialize the instance with the passed randomizer.
      *
-     * @param \AppserverIo\Apps\Example\Services\Randomizer $randomizer The randomizer instance
+     * @param \AppserverIo\Apps\Example\Services\RandomizerInterface $randomizer The randomizer instance
      */
-    public function __construct(Randomizer $randomizer)
+    public function __construct(RandomizerInterface $randomizer)
     {
         $this->randomizer = $randomizer;
     }

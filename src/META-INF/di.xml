@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<di xmlns="http://www.appserver.io/appserver">
+    <preferences>
+        <preference>
+            <interface>AppserverIo\Apps\Example\Services\RandomizerInterface</interface>
+            <class>AppserverIo\Apps\Example\Services\Randomizer</class>
+        </preference>
+    </preferences>
+</di>
