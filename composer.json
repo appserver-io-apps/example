@@ -3,11 +3,11 @@
     "description": "The example application for the ApplicationServer",
     "version": "1.0.0",
     "require": {
-        "robloach/component-installer": "0.0.12",
+        "jms/serializer": "0.16.*",
         "components/jquery": "*",
         "components/font-awesome": "*",
         "components/bootstrap": "3.3.4",
-        "jms/serializer": "0.16.*"
+        "robloach/component-installer": "0.0.12"
     },
     "require-dev": {
         "codegyre/robo": "*",
@@ -22,7 +22,8 @@
         "appserver-io-psr/security": "~1.0",
         "phpspec/phpspec": "~2.0",
         "herrera-io/phar-update": "2.0.0 as 1.0.3",
-        "tomzx/php-semver-checker": "0.9.*"
+        "tomzx/php-semver-checker": "0.9.*",
+        "gedmo/doctrine-extensions": "2.4.*"
     },
     "autoload" : {
         "psr-0" : {

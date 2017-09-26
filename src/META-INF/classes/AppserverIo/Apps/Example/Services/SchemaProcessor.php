@@ -25,6 +25,8 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\DBAL\Schema\SqliteSchemaManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
+use AppserverIo\Apps\Example\Entities\Impl\Category;
+use AppserverIo\Apps\Example\Entities\Impl\CategoryTranslation;
 
 /**
  * A singleton session bean implementation that handles the
@@ -51,7 +53,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     /**
      * The DIC provider instance.
      *
-     * @var \AppserverIo\Appserver\DependencyInjectionContainer\Interfaces\ProviderInterface $provider
+     * @var \AppserverIo\Psr\Di\ProviderInterface $provider
      * @Resource(name="ProviderInterface")
      */
     protected $providerInterface;
@@ -81,6 +83,98 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
         array('appserver_08', 'appserver.i0', array('Customer')),
         array('appserver_09', 'appserver.i0', array('Customer')),
         array('guest', 'appserver.i0', array('Guest'))
+    );
+
+    /**
+     * The default categories.
+     *
+     * @var array
+     */
+    protected $categories = array(
+        array(
+            'title' => 'Root',
+            'description' => 'Description for Root Category.',
+            'translations' => array(
+                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Root'),
+                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die "Root Kategorie".')
+            ),
+            'children' => array(
+                array(
+                    'title' => 'Default Category',
+                    'description' => 'Description for Default Category.',
+                    'translations' => array(
+                        array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Kategorie Standard'),
+                        array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Standard".')
+                    ),
+                    'children' => array(
+                        array(
+                            'title' => "What's New",
+                            'description' => "Description for What's New.",
+                            'translations' => array(
+                                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Was ist neu'),
+                                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Was ist neu".')
+                            )
+                        ),
+                        array(
+                            'title' => "Women",
+                            'description' => "Description for Women.",
+                            'translations' => array(
+                                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Was ist neu'),
+                                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Frauen".')
+                            )
+                        ),
+                        array(
+                            'title' => "Men",
+                            'description' => "Description for Men.",
+                            'translations' => array(
+                                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Männer'),
+                                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Männer".')
+                            )
+                        ),
+                        array(
+                            'title' => "Gear",
+                            'description' => "Description for Gear.",
+                            'translations' => array(
+                                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Ausrüstung'),
+                                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Ausrüstung".')
+                            )
+                        ),
+                        array(
+                            'title' => "Collections",
+                            'description' => "Description for Collections.",
+                            'translations' => array(
+                                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Kollektion'),
+                                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Kollektion".')
+                            )
+                        ),
+                        array(
+                            'title' => "Training",
+                            'description' => "Description for Training.",
+                            'translations' => array(
+                                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Training'),
+                                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Training".')
+                            )
+                        ),
+                        array(
+                            'title' => "Promotions",
+                            'description' => "Description for Promotions.",
+                            'translations' => array(
+                                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Aktion'),
+                                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Aktion".')
+                            )
+                        ),
+                        array(
+                            'title' => "Sale",
+                            'description' => "Description for Sale.",
+                            'translations' => array(
+                                array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Abverkauf'),
+                                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Abverkauf".')
+                            )
+                        )
+                    )
+                )
+            )
+        )
     );
 
     /**
@@ -173,6 +267,75 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
         } catch (\Exception $e) {
             $this->getSystemLogger()->error($e->__toString());
         }
+    }
+
+    /**
+     * Creates default categories.
+     *
+     * @return void
+     */
+    public function createDefaultCategories()
+    {
+
+        // iterate over the root categories and create the category tree
+        foreach ($this->categories as $rootCategory) {
+            $this->createCategory($rootCategory);
+        }
+
+        // load and flush the entity manager
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Recursive method to create a category and it's children.
+     *
+     * @param array $cat The category that has to be created
+     *
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Category|null $root The root category
+     */
+    protected function createCategory(array $cat, Category $parent = null)
+    {
+
+        // load the entity manager
+        $entityManager = $this->getEntityManager();
+
+        // load the skillmatrix master repository
+        $repository = $entityManager->getRepository($className = 'AppserverIo\Apps\Example\Entities\Impl\Category');
+
+        // check if the category already exists
+        /** @var AppserverIo\Apps\Example\Entities\Impl\Category $found */
+        if ($found = $repository->findOneByTitle($cat['title'])) {
+            $category = $found;
+        } else {
+            /** @var AppserverIo\Apps\Example\Entities\Impl\Category $category */
+            $category = $this->providerInterface->newInstance($className);
+        }
+
+        // if a NO root category has been passed, THIS is a root category
+        if ($parent !== null) {
+            $category->setParent($parent);
+        }
+
+        // set the category's values
+        $category->setTitle($cat['title']);
+        $category->setDescription($cat['description']);
+
+        // translate the category
+        foreach ($cat['translations'] as $trans) {
+            $this->getEntityManager()
+                 ->getRepository('Gedmo\Translatable\Entity\Translation')
+                 ->translate($category, $trans['field'], $trans['locale'], $trans['value']);
+        }
+
+        // create the category's children
+        if (isset($cat['children'])) {
+            foreach ($cat['children'] as $child) {
+                $this->createCategory($child, $category);
+            }
+        }
+
+        // persist the entity
+        $entityManager->persist($category);
     }
 
     /**
