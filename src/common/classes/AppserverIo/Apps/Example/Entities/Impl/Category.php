@@ -37,6 +37,7 @@ use AppserverIo\Apps\Example\Entities\AbstractEntity;
  * @ORM\Entity
  * @ORM\Table(name="category")
  * @Gedmo\Tree(type="nested")
+ * @Gedmo\TranslationEntity(class="AppserverIo\Apps\Example\Entities\Impl\CategoryTranslation")
  */
 class Category extends AbstractEntity
 {
@@ -50,7 +51,7 @@ class Category extends AbstractEntity
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * The catgory's left node.
@@ -60,7 +61,7 @@ class Category extends AbstractEntity
      * @Gedmo\TreeLeft
      * @ORM\Column(name="left_node", type="integer", nullable=false)
      */
-    private $leftNode;
+    protected $leftNode;
 
     /**
      * The category's right node.
@@ -69,7 +70,7 @@ class Category extends AbstractEntity
      * @Gedmo\TreeRight
      * @ORM\Column(name="right_node", type="integer", nullable=false)
      */
-    private $rightNode;
+    protected $rightNode;
 
     /**
      * The category's level.
@@ -79,7 +80,7 @@ class Category extends AbstractEntity
      * @Gedmo\TreeLevel
      * @ORM\Column(name="level", type="integer", nullable=false)
      */
-    private $level;
+    protected $level;
 
     /**
      * The category's title.
@@ -89,7 +90,7 @@ class Category extends AbstractEntity
      * @Gedmo\Translatable
      * @ORM\Column(name="title", type="string", length=100, nullable=true)
      */
-    private $title;
+    protected $title;
 
     /**
      * The category's description.
@@ -99,7 +100,7 @@ class Category extends AbstractEntity
      * @Gedmo\Translatable
      * @ORM\Column(name="description", type="string", length=500, nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * The collection with the category's children.
@@ -109,7 +110,7 @@ class Category extends AbstractEntity
      * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Category", mappedBy="parent", cascade={"persist"}, fetch="EAGER")
      * @ORM\OrderBy({"leftNode"="ASC"})
      */
-    private $children;
+    protected $children;
 
     /**
      * The root category.
@@ -119,7 +120,7 @@ class Category extends AbstractEntity
      * @Gedmo\TreeRoot
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $root;
+    protected $root;
 
     /**
      * The parent category.
@@ -130,14 +131,14 @@ class Category extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Category", inversedBy="children", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumns({@ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")})
      */
-    private $parent;
+    protected $parent;
 
     /**
      * Used locale to override Translation listener`s locale.
      *
      * @Gedmo\Locale
      */
-    private $locale;
+    protected $locale;
 
     /**
      * Initializes the category.
@@ -245,28 +246,6 @@ class Category extends AbstractEntity
     public function setTitle($title)
     {
         $this->title = $title;
-    }
-
-    /**
-     * Return's the category's unique path.
-     *
-     * @return string The category's unique path
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * Set's the category's title.
-     *
-     * @param string $title The category's unique path
-     *
-     * @return void
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
     }
 
     /**

@@ -21,6 +21,7 @@ namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppserverIo\Apps\Example\Entities\AbstractEntity;
 
@@ -36,6 +37,7 @@ use AppserverIo\Apps\Example\Entities\AbstractEntity;
  * @ORM\Entity
  * @ORM\Table(name="product")
  * @JMS\ExclusionPolicy("all")
+ * @Gedmo\TranslationEntity(class="AppserverIo\Apps\Example\Entities\Impl\ProductTranslation")
  */
 class Product extends AbstractEntity
 {
@@ -66,7 +68,11 @@ class Product extends AbstractEntity
      *
      * @var array
      */
-    protected $statusArray = array();
+    protected $statusArray = array(
+        self::STATUS_ACTIVE,
+        self::STATUS_PROCESSING,
+        self::STATUS_INACTIVE
+    );
 
     /**
      * The unique ID of this entity.
@@ -100,6 +106,7 @@ class Product extends AbstractEntity
      * @JMS\Expose
      * @JMS\Groups({"search"})
      * @JMS\Type("string")
+     * @Gedmo\Translatable
      */
     protected $name;
 
@@ -111,6 +118,7 @@ class Product extends AbstractEntity
      * @JMS\Expose
      * @JMS\Groups({"search"})
      * @JMS\Type("string")
+     * @Gedmo\Translatable
      */
     protected $urlKey;
 
@@ -152,6 +160,7 @@ class Product extends AbstractEntity
      * @JMS\Expose
      * @JMS\Groups({"search"})
      * @JMS\Type("string")
+     * @Gedmo\Translatable
      */
     protected $description;
 
@@ -230,6 +239,13 @@ class Product extends AbstractEntity
     protected $parentProduct;
 
     /**
+     * Used locale to override Translation listener`s locale.
+     *
+     * @Gedmo\Locale
+     */
+    protected $locale;
+
+    /**
      * Initialize the product instance.
      */
     public function __construct()
@@ -237,13 +253,6 @@ class Product extends AbstractEntity
 
         // update the creation and update date
         $this->updateCreatedUpdatedDate();
-
-        // initialize the array with the status
-        $this->statusArray = [
-            self::STATUS_ACTIVE,
-            self::STATUS_PROCESSING,
-            self::STATUS_INACTIVE
-        ];
 
         // initialize the product's collections
         $this->variants = new ArrayCollection();

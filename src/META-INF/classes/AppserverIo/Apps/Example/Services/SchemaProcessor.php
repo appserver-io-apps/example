@@ -26,7 +26,6 @@ use Doctrine\DBAL\Schema\SqliteSchemaManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
 use AppserverIo\Apps\Example\Entities\Impl\Category;
-use AppserverIo\Apps\Example\Entities\Impl\CategoryTranslation;
 
 /**
  * A singleton session bean implementation that handles the
@@ -178,6 +177,27 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     );
 
     /**
+     * The default products.
+     *
+     * @var array
+     */
+    protected $products = array(
+        array(
+            'name' => 'Joust Duffle Bag',
+            'description' => 'The sporty Joust Duffle Bag can\'t be beat - not in the gym, not on the luggage carousel, not anywhere. Big enough to haul a basketball or soccer ball and some sneakers with plenty of room to spare, it\'s ideal for athletes with places to go.',
+            'status' => 1,
+            'urlKey' => 'joust-duffle-bag',
+            'productNumber' => '24-MB01',
+            'salesPrice' => 101.00,
+            'translations' => array(
+                array('locale' => 'de_DE', 'field' => 'name', 'value' => 'Joust Duffle Bag'),
+                array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Die sportliche Joust Duffle Bag ist praktisch unschlagbar - weder im Studio, auf dem Gepäckband oder sonstwo.'),
+                array('locale' => 'de_DE', 'field' => 'urlKey', 'value' => 'joust-duffle-bag')
+            )
+        )
+    );
+
+    /**
      * Example method that should be invoked after constructor.
      *
      * @return void
@@ -323,7 +343,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
         // translate the category
         foreach ($cat['translations'] as $trans) {
             $this->getEntityManager()
-                 ->getRepository('Gedmo\Translatable\Entity\Translation')
+                 ->getRepository('AppserverIo\Apps\Example\Entities\Impl\CategoryTranslation')
                  ->translate($category, $trans['field'], $trans['locale'], $trans['value']);
         }
 
@@ -353,20 +373,30 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
         $repository = $entityManager->getRepository($className = '\AppserverIo\Apps\Example\Entities\Impl\Product');
 
         // create 10 products
-        for ($i = 1; $i < 11; $i++) {
+        foreach ($this->products as $prod) {
             // query whether or not, the product has already been created
-            if ($repository->findOneByProductNumber($i)) {
-                continue;
+            /** @var AppserverIo\Apps\Example\Entities\Impl\Product $found */
+            if ($found = $repository->findOneByProductNumber($prod['productNumber'])) {
+                $product = $found;
+            } else {
+                /** @var AppserverIo\Apps\Example\Entities\Impl\Product $product */
+                $product = $this->providerInterface->newInstance($className);
             }
 
             // set user data and save it
-            $product = $this->providerInterface->newInstance($className);
-            $product->setName("Product-$i");
-            $product->setStatus(Product::STATUS_ACTIVE);
-            $product->setUrlKey("product-$i");
-            $product->setProductNumber($i);
-            $product->setSalesPrice($i);
-            $product->setDescription("Description of Product-$i");
+            $product->setName($prod['name']);
+            $product->setStatus($prod['status']);
+            $product->setUrlKey($prod['urlKey']);
+            $product->setProductNumber($prod['productNumber']);
+            $product->setSalesPrice($prod['salesPrice']);
+            $product->setDescription($prod['description']);
+
+            // translate the category
+            foreach ($prod['translations'] as $trans) {
+                $this->getEntityManager()
+                     ->getRepository('AppserverIo\Apps\Example\Entities\Impl\ProductTranslation')
+                     ->translate($product, $trans['field'], $trans['locale'], $trans['value']);
+            }
 
             // persist the user
             $entityManager->persist($product);
