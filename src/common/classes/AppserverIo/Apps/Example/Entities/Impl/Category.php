@@ -134,6 +134,14 @@ class Category extends AbstractEntity
     protected $parent;
 
     /**
+     * The category's products.
+     *
+     * @ORM\ManyToMany(targetEntity="\AppserverIo\Apps\Example\Entities\Impl\Product")
+     * )
+     */
+    protected $products;
+
+    /**
      * Used locale to override Translation listener`s locale.
      *
      * @Gedmo\Locale

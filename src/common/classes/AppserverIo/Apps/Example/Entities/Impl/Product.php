@@ -239,6 +239,14 @@ class Product extends AbstractEntity
     protected $parentProduct;
 
     /**
+     * The product's categories.
+     *
+     * @ORM\ManyToMany(targetEntity="\AppserverIo\Apps\Example\Entities\Impl\Category")
+     * @ORM\JoinTable(name="category_products")
+     */
+    protected $categories;
+
+    /**
      * Used locale to override Translation listener`s locale.
      *
      * @Gedmo\Locale
