@@ -36,6 +36,7 @@ use AppserverIo\Apps\Example\Entities\AbstractEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="category")
+ * @ORM\Entity(repositoryClass="AppserverIo\Apps\Example\Repositories\CategoryRepository")
  * @Gedmo\Tree(type="nested")
  * @Gedmo\TranslationEntity(class="AppserverIo\Apps\Example\Entities\Impl\CategoryTranslation")
  */
@@ -46,7 +47,6 @@ class Category extends AbstractEntity
      * The category ID.
      *
      * @var integer
-     *
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -57,7 +57,6 @@ class Category extends AbstractEntity
      * The catgory's left node.
      *
      * @var integer
-     *
      * @Gedmo\TreeLeft
      * @ORM\Column(name="left_node", type="integer", nullable=false)
      */
@@ -76,7 +75,6 @@ class Category extends AbstractEntity
      * The category's level.
      *
      * @var integer
-     *
      * @Gedmo\TreeLevel
      * @ORM\Column(name="level", type="integer", nullable=false)
      */
@@ -86,7 +84,6 @@ class Category extends AbstractEntity
      * The category's title.
      *
      * @var string
-     *
      * @Gedmo\Translatable
      * @ORM\Column(name="title", type="string", length=100, nullable=true)
      */
@@ -96,37 +93,47 @@ class Category extends AbstractEntity
      * The category's description.
      *
      * @var string
-     *
      * @Gedmo\Translatable
      * @ORM\Column(name="description", type="string", length=500, nullable=true)
      */
     protected $description;
 
     /**
-     * The collection with the category's children.
+     * The category's slug.
      *
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Category", mappedBy="parent", cascade={"persist"}, fetch="EAGER")
-     * @ORM\OrderBy({"leftNode"="ASC"})
+     * @var string
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @Gedmo\Slug(handlers={
+     *      @Gedmo\SlugHandler(class="Gedmo\Sluggable\Handler\TreeSlugHandler", options={
+     *          @Gedmo\SlugHandlerOption(name="parentRelationField", value="parent"),
+     *          @Gedmo\SlugHandlerOption(name="separator", value="/")
+     *      })
+     * }, fields={"title"})
      */
-    protected $children;
+    protected $slug;
 
     /**
      * The root category.
      *
-     * @var \AppserverIo\Apps\Example\Entities\Impl\Category
-     *
+     * @var integer
      * @Gedmo\TreeRoot
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $root;
 
     /**
+     * The collection with the category's children.
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Category", mappedBy="parent", cascade={"persist"}, fetch="EAGER")
+     * @ORM\OrderBy({"leftNode"="ASC"})
+     */
+    protected $children;
+
+    /**
      * The parent category.
      *
      * @var \AppserverIo\Apps\Example\Entities\Impl\Category
-     *
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Category", inversedBy="children", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumns({@ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")})
@@ -136,8 +143,8 @@ class Category extends AbstractEntity
     /**
      * The category's products.
      *
-     * @ORM\ManyToMany(targetEntity="\AppserverIo\Apps\Example\Entities\Impl\Product")
-     * )
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\Product>
+     * @ORM\ManyToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Product", mappedBy="categories")
      */
     protected $products;
 
@@ -154,6 +161,7 @@ class Category extends AbstractEntity
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     /**
@@ -350,5 +358,39 @@ class Category extends AbstractEntity
     public function setParent($parent)
     {
         $this->parent = $parent;
+    }
+
+    /**
+     * Set's the category's slug.
+     *
+     * @param string $slug The slug
+     *
+     * @return void
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * Return's the category's slug.
+     *
+     * @return string The slug
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Add's the passed product to the category.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Product $product The product to add
+     *
+     * @return void
+     */
+    public function addProduct(Product $product)
+    {
+        $this->products->add($product);
     }
 }

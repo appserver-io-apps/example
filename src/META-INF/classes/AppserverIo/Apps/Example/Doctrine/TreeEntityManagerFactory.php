@@ -28,6 +28,7 @@ use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use AppserverIo\Psr\Application\ApplicationInterface;
 use AppserverIo\Appserver\Core\Api\Node\PersistenceUnitNodeInterface;
 use AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\EntityManagerFactory;
+use Gedmo\Sluggable\SluggableListener;
 
 /**
  * Factory implementation for a Doctrine EntityManager instance.
@@ -69,6 +70,13 @@ class TreeEntityManagerFactory extends EntityManagerFactory
         // load superclass metadata mapping only, into driver chain
         // also registers Gedmo annotations.NOTE: you can personalize it
         DoctrineExtensions::registerAbstractMappingIntoDriverChainORM($driverChain, $annotationReader);
+
+        // initialize the SluggableListener instance
+        $sluggableListener = new SluggableListener();
+        $sluggableListener->setAnnotationReader($annotationReader);
+
+        // hook the TranslatableListener instance
+        $entityManager->getEventManager()->addEventSubscriber($sluggableListener);
 
         // initialize the TreeListener instance
         $treeListener = new TreeListener();

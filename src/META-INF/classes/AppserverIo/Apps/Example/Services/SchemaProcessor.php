@@ -193,6 +193,9 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
                 array('locale' => 'de_DE', 'field' => 'name', 'value' => 'Joust Duffle Bag'),
                 array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Die sportliche Joust Duffle Bag ist praktisch unschlagbar - weder im Studio, auf dem Gepäckband oder sonstwo.'),
                 array('locale' => 'de_DE', 'field' => 'urlKey', 'value' => 'joust-duffle-bag')
+            ),
+            'categories' => array(
+                'root/default-category/gear'
             )
         )
     );
@@ -347,15 +350,15 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
                  ->translate($category, $trans['field'], $trans['locale'], $trans['value']);
         }
 
+        // persist the category BEFORE persisting the children
+        $entityManager->persist($category);
+
         // create the category's children
         if (isset($cat['children'])) {
             foreach ($cat['children'] as $child) {
                 $this->createCategory($child, $category);
             }
         }
-
-        // persist the entity
-        $entityManager->persist($category);
     }
 
     /**
@@ -396,6 +399,21 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
                 $this->getEntityManager()
                      ->getRepository('AppserverIo\Apps\Example\Entities\Impl\ProductTranslation')
                      ->translate($product, $trans['field'], $trans['locale'], $trans['value']);
+            }
+
+            // relate with the defined categories
+            foreach ($prod['categories'] as $cat) {
+                // try to load the category by the generated slug
+                /** @var AppserverIo\Apps\Example\Entities\Impl\Category $category */
+                $category = $this->getEntityManager()
+                                 ->getRepository('AppserverIo\Apps\Example\Entities\Impl\Category')
+                                 ->findOneBySlug($cat);
+
+                // if a category can be found, relate it with the product
+                if ($category) {
+                    error_log("Add category " . $category->getSlug() . " to product " . $product->getProductNumber());
+                    $product->addCategory($category);
+                }
             }
 
             // persist the user

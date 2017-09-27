@@ -36,6 +36,7 @@ use AppserverIo\Apps\Example\Entities\AbstractEntity;
  *
  * @ORM\Entity
  * @ORM\Table(name="product")
+ * @ORM\Entity(repositoryClass="AppserverIo\Apps\Example\Repositories\ProductRepository")
  * @JMS\ExclusionPolicy("all")
  * @Gedmo\TranslationEntity(class="AppserverIo\Apps\Example\Entities\Impl\ProductTranslation")
  */
@@ -208,7 +209,7 @@ class Product extends AbstractEntity
     /**
      * The product's product images.
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\ProductImages> $images
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\ProductImages>
      * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\ProductImage", mappedBy="product")
      * @JMS\Expose
      * @JMS\MaxDepth(2)
@@ -220,7 +221,7 @@ class Product extends AbstractEntity
     /**
      * The product variants.
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\ProductImages> $productVariants
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\ProductImages>
      * @ORM\OneToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Product", mappedBy="parentProduct")
      * @JMS\Expose
      * @JMS\MaxDepth(2)
@@ -241,8 +242,8 @@ class Product extends AbstractEntity
     /**
      * The product's categories.
      *
-     * @ORM\ManyToMany(targetEntity="\AppserverIo\Apps\Example\Entities\Impl\Category")
-     * @ORM\JoinTable(name="category_products")
+     * @var \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\Category>
+     * @ORM\ManyToMany(targetEntity="AppserverIo\Apps\Example\Entities\Impl\Category", inversedBy="products")
      */
     protected $categories;
 
@@ -265,6 +266,7 @@ class Product extends AbstractEntity
         // initialize the product's collections
         $this->variants = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->categories = new ArrayCollection();
         $this->productVariants = new ArrayCollection();
     }
 
@@ -584,5 +586,17 @@ class Product extends AbstractEntity
     public function setParentProduct($parentProduct)
     {
         $this->parentProduct = $parentProduct;
+    }
+
+    /**
+     * Add's the passed category to the product.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Category $category The category to add
+     *
+     * @return void
+     */
+    public function addCategory(Category $category)
+    {
+        $this->categories->add($category);
     }
 }
