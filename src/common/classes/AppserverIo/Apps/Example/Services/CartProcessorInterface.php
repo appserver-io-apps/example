@@ -41,14 +41,14 @@ interface CartProcessorInterface
     /**
      * Returns the cart instance.
      *
-     * @return \AppserverIo\Apps\Example\Entities\Cart The cart instance
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Cart The cart instance
      */
     public function getCart();
 
     /**
      * Adds the passed cart item to the cart.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be added
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item that has to be added
      * @return void
      */
     public function addCartItem($cartItem);
@@ -56,7 +56,7 @@ interface CartProcessorInterface
     /**
      * Updates the passed cart item.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be updated
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item that has to be updated
      * @return void
      */
     public function updateCartItem($cartItem);
@@ -64,7 +64,7 @@ interface CartProcessorInterface
     /**
      * Removes the passed cart item from the cart.
      *
-     * @param \AppserverIo\Apps\Example\Entities\CartItem $cartItem The cart item that has to be removed
+     * @param \AppserverIo\Apps\Example\Entities\Impl\CartItem $cartItem The cart item that has to be removed
      * @return void
      */
     public function removeCartItem($cartItem);

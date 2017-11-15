@@ -1,0 +1,89 @@
+{
+  "magento-edition": "CE",
+  "magento-version": "2.1.7",
+  "operation-name" : "add-update",
+  "source-date-format": "n/d/y, g:i A",
+  "archive-artefacts" : true,
+  "debug-mode" : false,
+  "source-dir" : "tmp",
+  "target-dir" : "tmp",
+  "entity-type-code" : "catalog_product",
+  "pid-filename" : "tmp/import.pid",
+  "databases" : [
+    {
+      "id": "docker",
+      "default" : true,
+      "pdo-dsn": "mysql:host=127.0.0.1;dbname=magento2_ce_218_sampledata;charset=utf8",
+      "username": "appserver",
+      "password": "appserver.i0"
+    }
+  ],
+  "loggers": [
+    {
+      "name": "system",
+      "channel-name": "logger/system",
+      "type": "Monolog\\Logger",
+      "handlers": [
+        {
+          "type": "Monolog\\Handler\\ErrorLogHandler",
+          "formatter": {
+            "type": "Monolog\\Formatter\\LineFormatter",
+            "params" : [
+              {
+                "format": "[%datetime%] %channel%.%level_name%: %message% %context% %extra%",
+                "date-format": "Y-m-d H:i:s",
+                "allow-inline-line-breaks": true,
+                "ignore-empty-context-and-extra": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "operations" : [
+    {
+      "name" : "add-update",
+      "plugins" : [
+        {
+          "id": "TechDivision\\Import\\Plugins\\SubjectPlugin",
+          "subjects": [
+            {
+              "id": "TechDivision\\Import\\Subjects\\MoveFilesSubject",
+              "identifier": "move-files",
+              "prefix": "product-import",
+              "ok-file-needed": true,
+              "import-adapter": {
+                "id": "TechDivision\\Import\\Adapter\\CsvImportAdapter"
+              },
+              "filesystem-adapter": {
+                "id": "TechDivision\\Import\\Adapter\\PhpFilesystemAdapterFactory"
+              }
+            },
+            {
+              "id": "AppserverIo\\Apps\\Example\\Subjects\\ProductSubject",
+              "identifier": "files",
+              "prefix": "product-import",
+              "import-adapter": {
+                "id": "TechDivision\\Import\\Adapter\\CsvImportAdapter"
+              },
+              "filesystem-adapter": {
+                "id": "TechDivision\\Import\\Adapter\\PhpFilesystemAdapterFactory"
+              },
+              "observers": [
+                {
+                  "pre-import": [
+                    "AppserverIo\\Apps\\Example\\Observers\\ProductObserver"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "TechDivision\\Import\\Plugins\\ArchivePlugin"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * resources/templates/www/dhtml/500.dhtml
+ * dhtml/error.dhtml
  *
  * NOTICE OF LICENSE
  *

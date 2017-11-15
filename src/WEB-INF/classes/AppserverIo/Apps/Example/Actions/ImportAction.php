@@ -93,7 +93,6 @@ class ImportAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/import")
      */
@@ -122,7 +121,6 @@ class ImportAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see IndexServlet::indexAction()
      *
      * @Action(name="/upload")
      */
@@ -158,7 +156,6 @@ class ImportAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/delete")
      */

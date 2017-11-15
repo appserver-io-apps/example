@@ -47,9 +47,9 @@ interface SampleProcessorInterface
     /**
      * Persists the passed entity.
      *
-     * @param \AppserverIo\Apps\Example\Entities\Sample $entity The entity to persist
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Sample $entity The entity to persist
      *
-     * @return \AppserverIo\Apps\Example\Entities\Sample The persisted entity
+     * @return \AppserverIo\Apps\Example\Entities\Impl\Sample The persisted entity
      */
     public function persist(Sample $entity);
 

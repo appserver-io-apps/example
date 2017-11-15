@@ -25,6 +25,7 @@ use AppserverIo\Psr\Security\PrincipalInterface;
 use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
 use AppserverIo\Apps\Example\Entities\Impl\CartItem;
+use AppserverIo\Apps\Example\Entities\Impl\Category;
 use AppserverIo\Apps\Example\Exceptions\LoginException;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 
@@ -259,5 +260,63 @@ class ViewHelper
     public function getDeleteImportFileLink($importFile)
     {
         return sprintf('index.do/import/delete?%s=%s', RequestKeys::FILENAME, $importFile);
+    }
+
+    /**
+     * Return's the link to sign in.
+     *
+     * @return string The sign in link
+     */
+    public function getSignInLink()
+    {
+        return 'index.do/user';
+    }
+
+    /**
+     * Return's the link to create a new account.
+     *
+     * @return string The link to create a new account
+     */
+    public function getCreateAccountLink()
+    {
+        return 'index.do/account/create';
+    }
+
+    /**
+     * Return's the link to load the catalog for the passed category.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Category $category
+     *
+     * @return string The link for the passed category
+     */
+    public function getCategoryLink(Category $category)
+    {
+        return sprintf('index.do/catalog/index/%s', $category->getSlug());
+    }
+
+    /**
+     * Query whether or not the passed category is the active one.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Category          $category       The category to query for
+     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface $servletRequest The request instance
+     *
+     * @return boolean TRUE if the passed category is the active one, else FALSE
+     */
+    public function isActiveCategory(Category $category, HttpServletRequestInterface $servletRequest)
+    {
+        return $category->getSlug() === $servletRequest->getPathInfo();
+    }
+
+    /**
+     * Query whether or not the passed category is a subcategory of parent.
+     *
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Category $category The category to query for
+     * @param \AppserverIo\Apps\Example\Entities\Impl\Category $parent   The parent category
+     *
+     * @return boolean TRUE if the passed category is a subcategory of parent, else FALSE
+     */
+    public function isSubcategoryOf(Category $category, Category $parent)
+    {
+        return $category->getParent() === $parent;
     }
 }

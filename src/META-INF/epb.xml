@@ -49,6 +49,67 @@
         </session>
         <session>
             <session-type>Stateless</session-type>
+            <epb-name>ImportApplication</epb-name>
+            <epb-class>AppserverIo\Apps\Example\Actions\ImportApplication</epb-class>
+            <epb-ref>
+                <epb-ref-name>RegistryProcessor</epb-ref-name>
+                <epb-link>RegistryProcessor</epb-link>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Actions\ImportApplication</injection-target-class>
+                    <injection-target-property>registryProcessor</injection-target-property>
+                </injection-target>
+            </epb-ref>
+            <res-ref>
+                <res-ref-name>ApplicationInterface</res-ref-name>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Actions\ImportApplication</injection-target-class>
+                    <injection-target-property>application</injection-target-property>
+                </injection-target>
+            </res-ref>
+            <res-ref>
+                <res-ref-name>ProviderInterface</res-ref-name>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Actions\ImportApplication</injection-target-class>
+                    <injection-target-property>providerInterface</injection-target-property>
+                </injection-target>
+            </res-ref>
+            <bean-ref>
+                <bean-ref-name>SystemLoggers</bean-ref-name>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Actions\ImportApplication</injection-target-class>
+                    <injection-target-property>systemLoggers</injection-target-property>
+                </injection-target>
+            </bean-ref>
+            <bean-ref>
+                <bean-ref-name>Configuration</bean-ref-name>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Actions\ImportApplication</injection-target-class>
+                    <injection-target-property>configuration</injection-target-property>
+                </injection-target>
+            </bean-ref>
+            <bean-ref>
+                <bean-ref-name>PluginFactory</bean-ref-name>
+                <bean-ref-type>\AppserverIo\Apps\Example\Actions\PluginFactory</bean-ref-type>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Actions\ImportApplication</injection-target-class>
+                    <injection-target-property>pluginFactory</injection-target-property>
+                </injection-target>
+            </bean-ref>
+        </session>
+        <session>
+            <session-type>Stateful</session-type>
+            <epb-name>TestProcessor</epb-name>
+            <bean-ref>
+                <bean-ref-name>SomeTest</bean-ref-name>
+                <bean-ref-type>AppserverIo\Apps\Example\Services\SomeTest</bean-ref-type>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Apps\Example\Services\TestProcessor</injection-target-class>
+                    <injection-target-property>anotherTest</injection-target-property>
+                </injection-target>
+            </bean-ref>
+        </session>
+        <session>
+            <session-type>Stateless</session-type>
             <epb-name>SampleProcessor</epb-name>
             <epb-class>AppserverIo\Apps\Example\Services\SampleProcessor</epb-class>
             <post-construct>
@@ -98,7 +159,7 @@
             </res-ref>
             <persistence-unit-ref>
                 <description>Reference to a persistence unit</description>
-                <persistence-unit-res-ref-name>ExampleEntityManager</persistence-unit-ref-name>
+                <persistence-unit-ref-name>ExampleEntityManager</persistence-unit-ref-name>
                 <injection-target>
                     <injection-target-class>Doctrine\ORM\EntityManagerInterface</injection-target-class>
                     <injection-target-property>entityManager</injection-target-property>
@@ -113,10 +174,6 @@
         <message-driven>
             <epb-name>CreateASingleActionTimer</epb-name>
             <epb-class>AppserverIo\Apps\Example\MessageBeans\CreateASingleActionTimer</epb-class>
-        </message-driven>
-        <message-driven>
-            <epb-name>ImportChunkReceiver</epb-name>
-            <epb-class>AppserverIo\Apps\Example\MessageBeans\ImportChunkReceiver</epb-class>
         </message-driven>
         <message-driven>
             <epb-name>ImportReceiver</epb-name>

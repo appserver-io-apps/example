@@ -99,7 +99,6 @@ class CartAction extends DispatchAction
      * @return string|null The action result
      *
      * @throws \Exception
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/addToCart/:productId", restrictions={{"productId", "\d+"}})
      */

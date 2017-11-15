@@ -41,23 +41,31 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
     /**
      * The queue sender for sending the import message.
      *
-     * @var AppserverIo\Messaging\QueueSender
+     * @var \AppserverIo\Messaging\QueueSender
      * @Resource(name="import", type="pms/import")
      */
     protected $importSender;
 
     /**
-     * The queue sender for sending the message to create an interval timer.
+     * The import action instance.
      *
-     * @var AppserverIo\Messaging\QueueSender
-     * @Resource(name="createAIntervalTimer", type="pms/createAIntervalTimer")
+     * @var \AppserverIo\Apps\Example\Actions\ImportApplication
+     * @EnterpriseBean
      */
-    protected $createAIntervalTimerSender;
+    protected $importApplication;
+
+    /**
+     * The system logger implementation.
+     *
+     * @var \AppserverIo\Logger\Logger
+     * @Resource(lookup="php:global/log/System")
+     */
+    protected $systemLogger;
 
     /**
      * Returns the queue sender for sending the import message.
      *
-     * @return @var AppserverIo\Messaging\QueueSender The queue sender
+     * @return \AppserverIo\Messaging\QueueSender The queue sender
      */
     protected function getImportSender()
     {
@@ -65,13 +73,23 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
     }
 
     /**
-     * Returns the queue sender for sending the message to create an interval timer.
+     * Returns the import action instance.
      *
-     * @return @var AppserverIo\Messaging\QueueSender The queue sender
+     * @return \AppserverIo\Apps\Example\Actions\ImportApplicationInterface The import action instance
      */
-    protected function getCreateAIntervalTimerSender()
+    protected function getImportApplication()
     {
-        return $this->createAIntervalTimerSender;
+        return $this->importApplication;
+    }
+
+    /**
+     * Return's the system logger instance.
+     *
+     * @return \AppserverIo\Logger\Logger The sytsem logger instance
+     */
+    protected function getSystemLogger()
+    {
+        return $this->systemLogger;
     }
 
     /**
@@ -100,7 +118,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
 
         // Iterate through all phar files and extract them to tmp dir
         foreach (new \RegexIterator($fileIterator, '/^.*\\.csv$/') as $importFile) {
-            $overviewData->append($importFile->getFilename());
+            $overviewData->append($importFile->getPathname());
         }
 
         // return the array with the name of the uploaded files
@@ -126,9 +144,6 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
 
         // check if we should watch the directory for periodic import
         if ($watchDirectory->booleanValue()) {
-            // load the application name
-            $applicationName = $this->getApplication()->getName();
-
             // initialize the message with the name of the directory we want to watch
             $message = new StringMessage($this->getUploadTmpDir());
 
@@ -159,13 +174,25 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
     public function import($filename)
     {
 
-        // load the application name
-        $applicationName = $this->getApplication()->getName();
-
         // initialize the message with the name of the file to import the data from
-        $message = new StringMessage($this->getUploadTmpDir() . DIRECTORY_SEPARATOR . $filename);
+        $message = new StringMessage($filename);
 
         // create a new message and send it
         $this->getImportSender()->send($message, false);
+    }
+
+    /**
+     * Scan's the upload directory for new CSV files that has to be imported.
+     *
+     * @return void
+     * @Schedule(dayOfMonth = EVERY, month = EVERY, year = EVERY, second = ZERO, minute = EVERY, hour = EVERY)
+     */
+    public function scan()
+    {
+        try {
+            $this->getImportApplication()->process();
+        } catch (\Exception $e) {
+            $this->getSystemLogger()->error($e->__toString());
+        }
     }
 }

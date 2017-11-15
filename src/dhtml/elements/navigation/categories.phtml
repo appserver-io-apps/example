@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * dhtml/elements/navigation/categories.phtml
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ */
+
+namespace AppserverIo\Apps\Example\Servlets;
+
+use AppserverIo\Apps\Example\Utils\ViewHelper;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
+
+?>
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav"><?php foreach ($servletRequest->getAttribute(RequestKeys::CATALOG_VIEW_DATA)->getCategories() as $category) { ?>
+        <?php if ($category->getLevel() === 2) { ?><li<?php if (ViewHelper::singleton()->isActiveCategory($category, $servletRequest)) { ?> class="active"<?php } ?>>
+            <a href="<?php echo ViewHelper::singleton()->getCategoryLink($category) ?>">&nbsp;&nbsp;&nbsp;<?php echo $category->getTitle() ?></a>
+        </li><?php } ?>
+    <?php } ?></ul>
+</div>

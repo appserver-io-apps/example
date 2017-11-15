@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * dhtml\catalog.dhtml
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ */
+
+namespace AppserverIo\Apps\Example\Servlets;
+
+use AppserverIo\Apps\Example\Utils\ViewHelper;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
+
+$catagoryViewData = $servletRequest->getAttribute(RequestKeys::CATALOG_VIEW_DATA);
+$selectedCategory = $catagoryViewData->getSelectedCategory();
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="appserver.io">
+
+    <title>appserver.io example</title>
+
+    <base href="<?php echo ViewHelper::singleton()->getBaseUrl($servletRequest) ?>">
+
+    <link href="components/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <link href="static/img/favicon.png" rel="shortcut icon">
+</head>
+
+<body>
+
+    <?php require_once 'elements/navigation.phtml' ?>
+
+    <div class="container content">
+
+        <?php require_once 'elements/messages/error.phtml' ?>
+
+        <?php require_once 'elements/navigation/categories.phtml' ?>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"><?php foreach ($servletRequest->getAttribute(RequestKeys::CATALOG_VIEW_DATA)->getCategories() as $category) { ?>
+                <?php if (ViewHelper::singleton()->isSubcategoryOf($category, $selectedCategory)) { ?><li<?php if (ViewHelper::singleton()->isActiveCategory($category, $servletRequest)) { ?> class="active"<?php } ?>>
+                    <a href="<?php echo ViewHelper::singleton()->getCategoryLink($category) ?>">&nbsp;&nbsp;&nbsp;<?php echo $category->getTitle() ?></a>
+                </li><?php } ?>
+            <?php } ?></ul>
+        </div>
+
+        <div class="row">
+            <?php foreach ($servletRequest->getAttribute(RequestKeys::CATALOG_VIEW_DATA)->getProducts() as $entity) { ?>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail" >
+                        <img src="http://lorempixel.com/340/200/technics/<?php echo $entity->getId() ?>" class="img-responsive">
+                        <div class="caption">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-6 text-left">
+                                    <h3><?php echo $entity->getName() ?></h3>
+                                </div>
+                                <div class="col-md-6 col-xs-6 price text-right">
+                                    <h3><label>$<?php echo $entity->getSalesPrice() ?></label></h3>
+                                </div>
+                            </div>
+                            <p class="text-left"><?php echo $entity->getDescription() ?></p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="<?php echo ViewHelper::singleton()->getAddToCartLink($entity) ?>" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart</a>
+                                </div>
+                            </div><p/>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+
+        <div class="footer">
+            <p>&copy; and built with pride by <a href="http://appserver.io" target="_blank">appserver.io</a></p>
+        </div>
+
+    </div>
+
+<!-- placed at the end of the document so the pages load faster -->
+<script src="components/jquery/jquery.min.js"></script>
+<script src="components/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

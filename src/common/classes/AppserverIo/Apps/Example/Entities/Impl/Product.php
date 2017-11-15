@@ -597,6 +597,8 @@ class Product extends AbstractEntity
      */
     public function addCategory(Category $category)
     {
-        $this->categories->add($category);
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
     }
 }

@@ -3,9 +3,6 @@
     <message-queue type="ImportReceiver">
         <destination>pms/import</destination>
     </message-queue>
-    <message-queue type="ImportChunkReceiver">
-        <destination>pms/importChunk</destination>
-    </message-queue>
     <message-queue type="CreateASingleActionTimer">
         <destination>pms/createASingleActionTimer</destination>
     </message-queue>

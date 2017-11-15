@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * dhtml/elements/navigation.phtml
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ */
+
+namespace AppserverIo\Apps\Example\Servlets;
+
+use AppserverIo\Apps\Example\Utils\ViewHelper;
+use AppserverIo\Apps\Example\Utils\RequestKeys;
+
+?>
+<?php if ($errorMessages = $servletRequest->getAttribute(RequestKeys::ERROR_MESSAGES)) { ?><div class="alert alert-danger">
+    <?php foreach ($errorMessages as $errorMessage): ?>
+        <?php echo $errorMessage ?><br/>
+    <?php endforeach; ?>
+</div><?php } ?>

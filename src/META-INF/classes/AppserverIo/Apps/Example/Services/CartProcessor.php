@@ -20,8 +20,6 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Apps\Example\Entities\Impl\Cart;
-use AppserverIo\Apps\Example\Entities\Impl\Product;
-use AppserverIo\Apps\Example\Entities\Impl\CartItem;
 
 /**
  * A stateful session bean implementation providing shopping cart functionality

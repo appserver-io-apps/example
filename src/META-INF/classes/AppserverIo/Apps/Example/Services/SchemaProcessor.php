@@ -24,7 +24,6 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\DBAL\Schema\SqliteSchemaManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppserverIo\Apps\Example\Entities\Impl\Product;
 use AppserverIo\Apps\Example\Entities\Impl\Category;
 
 /**
@@ -136,6 +135,32 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
                             'translations' => array(
                                 array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Ausrüstung'),
                                 array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Ausrüstung".')
+                            ),
+                            'children' => array(
+                                array(
+                                    'title' => "Bags",
+                                    'description' => "Description for Bags.",
+                                    'translations' => array(
+                                        array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Taschen'),
+                                        array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Taschen".')
+                                    )
+                                ),
+                                array(
+                                    'title' => "Fitness Equipment",
+                                    'description' => "Description for Fitness Equipment.",
+                                    'translations' => array(
+                                        array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Fitness Ausrüstung'),
+                                        array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Fitness Ausrüstung".')
+                                    )
+                                ),
+                                array(
+                                    'title' => "Watches",
+                                    'description' => "Description for Watches.",
+                                    'translations' => array(
+                                        array('locale' => 'de_DE', 'field' => 'title', 'value' => 'Uhren'),
+                                        array('locale' => 'de_DE', 'field' => 'description', 'value' => 'Beschreibung für die Kategorie "Uhren".')
+                                    )
+                                )
                             )
                         ),
                         array(
@@ -195,7 +220,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
                 array('locale' => 'de_DE', 'field' => 'urlKey', 'value' => 'joust-duffle-bag')
             ),
             'categories' => array(
-                'root/default-category/gear'
+                'root/default-category/gear',
+                'root/default-category/gear/bags'
             )
         )
     );
@@ -411,7 +437,6 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
 
                 // if a category can be found, relate it with the product
                 if ($category) {
-                    error_log("Add category " . $category->getSlug() . " to product " . $product->getProductNumber());
                     $product->addCategory($category);
                 }
             }

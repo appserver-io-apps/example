@@ -22,7 +22,6 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
-use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -51,27 +50,27 @@ class IndexAction extends DispatchAction
 {
 
     /**
-     * The CartProcessor instance to handle the sample functionality.
+     * The CatalogProcessor instance to handle the sample functionality.
      *
-     * @var \AppserverIo\Apps\Example\Services\SampleProcessor
+     * @var \AppserverIo\Apps\Example\Services\CatalogProcessor
      * @EnterpriseBean
      */
-    protected $sampleProcessor;
+    protected $catalogProcessor;
 
     /**
-     * Returns the SampleProcessor instance to handle the sample funcionality.
+     * Returns the CatalogProcessor instance to handle the catalog functionality.
      *
      * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
      */
-    public function getSampleProcessor()
+    public function getCatalogProcessor()
     {
-        return $this->sampleProcessor;
+        return $this->catalogProcessor;
     }
 
     /**
      * Default action to invoke if no action parameter has been found in the request.
      *
-     * Loads all sample data and attaches it to the servlet context ready to be rendered
+     * Load's the catalog view data and attaches it to the servlet context ready to be rendered
      * by the template.
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
@@ -79,124 +78,16 @@ class IndexAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/index")
+     * @Action(name="/index/:slug")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
-        // append the sample data to the request attributes
-        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
-    }
 
-    /**
-     * Loads the sample entity with the sample ID found in the request and attaches
-     * it to the servlet context ready to be rendered by the template.
-     *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
-     *
-     * @return string|null The action result
-     *
-     * @throws \Exception
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
-     *
-     * @Action(name="/load")
-     */
-    public function loadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
-    {
+        // load the catalog view data for the passed path info
+        /** @var \AppserverIo\Apps\Example\Dtos\CatalogViewData $viewData */
+        $viewData = $this->getCatalogProcessor()->getCatalogViewData($servletRequest->getParameter(RequestKeys::SLUG));
 
-        // check if the necessary params has been specified and are valid
-        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
-        if ($sampleId == null) {
-            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
-        }
-
-        // load the entity to be edited and attach it to the servlet context
-        $viewData = $this->getSampleProcessor()->load($sampleId);
-        $servletRequest->setAttribute(RequestKeys::VIEW_DATA, $viewData);
-
-        // append the sample data to the request attributes
-        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
-    }
-
-    /**
-     * Deletes the sample entity with the sample ID found in the request and
-     * reloads all other entities from the database.
-     *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
-     *
-     * @return string|null The action result
-     *
-     * @throws \Exception
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
-     *
-     * @Action(name="/delete")
-     */
-    public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
-    {
-
-        // check if the necessary params has been specified and are valid
-        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
-        if ($sampleId == null) {
-            throw new \Exception(sprintf('Can\'t find requested %s', RequestKeys::SAMPLE_ID));
-        }
-
-        // delete the entity
-        $this->getSampleProcessor()->delete($sampleId);
-
-        // append the sample data to the request attributes
-        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
-    }
-
-    /**
-     * Persists the entity data found in the request.
-     *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
-     *
-     * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
-     *
-     * @Action(name="/persist")
-     */
-    public function persistAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
-    {
-
-        // check if the necessary params has been specified and are valid
-        $sampleId = $servletRequest->getParameter(RequestKeys::SAMPLE_ID, FILTER_VALIDATE_INT);
-
-        // check if the user has a name specified
-        if ($name = trim($servletRequest->getParameter(RequestKeys::NAME))) {
-            // create a new entity and persist it
-            $entity = new Sample();
-            $entity->setSampleId((integer) $sampleId);
-            $entity->setName($name);
-            $this->getSampleProcessor()->persist($entity);
-
-            // append the sample data to the request attributes
-            $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
-
-        } else {
-            // if no name has been specified, add an error message
-            $this->addFieldError(RequestKeys::NAME, 'Please add a name!');
-        }
-    }
-
-    /**
-     * Deletes all samples from the database.
-     *
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
-     * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
-     *
-     * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
-     *
-     * @Action(name="/deleteAll")
-     */
-    public function deleteAllAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
-    {
-
-        // remove all samples from the database and append an empty array to the request attributes
-        $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->deleteAll());
+        // append the catalog view data to the request attributes
+        $servletRequest->setAttribute(RequestKeys::CATALOG_VIEW_DATA, $viewData);
     }
 }

@@ -21,8 +21,6 @@
 namespace AppserverIo\Apps\Example\MessageBeans;
 
 use AppserverIo\Psr\Pms\MessageInterface;
-use AppserverIo\Messaging\ArrayMessage;
-use AppserverIo\Messaging\Utils\PriorityMedium;
 use AppserverIo\Messaging\AbstractMessageListener;
 
 /**
@@ -40,21 +38,21 @@ class ImportReceiver extends AbstractMessageListener
 {
 
     /**
-     * The queue sender for sending the import message.
+     * The ImportProcessor instance to handle the import functionality.
      *
-     * @var AppserverIo\Messaging\QueueSender
-     * @Resource(name="importChunk", type="pms/importChunk")
+     * @var \AppserverIo\Apps\Example\Services\ImportProcessor
+     * @EnterpriseBean
      */
-    protected $importChunkSender;
+    protected $importProcessor;
 
     /**
-     * Returns the queue sender for sending the import message.
+     * Returns the ImportProcessor instance to handle the sample funcionality.
      *
-     * @return @var AppserverIo\Messaging\QueueSender The queue sender
+     * @return \AppserverIo\RemoteMethodInvocation\RemoteObjectInterface The instance
      */
-    protected function getImportChunkSender()
+    public function getImportProcessor()
     {
-        return $this->importChunkSender;
+        return $this->importProcessor;
     }
 
     /**
@@ -71,57 +69,6 @@ class ImportReceiver extends AbstractMessageListener
 
         // log a message that the message has successfully been received
         $this->getApplication()->getInitialContext()->getSystemLogger()->info('Successfully received / finished message');
-
-        // define the import file from message
-        $importFile = $message->getMessage();
-
-        // open the import file
-        $importData = file($importFile);
-
-        // load the application name
-        $applicationName = $this->getApplication()->getName();
-
-        // init chunk data
-        $chunkSize = 100;
-
-        // if data contains less entries than chunk size
-        if (sizeof($importData) <= $chunkSize) {
-            return $this->getImportChunkSender()->send(new ArrayMessage($importData), false);
-        }
-
-        // prepare the variables we need for chunking
-        $i = 0;
-        $currentChunkIndex = 0;
-        $chunkData = array();
-
-        // send chunk message
-        foreach ($importData as $data) {
-            // increase counter
-            $i ++;
-
-            // fill chunk data array
-            $chunkData[] = $data;
-
-            // check if chunk size is reached
-            if ($i == $chunkSize) {
-                // raise the counter for the chunks
-                $currentChunkIndex ++;
-
-                // reset counter
-                $i = 0;
-
-                // send chunked data message
-                $message = new ArrayMessage($chunkData);
-                $message->setPriority(PriorityMedium::get());
-                $send = $this->getImportChunkSender()->send($message, false);
-
-                // reset chunk data
-                $chunkData = array();
-
-                // reduce CPU load a bit
-                usleep(10000); // === 0.01 s
-            }
-        }
 
         // update the message monitor for this message
         $this->updateMonitor($message);

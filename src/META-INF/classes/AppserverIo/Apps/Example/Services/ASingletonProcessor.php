@@ -20,7 +20,6 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Psr\Application\ApplicationInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
 

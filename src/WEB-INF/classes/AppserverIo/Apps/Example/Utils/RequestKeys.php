@@ -185,4 +185,18 @@ class RequestKeys
      * @return string
      */
     const WATCH_DIRECTORY = 'watchDirectory';
+
+    /**
+     * The key for the catalog view data.
+     *
+     * @var string
+     */
+    const CATALOG_VIEW_DATA = 'catalog.view.data';
+
+    /**
+     * The key for the category slug.
+     *
+     * @var string
+     */
+    const SLUG = 'slug';
 }

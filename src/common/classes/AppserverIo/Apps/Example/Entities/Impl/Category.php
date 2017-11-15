@@ -393,4 +393,14 @@ class Category extends AbstractEntity
     {
         $this->products->add($product);
     }
+
+    /**
+     * Return's the category's products.
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection<\AppserverIo\Apps\Example\Entities\Impl\Product> The category's products
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
 }
