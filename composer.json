@@ -15,6 +15,7 @@
     "require-dev": {
         "codegyre/robo": "*",
         "appserver-io/phar": "~1.0",
+        "appserver-io/build": "~1.0",
         "appserver-io/lang": "3.0.0 as 1.0.1",
         "appserver-io/messaging": "dev-di as 2.0.1",
         "appserver-io/properties": "~2.0",
