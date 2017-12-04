@@ -3,6 +3,12 @@
     "description": "The example application for the ApplicationServer",
     "version": "1.0.0",
     "minimum-stability": "beta",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/appserver-io/build"
+        }
+    ],
     "require": {
         "jms/serializer": "1.8.1",
         "components/jquery": "*",
@@ -15,7 +21,7 @@
     "require-dev": {
         "codegyre/robo": "*",
         "appserver-io/phar": "~1.0",
-        "appserver-io/build": "~1.0",
+        "appserver-io/build": "dev-dependencyUpdate",
         "appserver-io/lang": "3.0.0 as 1.0.1",
         "appserver-io/messaging": "dev-di as 2.0.1",
         "appserver-io/properties": "~2.0",
