@@ -20,7 +20,6 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Psr\Application\ApplicationInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
 
@@ -43,7 +42,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
-     * @Resource(name="ApplicationInterface")
+     * @Resource(type="ApplicationInterface")
      */
     protected $application;
 

@@ -38,7 +38,7 @@ abstract class AbstractProcessor
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
-     * @Resource(name="ApplicationInterface")
+     * @Resource(type="ApplicationInterface")
      */
     protected $application;
 

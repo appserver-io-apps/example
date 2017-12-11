@@ -21,11 +21,9 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\DBAL\Schema\SqliteSchemaManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppserverIo\Collections\ArrayList;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
 
 /**
@@ -53,8 +51,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     /**
      * The DIC provider instance.
      *
-     * @var \AppserverIo\Appserver\DependencyInjectionContainer\Interfaces\ProviderInterface $provider
-     * @Resource(name="ProviderInterface")
+     * @var \AppserverIo\Psr\Di\ProviderInterface $provider
+     * @Resource(type="ProviderInterface")
      */
     protected $providerInterface;
 

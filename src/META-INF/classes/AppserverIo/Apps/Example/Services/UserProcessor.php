@@ -48,8 +48,8 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
     /**
      * The DIC provider instance.
      *
-     * @var \AppserverIo\Appserver\DependencyInjectionContainer\Interfaces\ProviderInterface $provider
-     * @Resource(name="ProviderInterface")
+     * @var \AppserverIo\Psr\Di\ProviderInterface $provider
+     * @Resource(type="ProviderInterface")
      */
     protected $provider;
 
