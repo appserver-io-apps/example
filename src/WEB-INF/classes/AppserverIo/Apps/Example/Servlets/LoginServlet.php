@@ -23,7 +23,6 @@ namespace AppserverIo\Apps\Example\Servlets;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
-use AppserverIo\Apps\Example\Utils\SessionKeys;
 
 /**
  * Demo servlet handling a login GET request to test SFSB functionality.
@@ -66,9 +65,6 @@ class LoginServlet extends HttpServlet
 
             // try to login, using the session bean
             $this->userProcessor->login('appserver', 'appserver.i0');
-
-            // if successfully then add the username to the session and redirect to the overview
-            $session->putData(SessionKeys::USERNAME, 'appserver');
 
             // log that we've succussfully been logged into the system
             $servletRequest

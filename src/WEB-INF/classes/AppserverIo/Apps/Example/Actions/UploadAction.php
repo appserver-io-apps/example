@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\BaseAction;
-use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -38,8 +37,8 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/upload")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/upload.dhtml", type="ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/upload.dhtml", type="ServletDispatcherResult")
  * })
  */
 class UploadAction extends BaseAction

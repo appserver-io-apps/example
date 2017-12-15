@@ -39,7 +39,6 @@ class SessionKeys
     {
     }
 
-
     /**
      * The key for the form errors stored in the session.
      *

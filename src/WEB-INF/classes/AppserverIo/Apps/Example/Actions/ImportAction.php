@@ -23,8 +23,6 @@ namespace AppserverIo\Apps\Example\Actions;
 use AppserverIo\Lang\String;
 use AppserverIo\Lang\Boolean;
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -42,8 +40,8 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/import")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/import.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/import.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/import.dhtml", type="ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/import.dhtml", type="ServletDispatcherResult")
  * })
  */
 class ImportAction extends DispatchAction
@@ -95,7 +93,6 @@ class ImportAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/import")
      */
@@ -124,7 +121,6 @@ class ImportAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see IndexServlet::indexAction()
      *
      * @Action(name="/upload")
      */
@@ -160,7 +156,6 @@ class ImportAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/delete")
      */

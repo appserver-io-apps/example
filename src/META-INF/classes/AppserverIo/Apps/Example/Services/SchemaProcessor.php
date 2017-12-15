@@ -60,7 +60,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      * The system logger implementation.
      *
      * @var \AppserverIo\Logger\Logger
-     * @Resource(lookup="php:global/log/System")
+     * @Resource(type="SystemLogger")
      */
     protected $systemLogger;
 

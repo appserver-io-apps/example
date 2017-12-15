@@ -20,14 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Actions;
 
-use AppserverIo\Http\HttpProtocol;
 use AppserverIo\Routlt\BaseAction;
-use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Routlt\Util\Validateable;
-use AppserverIo\Apps\Example\Utils\ViewHelper;
-use AppserverIo\Apps\Example\Utils\RequestKeys;
-use AppserverIo\Apps\Example\Utils\SessionKeys;
-use AppserverIo\Apps\Example\Exceptions\LoginException;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -44,8 +37,8 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/logout")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/login.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/login.dhtml", type="ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/login.dhtml", type="ServletDispatcherResult")
  * })
  */
 class LogoutAction extends BaseAction
@@ -76,7 +69,6 @@ class LogoutAction extends BaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      */
     public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {

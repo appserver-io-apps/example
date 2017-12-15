@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
@@ -43,8 +42,8 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/user")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/user.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/user.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/user.dhtml", type="ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/user.dhtml", type="ServletDispatcherResult")
  * })
  */
 class UserAction extends DispatchAction

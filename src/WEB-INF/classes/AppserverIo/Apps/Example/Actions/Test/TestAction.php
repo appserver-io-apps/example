@@ -21,8 +21,6 @@
 namespace AppserverIo\Apps\Example\Actions\Test;
 
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Routlt\ActionInterface;
-use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -43,8 +41,8 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/testTest")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/index.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/index.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/index.dhtml", type="ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/index.dhtml", type="ServletDispatcherResult")
  * })
  *
  */
