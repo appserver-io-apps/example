@@ -67,11 +67,7 @@ class LoginServlet extends HttpServlet
             $this->userProcessor->login('appserver', 'appserver.i0');
 
             // log that we've succussfully been logged into the system
-            $servletRequest
-                ->getContext()
-                ->getInitialContext()
-                ->getSystemLogger()
-                ->info('Successfully logged in with appserver/appserver.i0!');
+            \info('Successfully logged in with appserver/appserver.i0!');
         }
 
         // append the Hello World! to the body stream

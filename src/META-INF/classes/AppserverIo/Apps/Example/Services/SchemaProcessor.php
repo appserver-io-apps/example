@@ -91,7 +91,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      */
     public function initialize()
     {
-        $this->getSystemLogger()->info(
+        \info(
             sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
         );
     }
@@ -143,9 +143,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             if (!in_array($dbname, $sm->listDatabases())) {
                 $sm->createDatabase($dbname);
             }
-
         } catch (\Exception $e) {
-            $this->getSystemLogger()->error($e->__toString());
+            \error($e->__toString());
         }
     }
 
@@ -169,9 +168,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
 
             // create or update the schema
             $schemaTool->updateSchema($classes);
-
         } catch (\Exception $e) {
-            $this->getSystemLogger()->error($e->__toString());
+            \error($e->__toString());
         }
     }
 

@@ -82,7 +82,6 @@ class WebserviceServlet extends HttpServlet
 
             // append the data to the response
             $servletResponse->appendBodyStream($response);
-
         } catch (\Exception $e) {
             // handle the exception
             $servletResponse->appendBodyStream($e->__toString());
@@ -116,7 +115,6 @@ class WebserviceServlet extends HttpServlet
             // append the SOAP response
             $servletResponse->appendBodyStream($soapResponse);
             $servletResponse->addHeader(HttpProtocol::HEADER_CONNECTION, 'close');
-
         } catch (\Exception $e) {
             // handle the exception
             $servletResponse->appendBodyStream($e->__toString());

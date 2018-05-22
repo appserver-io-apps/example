@@ -67,9 +67,7 @@ class CreateASingleActionTimer extends AbstractMessageListener implements TimedO
         $timerService->createSingleActionTimer($duration);
 
         // log a message that the single action timer has been successfully created
-        $this->getApplication()->getInitialContext()->getSystemLogger()->info(
-            sprintf('Successfully created a single action timer with a duration of %d microseconds', $duration)
-        );
+        \info(sprintf('Successfully created a single action timer with a duration of %d microseconds', $duration));
 
         // update the message monitor for this message
         $this->updateMonitor($message);
@@ -84,8 +82,6 @@ class CreateASingleActionTimer extends AbstractMessageListener implements TimedO
      **/
     public function timeout(TimerInterface $timer)
     {
-        $this->getApplication()->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by interface', __METHOD__)
-        );
+        \info(sprintf('%s has successfully been invoked by interface', __METHOD__));
     }
 }

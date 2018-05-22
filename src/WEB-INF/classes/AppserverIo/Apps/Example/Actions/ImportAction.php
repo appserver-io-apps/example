@@ -103,7 +103,6 @@ class ImportAction extends DispatchAction
         if ($filename = $servletRequest->getParameter(RequestKeys::FILENAME, FILTER_SANITIZE_STRING)) {
             // import the file with the name passed as request parameter
             $this->getImportProcessor()->import($filename);
-
         } else {
             // if no file has been selected, add an error message
             throw new \Exception('Please select a file to import!');
@@ -139,7 +138,6 @@ class ImportAction extends DispatchAction
 
             // if yes, upload the file to be imported and watch the Directory
             $this->getImportProcessor()->upload($fileToUpload, $watchDirectory);
-
         } else {
             // if no file has been selected, add an error message
             throw new \Exception('Please select a file to upload!');

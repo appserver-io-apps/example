@@ -67,7 +67,7 @@ class CreateAIntervalTimer extends AbstractMessageListener
         $timerService->createIntervalTimer($initialExpiration, $intervalDuration, new String($message->getMessage()));
 
         // log a message that the single action timer has been successfully created
-        $this->getApplication()->getInitialContext()->getSystemLogger()->info(
+        \info(
             sprintf(
                 'Successfully created a interval timer starting in %d seconds and a interval of %d seconds',
                 $initialExpiration / 1000000,
@@ -91,7 +91,7 @@ class CreateAIntervalTimer extends AbstractMessageListener
     {
 
         // log a message with the directory name we found
-        $this->getApplication()->getInitialContext()->getSystemLogger()->info(
+        \info(
             sprintf(
                 '%s has successfully been invoked by @Timeout annotation to watch directory %s',
                 __METHOD__,

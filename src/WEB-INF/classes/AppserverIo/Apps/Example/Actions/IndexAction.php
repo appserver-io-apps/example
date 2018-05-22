@@ -172,7 +172,6 @@ class IndexAction extends DispatchAction
 
             // append the sample data to the request attributes
             $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
-
         } else {
             // if no name has been specified, add an error message
             $this->addFieldError(RequestKeys::NAME, 'Please add a name!');

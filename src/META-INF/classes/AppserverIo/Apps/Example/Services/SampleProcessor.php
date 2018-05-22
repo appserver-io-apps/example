@@ -61,7 +61,7 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
      */
     public function initialize()
     {
-        $this->getInitialContext()->getSystemLogger()->info(
+        \info(
             sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
         );
     }

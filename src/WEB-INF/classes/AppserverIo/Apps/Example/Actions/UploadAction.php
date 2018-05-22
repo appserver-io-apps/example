@@ -61,7 +61,6 @@ class UploadAction extends BaseAction
             // save file to appserver's upload tmp folder with tmpname
             $fileToUpload->init();
             $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
-
         } else {
             // if no file has been selected, add an error message
             $this->addFieldError('fileToUpload', 'Please select a file to upload!');
