@@ -55,7 +55,7 @@
                             </location>
                         </locations>
                         <environmentVariables>
-                            <environmentVariable condition="" definition="LOGGER_ACCESS=${container.name}/${webapp.name}/Access" />
+                            <environmentVariable condition="" definition="LOGGER_ACCESS=${container.name}/${webapp.name}/AccessLogger" />
                         </environmentVariables>
                     </virtualHost>
                 </virtualHosts>
@@ -67,7 +67,7 @@
                     </access>
                 </accesses>
                 <environmentVariables>
-                    <environmentVariable condition="^\/${webapp.name}@$X_REQUEST_URI" definition="LOGGER_ACCESS=${container.name}/${webapp.name}/Access" />
+                    <environmentVariable condition="^\/${webapp.name}@$X_REQUEST_URI" definition="LOGGER_ACCESS=${container.name}/${webapp.name}/AccessLogger" />
                 </environmentVariables>
             </server>
         </servers>

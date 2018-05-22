@@ -391,7 +391,7 @@ class User
     /**
      * Return's the user's roles.
      *
-     * @return Doctrine\Common\Collections\ArrayCollection The roles
+     * @return \Doctrine\Common\Collections\ArrayCollection The roles
      */
     public function getRoles()
     {

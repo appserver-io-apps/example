@@ -20,8 +20,6 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Psr\Application\ApplicationInterface;
-
 /**
  * Abstract processor implementation that provides basic cache functionality.
  *
@@ -52,7 +50,7 @@ abstract class AbstractCacheProcessor extends \Stackable
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
-     * @Resource(name="ApplicationInterface")
+     * @Resource(type="ApplicationInterface")
      */
     protected $application;
 

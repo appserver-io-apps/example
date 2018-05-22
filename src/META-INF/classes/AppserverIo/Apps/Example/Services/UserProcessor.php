@@ -48,8 +48,8 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
     /**
      * The DIC provider instance.
      *
-     * @var \AppserverIo\Appserver\DependencyInjectionContainer\Interfaces\ProviderInterface $provider
-     * @Resource(name="ProviderInterface")
+     * @var \AppserverIo\Psr\Di\ProviderInterface $provider
+     * @Resource(type="ProviderInterface")
      */
     protected $provider;
 
@@ -135,15 +135,10 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
             $this->user = $repository->findOneBy(array('username' => $username));
 
             // log a message that the data has been loaded from database
-            $this->getInitialContext()->getSystemLogger()->info(
-                sprintf('Successfully reloaded data from database in stateful session bean %s', __CLASS__)
-            );
-
+            \info(sprintf('Successfully reloaded data from database in stateful session bean %s', __CLASS__));
         } else {
             // log a message that the data has already been loaded
-            $this->getInitialContext()->getSystemLogger()->info(
-                sprintf('Successfully loaded data from stateful session bean instance %s', __CLASS__)
-            );
+            \info(sprintf('Successfully loaded data from stateful session bean instance %s', __CLASS__));
         }
 
         // return the user instance

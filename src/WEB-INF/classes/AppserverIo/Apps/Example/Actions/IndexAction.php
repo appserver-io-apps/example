@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
-use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Entities\Impl\Sample;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
@@ -43,8 +42,8 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/index")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/index.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/index.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/index.dhtml", type="ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/index.dhtml", type="ServletDispatcherResult")
  * })
  *
  */
@@ -98,7 +97,6 @@ class IndexAction extends DispatchAction
      * @return string|null The action result
      *
      * @throws \Exception
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/load")
      */
@@ -129,7 +127,6 @@ class IndexAction extends DispatchAction
      * @return string|null The action result
      *
      * @throws \Exception
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/delete")
      */
@@ -156,7 +153,6 @@ class IndexAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/persist")
      */
@@ -176,7 +172,6 @@ class IndexAction extends DispatchAction
 
             // append the sample data to the request attributes
             $servletRequest->setAttribute(RequestKeys::OVERVIEW_DATA, $this->getSampleProcessor()->findAll());
-
         } else {
             // if no name has been specified, add an error message
             $this->addFieldError(RequestKeys::NAME, 'Please add a name!');
@@ -190,7 +185,6 @@ class IndexAction extends DispatchAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
      * @return string|null The action result
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
      *
      * @Action(name="/deleteAll")
      */

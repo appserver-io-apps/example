@@ -41,7 +41,7 @@ class SampleProcessorTest extends \PHPUnit_Framework_TestCase
     /**
      * The processor instance to be tested.
      *
-     * @var AppserverIo\Apps\Example\Services\SampleProcessor
+     * @var \AppserverIo\Apps\Example\Services\SampleProcessor
      */
     protected $sampleProcessor;
 

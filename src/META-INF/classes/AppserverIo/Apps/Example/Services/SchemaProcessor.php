@@ -21,11 +21,9 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\DBAL\Schema\SqliteSchemaManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppserverIo\Collections\ArrayList;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
 
 /**
@@ -53,8 +51,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
     /**
      * The DIC provider instance.
      *
-     * @var \AppserverIo\Appserver\DependencyInjectionContainer\Interfaces\ProviderInterface $provider
-     * @Resource(name="ProviderInterface")
+     * @var \AppserverIo\Psr\Di\ProviderInterface $provider
+     * @Resource(type="ProviderInterface")
      */
     protected $providerInterface;
 
@@ -62,7 +60,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      * The system logger implementation.
      *
      * @var \AppserverIo\Logger\Logger
-     * @Resource(lookup="php:global/log/System")
+     * @Resource(type="SystemLogger")
      */
     protected $systemLogger;
 
@@ -93,7 +91,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      */
     public function initialize()
     {
-        $this->getSystemLogger()->info(
+        \info(
             sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
         );
     }
@@ -145,9 +143,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             if (!in_array($dbname, $sm->listDatabases())) {
                 $sm->createDatabase($dbname);
             }
-
         } catch (\Exception $e) {
-            $this->getSystemLogger()->error($e->__toString());
+            \error($e->__toString());
         }
     }
 
@@ -171,9 +168,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
 
             // create or update the schema
             $schemaTool->updateSchema($classes);
-
         } catch (\Exception $e) {
-            $this->getSystemLogger()->error($e->__toString());
+            \error($e->__toString());
         }
     }
 

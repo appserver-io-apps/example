@@ -38,7 +38,7 @@ abstract class AbstractProcessor
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
-     * @Resource(name="ApplicationInterface")
+     * @Resource(type="ApplicationInterface")
      */
     protected $application;
 
@@ -64,9 +64,7 @@ abstract class AbstractProcessor
      */
     public function postConstruct()
     {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
-        );
+        \info(sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__));
     }
 
     /**
@@ -77,9 +75,7 @@ abstract class AbstractProcessor
      */
     public function preDestroy()
     {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PreDestroy annotation', __METHOD__)
-        );
+        \info(sprintf('%s has successfully been invoked by @PreDestroy annotation', __METHOD__));
     }
 
     /**
@@ -90,9 +86,7 @@ abstract class AbstractProcessor
      */
     public function postDetach()
     {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PostDetach annotation', __METHOD__)
-        );
+        \info(sprintf('%s has successfully been invoked by @PostDetach annotation', __METHOD__));
     }
 
     /**
@@ -103,9 +97,7 @@ abstract class AbstractProcessor
      */
     public function preAttach()
     {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PreAttach annotation', __METHOD__)
-        );
+        \info(sprintf('%s has successfully been invoked by @PreAttach annotation', __METHOD__));
     }
 
     /**

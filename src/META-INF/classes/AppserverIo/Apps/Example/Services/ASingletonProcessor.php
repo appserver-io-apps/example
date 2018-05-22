@@ -20,7 +20,6 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use AppserverIo\Psr\Application\ApplicationInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
 
@@ -43,7 +42,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
-     * @Resource(name="ApplicationInterface")
+     * @Resource(type="ApplicationInterface")
      */
     protected $application;
 
@@ -83,9 +82,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
         $this->counter = 0;
 
         // log a message for the @PostConstruct method invokation
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PostConstruct annotation %d times', __METHOD__, $this->raiseCounter())
-        );
+        \info(printf('%s has successfully been invoked by @PostConstruct annotation %d times', __METHOD__, $this->raiseCounter()));
     }
 
     /**
@@ -97,9 +94,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     public function postDetach()
     {
         // log a message for the @PostDetach method invokation
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PostDetach annotation', __METHOD__)
-        );
+        \info(sprintf('%s has successfully been invoked by @PostDetach annotation', __METHOD__));
     }
 
     /**
@@ -111,9 +106,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     public function preAttach()
     {
         // log a message for the @PreAttach method invokation
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @PreAttach annotation', __METHOD__)
-        );
+        \info(sprintf('%s has successfully been invoked by @PreAttach annotation', __METHOD__));
     }
 
     /**
@@ -149,7 +142,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
     /**
      * Returns the initial context instance.
      *
-     * @return \AppserverIo\Appserver\Application\Interfaces\ContextInterface The initial context instance
+     * @return \AppserverIo\Psr\ApplicationServer\ContextInterface The initial context instance
      */
     public function getInitialContext()
     {
@@ -180,7 +173,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
 
         // try to load the user and log the found name
         if ($user = $repository->findOneBy(array('username' => 'appserver'))) {
-            $this->getSystemLogger()->info(sprintf('Found user with username: %s', $user->getUsername()));
+            \info(sprintf('Found user with username: %s', $user->getUsername()));
         }
     }
 
@@ -194,9 +187,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      */
     public function invokedByTimer(TimerInterface $timer)
     {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by @Schedule annotation %d times', __METHOD__, $this->raiseCounter())
-        );
+        \info(sprintf('%s has successfully been invoked by @Schedule annotation %d times', __METHOD__, $this->raiseCounter()));
     }
 
     /**
@@ -208,8 +199,6 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      **/
     public function timeout(TimerInterface $timer)
     {
-        $this->getInitialContext()->getSystemLogger()->info(
-            sprintf('%s has successfully been invoked by interface %d times', __METHOD__, $this->raiseCounter())
-        );
+        \info(sprintf('%s has successfully been invoked by interface %d times', __METHOD__, $this->raiseCounter()));
     }
 }

@@ -1,3 +1,13 @@
+# Version 2.3.0
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Switch at least to appserver.io version 1.1.5-beta11
+
 # Version 2.2.4
 
 ## Bugfixes

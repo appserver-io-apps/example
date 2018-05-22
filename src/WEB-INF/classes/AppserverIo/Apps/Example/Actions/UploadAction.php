@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\BaseAction;
-use AppserverIo\Routlt\ActionInterface;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -38,8 +37,8 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/upload")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/upload.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/upload.dhtml", type="ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/upload.dhtml", type="ServletDispatcherResult")
  * })
  */
 class UploadAction extends BaseAction
@@ -62,7 +61,6 @@ class UploadAction extends BaseAction
             // save file to appserver's upload tmp folder with tmpname
             $fileToUpload->init();
             $fileToUpload->write(tempnam(ini_get('upload_tmp_dir'), 'example_upload_'));
-
         } else {
             // if no file has been selected, add an error message
             $this->addFieldError('fileToUpload', 'Please select a file to upload!');

@@ -21,7 +21,6 @@ namespace AppserverIo\Apps\Example\Entities\Impl;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use Doctrine\Search\Mapping\Annotations as MAP;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppserverIo\Apps\Example\Entities\AbstractEntity;
 

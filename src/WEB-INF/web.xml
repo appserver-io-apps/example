@@ -142,6 +142,13 @@
             <url-pattern>/index.do/user*</url-pattern>
             <http-method>POST</http-method>
             <http-method>GET</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+            <http-method>CONNECT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>PATCH</http-method>
         </web-resource-collection>
         <auth-constraint>
             <description>Enable profile access for the customer role</description>
@@ -155,6 +162,8 @@
         <web-resource-collection>
             <web-resource-name>All other resources</web-resource-name>
             <url-pattern>/*</url-pattern>
+            <http-method-omission>GET</http-method-omission>
+            <http-method-omission>POST</http-method-omission>
         </web-resource-collection>
     </security-constraint>
 

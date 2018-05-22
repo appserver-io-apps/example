@@ -21,10 +21,8 @@
 namespace AppserverIo\Apps\Example\MessageBeans;
 
 use AppserverIo\Psr\Pms\MessageInterface;
-use AppserverIo\Messaging\MessageQueue;
 use AppserverIo\Messaging\ArrayMessage;
 use AppserverIo\Messaging\Utils\PriorityMedium;
-use AppserverIo\Messaging\QueueConnectionFactory;
 use AppserverIo\Messaging\AbstractMessageListener;
 
 /**
@@ -44,7 +42,7 @@ class ImportReceiver extends AbstractMessageListener
     /**
      * The queue sender for sending the import message.
      *
-     * @var AppserverIo\Messaging\QueueSender
+     * @var \AppserverIo\Messaging\QueueSender
      * @Resource(name="importChunk", type="pms/importChunk")
      */
     protected $importChunkSender;
@@ -72,16 +70,13 @@ class ImportReceiver extends AbstractMessageListener
     {
 
         // log a message that the message has successfully been received
-        $this->getApplication()->getInitialContext()->getSystemLogger()->info('Successfully received / finished message');
+        \info('Successfully received / finished message');
 
         // define the import file from message
         $importFile = $message->getMessage();
 
         // open the import file
         $importData = file($importFile);
-
-        // load the application name
-        $applicationName = $this->getApplication()->getName();
 
         // init chunk data
         $chunkSize = 100;
@@ -115,7 +110,7 @@ class ImportReceiver extends AbstractMessageListener
                 // send chunked data message
                 $message = new ArrayMessage($chunkData);
                 $message->setPriority(PriorityMedium::get());
-                $send = $this->getImportChunkSender()->send($message, false);
+                $this->getImportChunkSender()->send($message, false);
 
                 // reset chunk data
                 $chunkData = array();

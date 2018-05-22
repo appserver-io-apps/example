@@ -32,6 +32,11 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
+ *
+ * Route(name="helloWorld",
+ *        displayName="I'm the HelloWorldServlet",
+ *        description="A hello world servlet implementation.",
+ *        urlPattern={"/helloWorld.do", "/helloWorld.do*"})
  */
 class HelloWorldServlet extends HttpServlet
 {
@@ -53,6 +58,14 @@ class HelloWorldServlet extends HttpServlet
     protected $userProcessor;
 
     /**
+     * The system logger implementation.
+     *
+     * @var \AppserverIo\Logger\Logger
+     * @Resource(type="SystemLogger")
+     */
+    protected $systemLogger;
+
+    /**
      * Handles a HTTP GET request.
      *
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
@@ -67,15 +80,11 @@ class HelloWorldServlet extends HttpServlet
 
         // check if we've a user logged into the system
         if ($loggedInUser = $this->userProcessor->getUserViewDataOfLoggedIn()) {
-            $servletRequest->getContext()->getInitialContext()->getSystemLogger()->info(
-                sprintf("Found user logged in: %s", $loggedInUser->getUsername())
-            );
+            $this->systemLogger->info(sprintf("Found user logged in: %s", $loggedInUser->getUsername()));
         }
 
         // log the number of samples found in the database
-        $servletRequest->getContext()->getInitialContext()->getSystemLogger()->info(
-            sprintf("Found %d samples", sizeof($this->sampleProcessor->findAll()))
-        );
+        $this->systemLogger->info(sprintf("Found %d samples", sizeof($this->sampleProcessor->findAll())));
 
         // append the Hello World! to the body stream
         $servletResponse->appendBodyStream('Hello World!');

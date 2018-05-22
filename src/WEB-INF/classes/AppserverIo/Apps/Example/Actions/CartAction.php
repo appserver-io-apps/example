@@ -43,8 +43,8 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @Path(name="/cart")
  *
  * @Results({
- *     @Result(name="input", result="/dhtml/cart.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/cart.dhtml", type="AppserverIo\Routlt\Results\ServletDispatcherResult")
+ *     @Result(name="input", result="/dhtml/cart.dhtml", type="ServletDispatcherResult"),
+ *     @Result(name="failure", result="/dhtml/cart.dhtml", type="ServletDispatcherResult")
  * })
  *
  */
@@ -98,8 +98,7 @@ class CartAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @throws \Exception
-     * @see \AppserverIo\Apps\Example\Servlets\IndexServlet::indexAction()
+     * @throws \Exception Is thrown, if the product with the requested ID is not available
      *
      * @Action(name="/addToCart/:productId", restrictions={{"productId", "\d+"}})
      */

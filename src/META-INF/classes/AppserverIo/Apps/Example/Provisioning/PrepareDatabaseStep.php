@@ -21,7 +21,6 @@
 namespace AppserverIo\Apps\Example\Provisioning;
 
 use AppserverIo\Appserver\Provisioning\Steps\AbstractStep;
-use AppserverIo\Appserver\Core\Utilities\DirectoryKeys;
 
 /**
  * An step implementation that creates a database, login credentials and dummy
@@ -32,6 +31,8 @@ use AppserverIo\Appserver\Core\Utilities\DirectoryKeys;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io/appserver
  * @link      http://www.appserver.io
+ *
+ * @Inject
  */
 class PrepareDatabaseStep extends AbstractStep
 {
@@ -42,6 +43,14 @@ class PrepareDatabaseStep extends AbstractStep
      * @var integer
      */
     const MAX_RETRIES = 5;
+    
+    /**
+     * The user processor instance (a SFB instance).
+     *
+     * @var \AppserverIo\Apps\Example\Services\SchemaProcessor
+     * @EnterpriseBean(name="SchemaProcessor")
+     */
+    protected $schemaProcessor;
 
     /**
      * Executes the functionality for this step, in this case the execution of
@@ -49,7 +58,7 @@ class PrepareDatabaseStep extends AbstractStep
      *
      * @return void
      * @throws \Exception Is thrown if the script can't be executed
-     * @see \AppserverIo\Appserver\Core\Provisioning\StepInterface::execute()
+     * @see \AppserverIo\Appserver\Provisioning\Steps\StepInterface::execute()
      */
     public function execute()
     {
@@ -61,27 +70,19 @@ class PrepareDatabaseStep extends AbstractStep
         do {
             try {
                 // log a message that provisioning starts
-                $this->getApplication()->getInitialContext()->getSystemLogger()->info(
-                    'Now start to prepare database using SchemaProcessor!'
-                );
-
-                // load the schema processor of our application
-                $schemaProcessor = $this->getApplication()->search('SchemaProcessor');
+                \info('Now start to prepare database using SchemaProcessor!');
 
                 // create schema, default products + login credentials
-                $schemaProcessor->createDatabase();
-                $schemaProcessor->createSchema();
-                $schemaProcessor->createDefaultProducts();
-                $schemaProcessor->createDefaultCredentials();
+                $this->schemaProcessor->createDatabase();
+                $this->schemaProcessor->createSchema();
+                $this->schemaProcessor->createDefaultProducts();
+                $this->schemaProcessor->createDefaultCredentials();
 
                 // log a message that provisioning has been successfull
-                $this->getApplication()->getInitialContext()->getSystemLogger()->info(
-                    'Successfully prepared database using SchemaProcessor!'
-                );
+                \info('Successfully prepared database using SchemaProcessor!');
 
                 // don't retry, because step has been successful
                 $retry = false;
-
             } catch (\Exception $e) {
                 // raise the retry count
                 $retryCount++;
@@ -90,7 +91,7 @@ class PrepareDatabaseStep extends AbstractStep
                     // sleep for an increasing number of seconds
                     sleep($retryCount + 1);
                     // debug log the exeception
-                    $this->getApplication()->getInitialContext()->getSystemLogger()->debug(
+                    \debug(
                         sprintf(
                             'Failed %d (of %d) times to run provisioning step %s',
                             $retryCount,
@@ -98,14 +99,12 @@ class PrepareDatabaseStep extends AbstractStep
                             __CLASS__
                         )
                     );
-
                 } else {
                     // log a message and stop retrying
-                    $this->getApplication()->getInitialContext()->getSystemLogger()->error($e->__toString());
+                    \error($e->__toString());
                     $retry = false;
                 }
             }
-
         } while ($retry);
     }
 }

@@ -21,9 +21,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Lang\Boolean;
-use AppserverIo\Messaging\MessageQueue;
 use AppserverIo\Messaging\StringMessage;
-use AppserverIo\Messaging\QueueConnectionFactory;
 use AppserverIo\Psr\HttpMessage\PartInterface;
 
 /**
@@ -43,7 +41,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
     /**
      * The queue sender for sending the import message.
      *
-     * @var AppserverIo\Messaging\QueueSender
+     * @var \AppserverIo\Messaging\QueueSender
      * @Resource(name="import", type="pms/import")
      */
     protected $importSender;
@@ -51,7 +49,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
     /**
      * The queue sender for sending the message to create an interval timer.
      *
-     * @var AppserverIo\Messaging\QueueSender
+     * @var \AppserverIo\Messaging\QueueSender
      * @Resource(name="createAIntervalTimer", type="pms/createAIntervalTimer")
      */
     protected $createAIntervalTimerSender;
@@ -128,12 +126,8 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
 
         // check if we should watch the directory for periodic import
         if ($watchDirectory->booleanValue()) {
-            // load the application name
-            $applicationName = $this->getApplication()->getName();
-
             // initialize the message with the name of the directory we want to watch
             $message = new StringMessage($this->getUploadTmpDir());
-
             // create a new message and send it
             $this->getCreateAIntervalTimerSender()->send($message, false);
         }
@@ -160,9 +154,6 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
      */
     public function import($filename)
     {
-
-        // load the application name
-        $applicationName = $this->getApplication()->getName();
 
         // initialize the message with the name of the file to import the data from
         $message = new StringMessage($this->getUploadTmpDir() . DIRECTORY_SEPARATOR . $filename);

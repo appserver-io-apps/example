@@ -20,8 +20,6 @@
 
 namespace AppserverIo\Apps\Example\Servlets;
 
-use AppserverIo\Messaging\IntegerMessage;
-use AppserverIo\Psr\Servlet\ServletConfigInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
