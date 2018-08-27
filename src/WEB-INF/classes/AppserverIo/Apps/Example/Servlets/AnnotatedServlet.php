@@ -21,15 +21,17 @@
 namespace AppserverIo\Apps\Example\Servlets;
 
 use AppserverIo\Messaging\IntegerMessage;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Psr\Servlet\ServletConfigInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
+use AppserverIo\Psr\Servlet\Annotations as SRV;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
 /**
  * Annotated servlet handling GET/POST requests.
  *
- * The GET requests only append the servlet name, defined in the @Route annotation,
+ * The GET requests only append the servlet name, defined in the Route annotation,
  * to the response, whereas the POST requests send a message to the MQ, defined in
  * the queueSender property of the servlet.
  *
@@ -39,11 +41,13 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Route(name="annotated",
- *        displayName="I'm the AnnotatedServlet",
- *        description="A annotated servlet implementation.",
- *        urlPattern={"/annotated.do", "/annotated.do*"},
- *        initParams={{"duration", "60000000"}})
+ * @SRV\Route(
+ *     name="annotated",
+ *     displayName="I'm the AnnotatedServlet",
+ *     description="A annotated servlet implementation.",
+ *     urlPattern={"/annotated.do", "/annotated.do*"},
+ *     initParams={{"duration", "60000000"}}
+ * )
  */
 class AnnotatedServlet extends HttpServlet
 {
@@ -66,7 +70,7 @@ class AnnotatedServlet extends HttpServlet
      * The singleton session bean instance.
      *
      * @var \AppserverIo\Apps\Example\Services\ASingletonProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $aSingletonProcessor;
 
@@ -74,7 +78,7 @@ class AnnotatedServlet extends HttpServlet
      * The queue session to send a message with.
      *
      * @var \AppserverIo\Messaging\QueueSession
-     * @Resource(name="createASingleActionTimer", type="pms/createASingleActionTimer")
+     * @EPB\Resource(name="createASingleActionTimer", type="pms/createASingleActionTimer")
      */
     protected $queueSender;
 
@@ -82,7 +86,7 @@ class AnnotatedServlet extends HttpServlet
      * The system logger implementation.
      *
      * @var \AppserverIo\Logger\Logger
-     * @Resource(lookup="php:global/log/System")
+     * @EPB\Resource(lookup="php:global/log/System")
      */
     protected $systemLogger;
 

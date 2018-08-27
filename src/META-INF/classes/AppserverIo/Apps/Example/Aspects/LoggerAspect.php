@@ -31,8 +31,6 @@ use AppserverIo\Appserver\ServletEngine\RequestHandler;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
- *
- * @Aspect
  */
 class LoggerAspect
 {
@@ -41,8 +39,6 @@ class LoggerAspect
      * Pointcut which targets all index actions for all action classes
      *
      * @return null
-     *
-     * @Pointcut("call(\AppserverIo\Apps\Example\Actions\*->indexAction())")
      */
     public function allIndexActions()
     {
@@ -54,8 +50,6 @@ class LoggerAspect
      * @param \AppserverIo\Psr\MetaobjectProtocol\Aop\MethodInvocationInterface $methodInvocation Initially invoked method
      *
      * @return null
-     *
-     * @Before("pointcut(allIndexActions())")
      */
     public function logInfoAdvice(MethodInvocationInterface $methodInvocation)
     {

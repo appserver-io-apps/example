@@ -24,6 +24,7 @@ use AppserverIo\Psr\Pms\MessageInterface;
 use AppserverIo\Psr\Naming\InitialContext;
 use AppserverIo\Messaging\AbstractMessageListener;
 use AppserverIo\Apps\Example\Entities\Impl\Sample;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * An message receiver that imports data chunks into a database.
@@ -34,7 +35,7 @@ use AppserverIo\Apps\Example\Entities\Impl\Sample;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @MessageDriven
+ * @EPB\MessageDriven
  */
 class ImportChunkReceiver extends AbstractMessageListener
 {
@@ -43,7 +44,7 @@ class ImportChunkReceiver extends AbstractMessageListener
      * The CartProcessor instance to handle the sample functionality.
      *
      * @var \AppserverIo\Apps\Example\Services\SampleProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $sampleProcessor;
 

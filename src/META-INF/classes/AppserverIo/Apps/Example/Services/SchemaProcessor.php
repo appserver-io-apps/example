@@ -25,6 +25,7 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\DBAL\Schema\SqliteSchemaManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * A singleton session bean implementation that handles the
@@ -36,7 +37,7 @@ use AppserverIo\Apps\Example\Entities\Impl\Product;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Stateless
+ * @EPB\Stateless
  */
 class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProcessorInterface
 {
@@ -52,7 +53,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      * The DIC provider instance.
      *
      * @var \AppserverIo\Psr\Di\ProviderInterface $provider
-     * @Resource(type="ProviderInterface")
+     * @EPB\Resource(type="ProviderInterface")
      */
     protected $providerInterface;
 
@@ -60,7 +61,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      * The system logger implementation.
      *
      * @var \AppserverIo\Logger\Logger
-     * @Resource(type="SystemLogger")
+     * @EPB\Resource(type="SystemLogger")
      */
     protected $systemLogger;
 
@@ -87,7 +88,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
      * Example method that should be invoked after constructor.
      *
      * @return void
-     * @PostConstruct
+     * @EPB\PostConstruct
      */
     public function initialize()
     {

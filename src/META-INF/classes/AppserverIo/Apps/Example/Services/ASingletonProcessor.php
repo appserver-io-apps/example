@@ -20,6 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
 
@@ -32,8 +33,8 @@ use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Singleton(name="ASingletonProcessor", description="A sample implementation for a singleton session bean")
- * @Startup
+ * @EPB\Singleton(name="ASingletonProcessor", description="A sample implementation for a singleton session bean")
+ * @EPB\Startup
  */
 class ASingletonProcessor extends \Stackable implements ASingletonProcessorInterface, TimedObjectInterface
 {
@@ -42,7 +43,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
-     * @Resource(type="ApplicationInterface")
+     * @EPB\Resource(type="ApplicationInterface")
      */
     protected $application;
 
@@ -50,7 +51,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      * The Doctrine EntityManager instance.
      *
      * @var \Doctrine\ORM\EntityManagerInterface
-     * @PersistenceUnit(unitName="ExampleEntityManager")
+     * @EPB\PersistenceUnit(unitName="ExampleEntityManager")
      */
     protected $entityManager;
 
@@ -58,7 +59,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      * The system logger implementation.
      *
      * @var \AppserverIo\Logger\Logger
-     * @Resource(lookup="php:global/log/System")
+     * @EPB\Resource(lookup="php:global/log/System")
      */
     protected $systemLogger;
 
@@ -73,7 +74,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      * Example method that should be invoked after constructor.
      *
      * @return void
-     * @PostConstruct
+     * @EPB\PostConstruct
      */
     public function initialize()
     {
@@ -82,14 +83,14 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
         $this->counter = 0;
 
         // log a message for the @PostConstruct method invokation
-        \info(printf('%s has successfully been invoked by @PostConstruct annotation %d times', __METHOD__, $this->raiseCounter()));
+        \info(sprintf('%s has successfully been invoked by @PostConstruct annotation %d times', __METHOD__, $this->raiseCounter()));
     }
 
     /**
      * Example method that will be invoked after the SSB has been detached from the container.
      *
      * @return void
-     * @PostDetach
+     * @EPB\PostDetach
      */
     public function postDetach()
     {
@@ -101,7 +102,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      * Close the entity manager's connection before re-attaching it to the container.
      *
      * @return void
-     * @PreAttach
+     * @EPB\PreAttach
      */
     public function preAttach()
     {
@@ -183,7 +184,7 @@ class ASingletonProcessor extends \Stackable implements ASingletonProcessorInter
      * @param TimerInterface $timer The timer instance
      *
      * @return void
-     * @Schedule(dayOfMonth = EVERY, month = EVERY, year = EVERY, second = ZERO, minute = EVERY, hour = EVERY)
+     * @EPB\Schedule(dayOfMonth="EVERY", month="EVERY", year="EVERY", second="ZERO", minute="EVERY", hour="EVERY")
      */
     public function invokedByTimer(TimerInterface $timer)
     {

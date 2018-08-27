@@ -21,7 +21,9 @@
 namespace AppserverIo\Apps\Example\Actions\Test;
 
 use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\Annotations as RLT;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -38,12 +40,13 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Path(name="/testTest")
- *
- * @Results({
- *     @Result(name="input", result="/dhtml/index.dhtml", type="ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/index.dhtml", type="ServletDispatcherResult")
- * })
+ * @RLT\Path(
+ *     name="/testTest",
+ *     results={
+ *         @RLT\Result(name="input", result="/dhtml/index.dhtml", type="ServletDispatcherResult"),
+ *         @RLT\Result(name="failure", result="/dhtml/index.dhtml", type="ServletDispatcherResult")
+ *     }
+ * )
  *
  */
 class TestAction extends DispatchAction
@@ -53,7 +56,7 @@ class TestAction extends DispatchAction
      * The CartProcessor instance to handle the sample functionality.
      *
      * @var \AppserverIo\Apps\Example\Services\SampleProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $sampleProcessor;
 
@@ -78,7 +81,7 @@ class TestAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/index")
+     * @RLT\Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {

@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
+
 /**
  * A test processor implementation.
  *
@@ -29,7 +31,7 @@ namespace AppserverIo\Apps\Example\Services;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Stateful
+ * @EPB\Stateful
  */
 class TestProcessor extends AbstractPersistenceProcessor
 {
@@ -38,7 +40,7 @@ class TestProcessor extends AbstractPersistenceProcessor
      * The stateful session bean instance.
      *
      * @var \AppserverIo\Apps\Example\Services\AnotherProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $anotherProcessor;
 

@@ -23,6 +23,7 @@ namespace AppserverIo\Apps\Example\Services;
 use AppserverIo\Lang\Boolean;
 use AppserverIo\Messaging\StringMessage;
 use AppserverIo\Psr\HttpMessage\PartInterface;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * A SLSB that handles the import process.
@@ -33,7 +34,7 @@ use AppserverIo\Psr\HttpMessage\PartInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Stateless
+ * @EPB\Stateless
  */
 class ImportProcessor extends AbstractPersistenceProcessor implements ImportProcessorInterface
 {
@@ -42,7 +43,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
      * The queue sender for sending the import message.
      *
      * @var \AppserverIo\Messaging\QueueSender
-     * @Resource(name="import", type="pms/import")
+     * @EPB\Resource(name="import", type="pms/import")
      */
     protected $importSender;
 
@@ -50,7 +51,7 @@ class ImportProcessor extends AbstractPersistenceProcessor implements ImportProc
      * The queue sender for sending the message to create an interval timer.
      *
      * @var \AppserverIo\Messaging\QueueSender
-     * @Resource(name="createAIntervalTimer", type="pms/createAIntervalTimer")
+     * @EPB\Resource(name="createAIntervalTimer", type="pms/createAIntervalTimer")
      */
     protected $createAIntervalTimerSender;
 

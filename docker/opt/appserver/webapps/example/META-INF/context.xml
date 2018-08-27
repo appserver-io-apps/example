@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <context 
-    name="routlt"
+    name="example"
     type="AppserverIo\Appserver\Application\Application"
     xmlns="http://www.appserver.io/appserver">
 
+    <classLoaders>
+        <classLoader
+            name="DgClassLoader"
+            interface="ClassLoaderInterface"
+            type="AppserverIo\Appserver\Core\DgClassLoader"
+            factory="AppserverIo\Appserver\Core\DgClassLoaderFactory">
+            <params>
+                <param name="environment" type="string">production</param>
+                <param name="enforcementLevel" type="integer">7</param>
+                <param name="typeSafety" type="boolean">1</param>
+                <param name="processing" type="string">exception</param>
+            </params>
+            <directories>
+                <directory enforced="true">${webapp.dir}/common/classes</directory>
+                <directory enforced="true">${webapp.dir}/WEB-INF/classes</directory>
+                <directory enforced="true">${webapp.dir}/META-INF/classes</directory>
+            </directories>
+        </classLoader>
+    </classLoaders>
+
     <loggers>
-        <logger channelName="system" name="System" type="\AppserverIo\Logger\Logger">
+        <logger channelName="system" name="SystemLogger" type="\AppserverIo\Logger\Logger">
             <handlers>
                 <handler type="\AppserverIo\Logger\Handlers\CustomFileHandler">
-                    <formatter type="\AppserverIo\Logger\Formatters\StandardFormatter"/>
+                    <formatter type="\AppserverIo\Appserver\Logger\Formatters\VarDumperFormatter"/>
                     <params>
-                        <param name="logFile" type="string">php://stderr</param>
-                        <param name="logLevel" type="string">info</param>
-                    </params>
-                </handler>
-            </handlers>
-        </logger>
-        <logger channelName="access" name="Access" type="\AppserverIo\Logger\Logger">
-            <handlers>
-                <handler type="\AppserverIo\Logger\Handlers\CustomFileHandler">
-                    <formatter type="\AppserverIo\Logger\Formatters\StandardFormatter">
-                        <params>
-                            <param name="format" type="string">%4$s</param>
-                        </params>
-                    </formatter>
-                    <params>
-                        <param name="logFile" type="string">php://stderr</param>
+                        <param name="logFile" type="string">${var.log.dir}/${webapp.name}-errors.log</param>
                         <param name="logLevel" type="string">info</param>
                     </params>
                 </handler>
@@ -33,19 +38,74 @@
         </logger>
     </loggers>
 
+    <annotationRegistries>
+        <annotationRegistry
+            type="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\AnnotationRegistries\FileAnnotationRegistry"
+            file="${webapp.dir}/vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php" />
+        <annotationRegistry 
+            type="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\AnnotationRegistries\NamespaceAnnotationRegistry"
+            namespace="AppserverIo\Psr\EnterpriseBeans\Annotations">
+            <directories>
+                <directory>${webapp.dir}/vendor/appserver-io-psr/epb/src</directory>
+            </directories>
+        </annotationRegistry>
+        <annotationRegistry 
+            type="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\AnnotationRegistries\NamespaceAnnotationRegistry"
+            namespace="AppserverIo\Psr\Servlet\Annotations">
+            <directories>
+                <directory>${webapp.dir}/vendor/appserver-io-psr/servlet/src</directory>
+            </directories>
+        </annotationRegistry>
+        <annotationRegistry 
+            type="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\AnnotationRegistries\NamespaceAnnotationRegistry"
+            namespace="AppserverIo\Routlt\Annotations">
+            <directories>
+                <directory>${webapp.dir}/vendor/appserver-io/routlt/src</directory>
+            </directories>
+        </annotationRegistry>
+        <annotationRegistry
+            type="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\AnnotationRegistries\NamespaceAnnotationRegistry"
+            namespace="AppserverIo\Psr\MetaobjectProtocol">
+            <directories>
+                <directory>${webapp.dir}/vendor/appserver-io-psr/mop/src</directory>
+            </directories>
+        </annotationRegistry>
+        <annotationRegistry 
+            type="AppserverIo\Appserver\PersistenceContainer\Doctrine\V2\AnnotationRegistries\NamespaceAnnotationRegistry"
+            namespace="JMS\Serializer\Annotation">
+            <directories>
+                <directory>${webapp.dir}/vendor/jms/serializer/src</directory>
+            </directories>
+        </annotationRegistry>
+    </annotationRegistries>
+
     <managers>
-        <manager
-            name="ObjectManagerInterface"
-            type="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManager"
-            factory="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManagerFactory">
+        <manager name="ObjectManagerInterface" type="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManager" factory="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManagerFactory">
             <descriptors>
+                <descriptor>AppserverIo\Description\PreferenceDescriptor</descriptor>
+                <descriptor>AppserverIo\Description\BeanDescriptor</descriptor>
                 <descriptor>AppserverIo\Description\ServletDescriptor</descriptor>
+                <descriptor>AppserverIo\Description\FixtureDescriptor</descriptor>
+                <descriptor>AppserverIo\Description\MigrationDescriptor</descriptor>
                 <descriptor>AppserverIo\Description\MessageDrivenBeanDescriptor</descriptor>
                 <descriptor>AppserverIo\Description\StatefulSessionBeanDescriptor</descriptor>
                 <descriptor>AppserverIo\Description\SingletonSessionBeanDescriptor</descriptor>
                 <descriptor>AppserverIo\Description\StatelessSessionBeanDescriptor</descriptor>
                 <descriptor>AppserverIo\Routlt\Description\PathDescriptor</descriptor>
+                <descriptor>AppserverIo\Routlt\Description\ResultDescriptor</descriptor>
             </descriptors>
+            <directories>
+                <directory>${webapp.dir}/vendor/appserver-io/console/etc/appserver/conf.d</directory>
+            </directories>
+        </manager>
+        <manager name="ServletContextInterface" type="AppserverIo\Appserver\ServletEngine\ServletManager" factory="AppserverIo\Appserver\ServletEngine\ServletManagerFactory" contextFactory="AppserverIo\Appserver\Naming\NamingContextFactory">
+            <params>
+                <param name="baseDirectory" type="string">WEB-INF</param>
+            </params>
+            <directories>
+                <directory>${webapp.dir}/vendor/appserver-io/routlt/src</directory>
+                <directory>${webapp.dir}/WEB-INF/classes</directory>
+            </directories>
         </manager>
         <manager name="AuthenticationManagerInterface" type="AppserverIo\Appserver\ServletEngine\Security\StandardAuthenticationManager" factory="AppserverIo\Appserver\ServletEngine\Security\StandardAuthenticationManagerFactory">
             <securityDomains>
@@ -57,12 +117,10 @@
                                     <param name="hashAlgorithm" type="string">null</param>
                                     <param name="url" type="string">openldap</param>
                                     <param name="port" type="string">389</param>
-
                                     <param name="baseDN" type="string">dc=example,dc=org</param>
                                     <param name="bindDN" type="string">cn=admin,dc=example,dc=org</param>
                                     <param name="bindCredential" type="string">admin</param>
                                     <param name="baseFilter" type="string">(&amp;(objectClass=person)(uid={0}))</param>
-
                                     <param name="rolesDN" type="string">dc=example,dc=org</param>
                                     <param name="roleFilter" type="string">memberUid={0}</param>
                                     <param name="allowEmptyPasswords" type="string">false</param>

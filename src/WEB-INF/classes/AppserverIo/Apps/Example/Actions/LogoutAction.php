@@ -21,6 +21,8 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\BaseAction;
+use AppserverIo\Routlt\Annotations as RLT;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -34,12 +36,13 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Path(name="/logout")
- *
- * @Results({
- *     @Result(name="input", result="/dhtml/login.dhtml", type="ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/login.dhtml", type="ServletDispatcherResult")
- * })
+ * @RLT\Path(
+ *     name="/logout",
+ *     results={
+ *         @RLT\Result(name="input", result="/dhtml/login.dhtml", type="ServletDispatcherResult"),
+ *         @RLT\Result(name="failure", result="/dhtml/login.dhtml", type="ServletDispatcherResult")
+ *     }
+ * )
  */
 class LogoutAction extends BaseAction
 {
@@ -48,7 +51,7 @@ class LogoutAction extends BaseAction
      * The UserProcessor instance to handle the user functionality.
      *
      * @var \AppserverIo\Apps\Example\Services\UserProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $userProcessor;
 

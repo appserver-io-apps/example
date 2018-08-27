@@ -18,4 +18,15 @@
  * @link       http://www.appserver.io
  */
 
+// load the classloader instance
 $loader = require 'src/vendor/autoload.php';
+
+// add the classmap
+$loader->add(
+    'AppserverIo\\Apps\\Example',
+    array(
+        __DIR__ . '/src/common/classes/',
+        __DIR__ . '/src/WEB-INF/classes',
+        __DIR__ . '/src/META-INF/classes/'
+    )
+);

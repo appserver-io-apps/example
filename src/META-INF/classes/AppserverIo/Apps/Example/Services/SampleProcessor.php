@@ -21,6 +21,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Apps\Example\Entities\Impl\Sample;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * A singleton session bean implementation that handles the
@@ -32,7 +33,7 @@ use AppserverIo\Apps\Example\Entities\Impl\Sample;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Stateless
+ * @EPB\Stateless
  */
 class SampleProcessor extends AbstractPersistenceProcessor implements SampleProcessorInterface
 {
@@ -41,7 +42,7 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
      * The user processor instance.
      *
      * @var \AppserverIo\Apps\Example\Services\UserProcessor
-     * @EnterpriseBean(name="UserProcessor")
+     * @EPB\EnterpriseBean(name="UserProcessor")
      */
     protected $userProcessor;
 
@@ -49,7 +50,7 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
      * The user processor instance.
      *
      * @var \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface
-     * @Resource(name="TimerServiceContextInterface")
+     * @EPB\Resource(name="TimerServiceContextInterface")
      */
     protected $timerServiceContextInterface;
 
@@ -57,7 +58,7 @@ class SampleProcessor extends AbstractPersistenceProcessor implements SampleProc
      * Example method that should be invoked after constructor.
      *
      * @return void
-     * @PostConstruct
+     * @EPB\PostConstruct
      */
     public function initialize()
     {

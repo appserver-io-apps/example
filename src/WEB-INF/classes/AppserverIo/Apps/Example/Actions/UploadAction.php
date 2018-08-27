@@ -21,6 +21,7 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\BaseAction;
+use AppserverIo\Routlt\Annotations as RLT;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
@@ -34,12 +35,13 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Path(name="/upload")
- *
- * @Results({
- *     @Result(name="input", result="/dhtml/upload.dhtml", type="ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/upload.dhtml", type="ServletDispatcherResult")
- * })
+ * @RLT\Path(
+ *     name="/upload",
+ *     results={
+ *         @RLT\Result(name="input", result="/dhtml/upload.dhtml", type="ServletDispatcherResult"),
+ *         @RLT\Result(name="failure", result="/dhtml/upload.dhtml", type="ServletDispatcherResult")
+ *     }
+ * )
  */
 class UploadAction extends BaseAction
 {
@@ -51,7 +53,7 @@ class UploadAction extends BaseAction
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface  $servletRequest  The request instance
      * @param \AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface $servletResponse The response instance
      *
-     * @return string|null The action result
+     * @return void
      */
     public function perform(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {

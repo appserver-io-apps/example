@@ -21,9 +21,11 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\Annotations as RLT;
 use AppserverIo\Apps\Example\Utils\ViewHelper;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Entities\Impl\CartItem;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -40,13 +42,13 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Path(name="/cart")
- *
- * @Results({
- *     @Result(name="input", result="/dhtml/cart.dhtml", type="ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/cart.dhtml", type="ServletDispatcherResult")
- * })
- *
+ * @RLT\Path(
+ *     name="/cart",
+ *     results={
+ *         @RLT\Result(name="input", result="/dhtml/cart.dhtml", type="ServletDispatcherResult"),
+ *         @RLT\Result(name="failure", result="/dhtml/cart.dhtml", type="ServletDispatcherResult")
+ *     }
+ * )
  */
 class CartAction extends DispatchAction
 {
@@ -55,7 +57,7 @@ class CartAction extends DispatchAction
      * The CartProcessor instance to handle the shopping cart functionality.
      *
      * @var \AppserverIo\Apps\Example\Services\CartProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $cartProcessor;
 
@@ -80,7 +82,7 @@ class CartAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/index")
+     * @RLT\Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -100,7 +102,7 @@ class CartAction extends DispatchAction
      *
      * @throws \Exception Is thrown, if the product with the requested ID is not available
      *
-     * @Action(name="/addToCart/:productId", restrictions={{"productId", "\d+"}})
+     * @RLT\Action(name="/addToCart/:productId", restrictions={{"productId", "\d+"}})
      */
     public function addToCartAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -134,7 +136,7 @@ class CartAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/delete/:productId", restrictions={{"productId", "\d+"}})
+     * @RLT\Action(name="/delete/:productId", restrictions={{"productId", "\d+"}})
      */
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {

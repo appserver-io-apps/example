@@ -21,6 +21,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Apps\Example\Entities\Impl\Product;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * A singleton session bean implementation that handles the
@@ -32,7 +33,7 @@ use AppserverIo\Apps\Example\Entities\Impl\Product;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Stateless
+ * @EPB\Stateless
  */
 class ProductProcessor extends AbstractPersistenceProcessor implements ProductProcessorInterface
 {

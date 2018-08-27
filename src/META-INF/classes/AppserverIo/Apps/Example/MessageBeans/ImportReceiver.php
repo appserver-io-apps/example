@@ -24,6 +24,7 @@ use AppserverIo\Psr\Pms\MessageInterface;
 use AppserverIo\Messaging\ArrayMessage;
 use AppserverIo\Messaging\Utils\PriorityMedium;
 use AppserverIo\Messaging\AbstractMessageListener;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * This is the implementation of a import message receiver.
@@ -34,7 +35,7 @@ use AppserverIo\Messaging\AbstractMessageListener;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @MessageDriven
+ * @EPB\MessageDriven
  */
 class ImportReceiver extends AbstractMessageListener
 {
@@ -43,7 +44,7 @@ class ImportReceiver extends AbstractMessageListener
      * The queue sender for sending the import message.
      *
      * @var \AppserverIo\Messaging\QueueSender
-     * @Resource(name="importChunk", type="pms/importChunk")
+     * @EPB\Resource(name="importChunk", type="pms/importChunk")
      */
     protected $importChunkSender;
 

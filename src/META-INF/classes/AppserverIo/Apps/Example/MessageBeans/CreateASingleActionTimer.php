@@ -24,6 +24,7 @@ use AppserverIo\Psr\Pms\MessageInterface;
 use AppserverIo\Messaging\AbstractMessageListener;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
 use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * This is the implementation of a message bean that simply creates and starts a single
@@ -35,7 +36,7 @@ use AppserverIo\Psr\EnterpriseBeans\TimedObjectInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @MessageDriven
+ * @EPB\MessageDriven
  */
 class CreateASingleActionTimer extends AbstractMessageListener implements TimedObjectInterface
 {

@@ -22,6 +22,7 @@ namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
 use AppserverIo\Routlt\ActionInterface;
+use AppserverIo\Routlt\Annotations as RLT;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -38,13 +39,13 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Path(name="/hello")
- *
- * @Results({
- *     @Result(name="input", result="input", type="AppserverIo\Routlt\Results\RawResult"),
- *     @Result(name="failure", result="failure", type="AppserverIo\Routlt\Results\RawResult")
- * })
- *
+ * @RLT\Path(
+ *     name="/hello",
+ *     results={
+ *         @RLT\Result(name="input", result="input", type="AppserverIo\Routlt\Results\RawResult"),
+ *         @RLT\Result(name="failure", result="failure", type="AppserverIo\Routlt\Results\RawResult")
+ *     }
+ * )
  */
 class HelloAction extends DispatchAction
 {
@@ -60,7 +61,7 @@ class HelloAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/index")
+     * @RLT\Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {

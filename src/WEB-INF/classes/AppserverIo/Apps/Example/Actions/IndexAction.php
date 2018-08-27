@@ -21,8 +21,10 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\Annotations as RLT;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
 use AppserverIo\Apps\Example\Entities\Impl\Sample;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -39,13 +41,13 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Path(name="/index")
- *
- * @Results({
- *     @Result(name="input", result="/dhtml/index.dhtml", type="ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/index.dhtml", type="ServletDispatcherResult")
- * })
- *
+ * @RLT\Path(
+ *     name="/index",
+ *     results={
+ *         @RLT\Result(name="input", result="/dhtml/index.dhtml", type="ServletDispatcherResult"),
+ *         @RLT\Result(name="failure", result="/dhtml/index.dhtml", type="ServletDispatcherResult")
+ *     }
+ * )
  */
 class IndexAction extends DispatchAction
 {
@@ -54,7 +56,7 @@ class IndexAction extends DispatchAction
      * The CartProcessor instance to handle the sample functionality.
      *
      * @var \AppserverIo\Apps\Example\Services\SampleProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $sampleProcessor;
 
@@ -79,7 +81,7 @@ class IndexAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/index")
+     * @RLT\Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -98,7 +100,7 @@ class IndexAction extends DispatchAction
      *
      * @throws \Exception
      *
-     * @Action(name="/load")
+     * @RLT\Action(name="/load")
      */
     public function loadAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -128,7 +130,7 @@ class IndexAction extends DispatchAction
      *
      * @throws \Exception
      *
-     * @Action(name="/delete")
+     * @RLT\Action(name="/delete")
      */
     public function deleteAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -154,7 +156,7 @@ class IndexAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/persist")
+     * @RLT\Action(name="/persist")
      */
     public function persistAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
@@ -186,7 +188,7 @@ class IndexAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/deleteAll")
+     * @RLT\Action(name="/deleteAll")
      */
     public function deleteAllAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {
