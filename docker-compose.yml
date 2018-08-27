@@ -22,7 +22,7 @@ services:
   webserver:
     restart: always
     container_name: webserver
-    image: appserver/dist
+    image: appserver/dist:1.1.13
     ports:
       - 9080:9080
       - 9443:9443
@@ -36,7 +36,7 @@ services:
   message-queue:
     restart: always
     container_name: message-queue
-    image: appserver/dist
+    image: appserver/dist:1.1.13
     volumes_from:
       - appdata
     volumes:
@@ -47,7 +47,7 @@ services:
   persistence-container:
     restart: always
     container_name: persistence-container
-    image: appserver/dist
+    image: appserver/dist:1.1.13
     volumes_from:
       - appdata
     volumes:
@@ -58,7 +58,7 @@ services:
   php-fcgi:
     restart: always
     container_name: php-fcgi
-    image: appserver/dist
+    image: appserver/dist:1.1.13
     volumes_from:
       - appdata
     volumes:

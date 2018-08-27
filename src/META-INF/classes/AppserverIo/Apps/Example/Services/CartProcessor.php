@@ -20,6 +20,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Apps\Example\Entities\Impl\Cart;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Appserver\ServletEngine\BadRequestException;
 
 /**
@@ -32,7 +33,7 @@ use AppserverIo\Appserver\ServletEngine\BadRequestException;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Stateful
+ * @EPB\Stateful
  */
 class CartProcessor extends AbstractPersistenceProcessor implements CartProcessorInterface
 {
@@ -58,7 +59,7 @@ class CartProcessor extends AbstractPersistenceProcessor implements CartProcesso
      * Dummy implementation for demonstration purposes.
      *
      * @return void
-     * @PostConstruct
+     * @EPB\PostConstruct
      */
     public function postConstruct()
     {

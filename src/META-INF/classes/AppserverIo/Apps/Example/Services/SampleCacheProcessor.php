@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
+
 /**
  * Abstract processor implementation that provides basic cache functionality.
  *
@@ -29,8 +31,8 @@ namespace AppserverIo\Apps\Example\Services;
  * @link https://github.com/appserver-io-apps/example
  * @link http://www.appserver.io
  *
- * @Singleton
- * @Startp
+ * @EPB\Singleton
+ * @EPB\Startup
  */
 class SampleCacheProcessor extends AbstractCacheProcessor
 {

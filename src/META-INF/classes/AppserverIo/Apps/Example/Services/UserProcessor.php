@@ -20,6 +20,7 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Apps\Example\Exceptions\LoginException;
 use AppserverIo\Apps\Example\Exceptions\FoundInvalidUserException;
 
@@ -33,7 +34,7 @@ use AppserverIo\Apps\Example\Exceptions\FoundInvalidUserException;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Stateful
+ * @EPB\Stateful
  */
 class UserProcessor extends AbstractPersistenceProcessor implements UserProcessorInterface
 {
@@ -49,7 +50,7 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
      * The DIC provider instance.
      *
      * @var \AppserverIo\Psr\Di\ProviderInterface $provider
-     * @Resource(type="ProviderInterface")
+     * @EPB\Resource(type="ProviderInterface")
      */
     protected $provider;
 
@@ -88,7 +89,7 @@ class UserProcessor extends AbstractPersistenceProcessor implements UserProcesso
      * Logout the user and removes the SFSB instance from the container.
      *
      * @return void
-     * @Remove
+     * @EPB\Remove
      */
     public function logout()
     {

@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
+
 /**
  * Abstract processor implementation that provides basic cache functionality.
  *
@@ -50,7 +52,7 @@ abstract class AbstractCacheProcessor extends \Stackable
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
-     * @Resource(type="ApplicationInterface")
+     * @EPB\Resource(type="ApplicationInterface")
      */
     protected $application;
 
@@ -68,7 +70,7 @@ abstract class AbstractCacheProcessor extends \Stackable
      * Initializes the session bean with the default cache lifetime.
      *
      * @return void
-     * @PostConstruct
+     * @EPB\PostConstruct
      */
     public function initialize()
     {

@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
+
 /**
  * Abstract processor implementation that provides a Doctrine ORM entity manager.
  *
@@ -36,7 +38,7 @@ abstract class AbstractPersistenceProcessor extends AbstractProcessor
      * The Doctrine EntityManager instance.
      *
      * @var \Doctrine\ORM\EntityManagerInterface
-     * @PersistenceUnit(unitName="ExampleEntityManager")
+     * @EPB\PersistenceUnit(unitName="ExampleEntityManager")
      */
     protected $entityManager;
 
@@ -54,7 +56,7 @@ abstract class AbstractPersistenceProcessor extends AbstractProcessor
      * Close the entity manager's connection before destroying the bean.
      *
      * @return void
-     * @PreDestroy
+     * @EPB\PreDestroy
      */
     public function preDestroy()
     {
@@ -69,7 +71,7 @@ abstract class AbstractPersistenceProcessor extends AbstractProcessor
      * Close the entity manager's connection before re-attaching it to the container.
      *
      * @return void
-     * @PreAttach
+     * @EPB\PreAttach
      */
     public function preAttach()
     {

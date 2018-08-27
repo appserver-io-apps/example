@@ -7,21 +7,13 @@
         "components/jquery": "*",
         "components/font-awesome": "*",
         "components/bootstrap": "3.3.4",
-        "jms/serializer": "0.16.*",
-        "appserver-io/console": "5.0.*"
+        "jms/serializer": "~1.0",
+        "doctrine/orm": "2.5.*",
+        "appserver-io/routlt": "2.4.*",
+        "appserver-io/console": "7.0.*"
     },
     "require-dev": {
-        "appserver-io/build": "~2.0"
-    },
-    "autoload" : {
-        "psr-0" : {
-            "AppserverIo\\Apps\\Example" : [
-                "src/common/classes",
-                "src/META-INF/classes",
-                "src/WEB-INF/classes",
-                "tests/META-INF/classes"
-            ]
-        }
+        "appserver-io/build" : "~2.0"
     },
     "config": {
         "vendor-dir": "src/vendor",

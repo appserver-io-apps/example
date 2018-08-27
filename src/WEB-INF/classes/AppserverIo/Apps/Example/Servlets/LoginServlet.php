@@ -40,7 +40,6 @@ class LoginServlet extends HttpServlet
      * The user processor instance (a SFB instance).
      *
      * @var \AppserverIo\Apps\Example\Services\UserProcessor
-     * @EnterpriseBean(name="UserProcessor")
      */
     protected $userProcessor;
 

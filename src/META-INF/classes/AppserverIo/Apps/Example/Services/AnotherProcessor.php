@@ -20,6 +20,8 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
+
 /**
  * Anotehr test processor implementation.
  *
@@ -29,7 +31,7 @@ namespace AppserverIo\Apps\Example\Services;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Stateful
+ * @EPB\Stateful
  */
 class AnotherProcessor extends AbstractPersistenceProcessor
 {

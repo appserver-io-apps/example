@@ -21,7 +21,9 @@
 namespace AppserverIo\Apps\Example\Actions;
 
 use AppserverIo\Routlt\DispatchAction;
+use AppserverIo\Routlt\Annotations as RLT;
 use AppserverIo\Apps\Example\Utils\RequestKeys;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -38,12 +40,13 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Path(name="/product")
- *
- * @Results({
- *     @Result(name="input", result="/dhtml/product.dhtml", type="ServletDispatcherResult"),
- *     @Result(name="failure", result="/dhtml/product.dhtml", type="ServletDispatcherResult")
- * })
+ * @RLT\Path(
+ *     name="/product",
+ *     results={
+ *         @RLT\Result(name="input", result="/dhtml/product.dhtml", type="ServletDispatcherResult"),
+ *         @RLT\Result(name="failure", result="/dhtml/product.dhtml", type="ServletDispatcherResult")
+ *     }
+ * )
  */
 class ProductAction extends DispatchAction
 {
@@ -52,7 +55,7 @@ class ProductAction extends DispatchAction
      * The UserProcessor instance to handle the product functionality.
      *
      * @var \AppserverIo\Apps\Example\Services\ProductProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $productProcessor;
 
@@ -77,7 +80,7 @@ class ProductAction extends DispatchAction
      *
      * @return string|null The action result
      *
-     * @Action(name="/index")
+     * @RLT\Action(name="/index")
      */
     public function indexAction(HttpServletRequestInterface $servletRequest, HttpServletResponseInterface $servletResponse)
     {

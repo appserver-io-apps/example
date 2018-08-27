@@ -24,6 +24,7 @@ use AppserverIo\Lang\String;
 use AppserverIo\Psr\Pms\MessageInterface;
 use AppserverIo\Messaging\AbstractMessageListener;
 use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * This is the implementation of a message bean that simply creates and starts an interval timer.
@@ -34,7 +35,7 @@ use AppserverIo\Psr\EnterpriseBeans\TimerInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @MessageDriven
+ * @EPB\MessageDriven
  */
 class CreateAIntervalTimer extends AbstractMessageListener
 {
@@ -85,7 +86,7 @@ class CreateAIntervalTimer extends AbstractMessageListener
      * @param \AppserverIo\Psr\EnterpriseBeans\TimerInterface $timer Timer whose expiration caused this notification
      *
      * @return void
-     * @Timeout
+     * @EPB\Timeout
      **/
     public function timeout(TimerInterface $timer)
     {

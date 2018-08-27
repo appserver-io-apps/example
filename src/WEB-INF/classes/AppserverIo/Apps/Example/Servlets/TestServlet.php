@@ -20,7 +20,9 @@
 
 namespace AppserverIo\Apps\Example\Servlets;
 
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 use AppserverIo\Psr\Servlet\Http\HttpServlet;
+use AppserverIo\Psr\Servlet\Annotations as SRV;
 use AppserverIo\Psr\Servlet\Http\HttpServletRequestInterface;
 use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
 
@@ -33,10 +35,12 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @Route(name="test",
- *        displayName="I'm the TestServlet",
- *        description="A test servlet implementation.",
- *        urlPattern={"/test.do", "/test.do*"})
+ * @SRV\Route(
+ *     name="test",
+ *     displayName="I'm the TestServlet",
+ *     description="A test servlet implementation.",
+ *     urlPattern={"/test.do", "/test.do*"}
+ * )
  */
 class TestServlet extends HttpServlet
 {
@@ -45,7 +49,7 @@ class TestServlet extends HttpServlet
      * The singleton session bean instance.
      *
      * @var \AppserverIo\Apps\Example\Services\TestProcessor
-     * @EnterpriseBean
+     * @EPB\EnterpriseBean
      */
     protected $testProcessor;
 
@@ -53,7 +57,7 @@ class TestServlet extends HttpServlet
      * The system logger implementation.
      *
      * @var \AppserverIo\Logger\Logger
-     * @Resource(lookup="php:global/log/System")
+     * @EPB\Resource(lookup="php:global/log/System")
      */
     protected $systemLogger;
 

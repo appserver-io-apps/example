@@ -26,8 +26,9 @@
             <password>appserver.i0</password>
             <databaseName>appserver_ApplicationServer</databaseName>
             <databaseHost>127.0.0.1</databaseHost>
-            <serverVersion>5.7</serverVersion>
-            <platform>Doctrine\DBAL\Platforms\MySQL57Platform</platform>
+            <serverVersion>5.6</serverVersion>
+            <platform>Doctrine\DBAL\Platforms\MySqlPlatform</platform>
+            <charset>utf8</charset>
         </database>
     </datasource -->
 
@@ -36,7 +37,7 @@
             <driver>pdo_sqlite</driver>
             <user>appserver</user>
             <password>appserver</password>
-            <path>META-INF/data/appserver_ApplicationServer.sqlite</path>
+            <path>${base.dir}/${host.tmpBase.dir}/${webapp.name}/data/appserver_ApplicationServer.sqlite</path>
             <memory>false</memory>
         </database>
     </datasource>

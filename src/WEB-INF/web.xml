@@ -34,6 +34,28 @@
         <display-name>Hello World</display-name>
         <servlet-name>helloWorld</servlet-name>
         <servlet-class>\AppserverIo\Apps\Example\Servlets\HelloWorldServlet</servlet-class>
+        <epb-ref>
+            <epb-ref-name>UserProcessor</epb-ref-name>
+            <injection-target>
+                <injection-target-class>AppserverIo\Apps\Example\Servlets\HelloWorldServlet</injection-target-class>
+                <injection-target-property>userProcessor</injection-target-property>
+            </injection-target>
+        </epb-ref>
+        <epb-ref>
+            <epb-ref-name>SampleProcessor</epb-ref-name>
+            <injection-target>
+                <injection-target-class>AppserverIo\Apps\Example\Servlets\HelloWorldServlet</injection-target-class>
+                <injection-target-property>sampleProcessor</injection-target-property>
+            </injection-target>
+        </epb-ref>
+        <res-ref>
+            <res-ref-name>SystemLogger</res-ref-name>
+            <res-ref-type>SystemLogger</res-ref-type>
+            <injection-target>
+                <injection-target-class>AppserverIo\Apps\Example\Servlets\HelloWorldServlet</injection-target-class>
+                <injection-target-property>systemLogger</injection-target-property>
+            </injection-target>
+        </res-ref>
     </servlet>
 
     <servlet>
@@ -48,10 +70,17 @@
         <display-name>The login servlet</display-name>
         <servlet-name>login</servlet-name>
         <servlet-class>\AppserverIo\Apps\Example\Servlets\LoginServlet</servlet-class>
+        <epb-ref>
+            <epb-ref-name>UserProcessor</epb-ref-name>
+            <injection-target>
+                <injection-target-class>AppserverIo\Apps\Example\Servlets\HelloWorldServlet</injection-target-class>
+                <injection-target-property>userProcessor</injection-target-property>
+            </injection-target>
+        </epb-ref>
     </servlet>
 
     <servlet>
-        <description>The routlt controller servlet implementation.</description>
+        <description>A servlet implementation that sleeps for a random number of seconds.</description>
         <display-name>Random runtime servlet</display-name>
         <servlet-name>randomRuntime</servlet-name>
         <servlet-class>\AppserverIo\Apps\Example\Servlets\RandomRuntimeServlet</servlet-class>

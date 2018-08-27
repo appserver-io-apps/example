@@ -32,11 +32,6 @@ use AppserverIo\Psr\Servlet\Http\HttpServletResponseInterface;
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
- *
- * Route(name="helloWorld",
- *        displayName="I'm the HelloWorldServlet",
- *        description="A hello world servlet implementation.",
- *        urlPattern={"/helloWorld.do", "/helloWorld.do*"})
  */
 class HelloWorldServlet extends HttpServlet
 {
@@ -45,7 +40,6 @@ class HelloWorldServlet extends HttpServlet
      * The user processor instance.
      *
      * @var \AppserverIo\Apps\Example\Services\SampleProcessor
-     * @EnterpriseBean(name="SampleProcessor")
      */
     protected $sampleProcessor;
 
@@ -53,7 +47,6 @@ class HelloWorldServlet extends HttpServlet
      * The user processor instance (a SFB instance).
      *
      * @var \AppserverIo\Apps\Example\Services\UserProcessor
-     * @EnterpriseBean(name="UserProcessor")
      */
     protected $userProcessor;
 
@@ -61,7 +54,6 @@ class HelloWorldServlet extends HttpServlet
      * The system logger implementation.
      *
      * @var \AppserverIo\Logger\Logger
-     * @Resource(type="SystemLogger")
      */
     protected $systemLogger;
 

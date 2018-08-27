@@ -21,6 +21,7 @@
 namespace AppserverIo\Apps\Example\Services;
 
 use AppserverIo\Psr\Application\ApplicationInterface;
+use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
  * Abstract processor implementation that provides basic functionality.
@@ -38,7 +39,7 @@ abstract class AbstractProcessor
      * The application instance that provides the entity manager.
      *
      * @var \AppserverIo\Psr\Application\ApplicationInterface
-     * @Resource(type="ApplicationInterface")
+     * @EPB\Resource(type="ApplicationInterface")
      */
     protected $application;
 
@@ -60,7 +61,7 @@ abstract class AbstractProcessor
      * Dummy implementation for demonstration purposes.
      *
      * @return void
-     * @PostConstruct
+     * @EPB\PostConstruct
      */
     public function postConstruct()
     {
@@ -71,7 +72,7 @@ abstract class AbstractProcessor
      * Dummy implementation for demonstration purposes.
      *
      * @return void
-     * @PreDestroy
+     * @EPB\PreDestroy
      */
     public function preDestroy()
     {
@@ -82,7 +83,7 @@ abstract class AbstractProcessor
      * Dummy implementation for demonstration purposes.
      *
      * @return void
-     * @PostDetach
+     * @EPB\PostDetach
      */
     public function postDetach()
     {
@@ -93,7 +94,7 @@ abstract class AbstractProcessor
      * Dummy implementation for demonstration purposes.
      *
      * @return void
-     * @PreAttach
+     * @EPB\PreAttach
      */
     public function preAttach()
     {
