@@ -42,8 +42,8 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
 
     /**
      * Trait that provides schema managing functionality.
-     * 
-     * @var AppserverIo\Console\Server\Services\SchemaProcessorTrait 
+     *
+     * @var AppserverIo\Console\Server\Services\SchemaProcessorTrait
      */
     use SchemaProcessorTrait;
     

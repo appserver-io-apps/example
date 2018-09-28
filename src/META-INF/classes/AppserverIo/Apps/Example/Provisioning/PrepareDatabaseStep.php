@@ -48,7 +48,7 @@ class PrepareDatabaseStep extends AbstractStep
 
     /**
      * Returns the schema processor instance.
-     * 
+     *
      * @return \AppserverIo\Apps\Example\Services\SchemaProcessorInterface
      */
     protected function getSchemaProcessor()
