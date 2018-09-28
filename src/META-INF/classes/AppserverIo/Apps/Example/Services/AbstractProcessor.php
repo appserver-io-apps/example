@@ -106,7 +106,7 @@ abstract class AbstractProcessor
      *
      * @return \AppserverIo\Psr\Application\ApplicationInterface The application instance
      */
-    public function getApplication()
+    protected function getApplication()
     {
         return $this->application;
     }
@@ -116,7 +116,7 @@ abstract class AbstractProcessor
      *
      * @return \AppserverIo\Appserver\Core\InitialContext The initial context instance
      */
-    public function getInitialContext()
+    protected function getInitialContext()
     {
         return $this->getApplication()->getInitialContext();
     }
@@ -126,7 +126,7 @@ abstract class AbstractProcessor
      *
      * @return \AppserverIo\Configuration\Interfaces\NodeInterface The system configuration
      */
-    public function getSystemConfiguration()
+    protected function getSystemConfiguration()
     {
         return $this->getInitialContext()->getSystemConfiguration();
     }
@@ -136,7 +136,7 @@ abstract class AbstractProcessor
      *
      * @return array The array with the datasources
      */
-    public function getDatasources()
+    protected function getDatasources()
     {
         return $this->getSystemConfiguration()->getDatasources();
     }

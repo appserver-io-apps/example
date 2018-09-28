@@ -1,19 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <epb xmlns="http://www.appserver.io/appserver">
     <enterprise-beans>
+    
+        <session>
+            <session-type>Stateless</session-type>
+            <epb-name>SchemaProcessor</epb-name>
+            <epb-class>AppserverIo\Apps\Example\Services\SchemaProcessor</epb-class>
+            <res-ref>
+                <res-ref-name>Application</res-ref-name>
+                <res-ref-type>ApplicationInterface</res-ref-type>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Console\Server\Services\SchemaProcessor</injection-target-class>
+                    <injection-target-property>application</injection-target-property>
+                </injection-target>
+            </res-ref>
+            <res-ref>
+                <res-ref-name>Provider</res-ref-name>
+                <res-ref-type>ProviderInterface</res-ref-type>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Console\Server\Services\SchemaProcessor</injection-target-class>
+                    <injection-target-property>provider</injection-target-property>
+                </injection-target>
+            </res-ref>
+            <res-ref>
+                <res-ref-name>TimerServiceContext</res-ref-name>
+                <res-ref-type>TimerServiceContextInterface</res-ref-type>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Console\Server\Services\SchemaProcessor</injection-target-class>
+                    <injection-target-property>timerServiceContext</injection-target-property>
+                </injection-target>
+            </res-ref>
+            <res-ref>
+                <res-ref-name>ObjectManager</res-ref-name>
+                <res-ref-type>ObjectManagerInterface</res-ref-type>
+                <injection-target>
+                    <injection-target-class>AppserverIo\Console\Server\Services\SchemaProcessor</injection-target-class>
+                    <injection-target-property>objectManager</injection-target-property>
+                </injection-target>
+            </res-ref>
+        </session>
+    
+    
         <session>
             <session-type>Singleton</session-type>
             <epb-name>ASingletonProcessor</epb-name>
             <epb-class>AppserverIo\Apps\Example\Services\ASingletonProcessor</epb-class>
             <init-on-startup>true</init-on-startup>
-            <post-construct>
-                <lifecycle-callback-method>initialize</lifecycle-callback-method>
-            </post-construct>
-        </session>
-        <session>
-            <session-type>Stateless</session-type>
-            <epb-name>SchemaProcessor</epb-name>
-            <epb-class>AppserverIo\Apps\Example\Services\SchemaProcessor</epb-class>
             <post-construct>
                 <lifecycle-callback-method>initialize</lifecycle-callback-method>
             </post-construct>
