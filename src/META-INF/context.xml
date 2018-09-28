@@ -81,31 +81,84 @@
 
     <managers>
         <manager name="ObjectManagerInterface" type="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManager" factory="AppserverIo\Appserver\DependencyInjectionContainer\ObjectManagerFactory">
-            <descriptors>
-                <descriptor>AppserverIo\Description\PreferenceDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\BeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\ServletDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\FixtureDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\MigrationDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\MessageDrivenBeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\StatefulSessionBeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\SingletonSessionBeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Description\StatelessSessionBeanDescriptor</descriptor>
-                <descriptor>AppserverIo\Routlt\Description\PathDescriptor</descriptor>
-                <descriptor>AppserverIo\Routlt\Description\ResultDescriptor</descriptor>
-            </descriptors>
-            <directories>
-                <directory>${webapp.dir}/vendor/appserver-io/console/etc/appserver/conf.d</directory>
-            </directories>
+            <objectDescription>
+                <descriptors>
+                    <descriptor>AppserverIo\Description\PreferenceDescriptor</descriptor>
+                    <descriptor>AppserverIo\Description\BeanDescriptor</descriptor>
+                </descriptors>
+                <parsers>
+                    <parser name="directory" type="AppserverIo\Appserver\DependencyInjectionContainer\DirectoryParser" factory="AppserverIo\Appserver\DependencyInjectionContainer\ParserFactory">
+                        <directories>
+                            <directory>${webapp.dir}/common/classes</directory>
+                            <directory>${webapp.dir}/WEB-INF/classes</directory>
+                            <directory>${webapp.dir}/META-INF/classes</directory>
+                        </directories>
+                    </parser>
+                    <parser name="deploymentDescriptor" type="AppserverIo\Appserver\DependencyInjectionContainer\DeploymentDescriptorParser" factory="AppserverIo\Appserver\DependencyInjectionContainer\ParserFactory" descriptorName="di">
+                        <directories>
+                            <directory>${webapp.dir}/vendor/appserver-io/console/etc/appserver/conf.d</directory>
+                            <directory>${webapp.dir}/common</directory>
+                            <directory>${webapp.dir}/WEB-INF</directory>
+                            <directory>${webapp.dir}/META-INF</directory>
+                        </directories>
+                    </parser>
+                </parsers>
+            </objectDescription>
+        </manager>
+        <manager name="BeanContextInterface" type="AppserverIo\Appserver\PersistenceContainer\BeanManager" factory="AppserverIo\Appserver\PersistenceContainer\BeanManagerFactory" contextFactory="AppserverIo\Appserver\Naming\NamingContextFactory">
+            <params>
+                <param name="baseDirectory" type="string">META-INF</param>
+                <param name="lifetime" type="integer">1440</param>
+                <param name="garbageCollectionProbability" type="float">0.1</param>
+            </params>
+            <objectDescription>
+                <descriptors>
+                    <descriptor>AppserverIo\Description\FixtureDescriptor</descriptor>
+                    <descriptor>AppserverIo\Description\MigrationDescriptor</descriptor>
+                    <descriptor>AppserverIo\Description\MessageDrivenBeanDescriptor</descriptor>
+                    <descriptor>AppserverIo\Description\StatefulSessionBeanDescriptor</descriptor>
+                    <descriptor>AppserverIo\Description\SingletonSessionBeanDescriptor</descriptor>
+                    <descriptor>AppserverIo\Description\StatelessSessionBeanDescriptor</descriptor>
+                </descriptors>
+                <parsers>
+                    <parser name="directory" type="AppserverIo\Appserver\DependencyInjectionContainer\DirectoryParser" factory="AppserverIo\Appserver\DependencyInjectionContainer\ParserFactory">
+                        <directories>
+                            <directory>${webapp.dir}/META-INF/classes</directory>
+                        </directories>
+                    </parser>
+                    <parser name="deploymentDescriptor" type="AppserverIo\Appserver\PersistenceContainer\DependencyInjection\DeploymentDescriptorParser" factory="AppserverIo\Appserver\DependencyInjectionContainer\ParserFactory" descriptorName="epb">
+                        <directories>
+                            <directory>${webapp.dir}/vendor/appserver-io/console/etc/appserver/conf.d</directory>
+                            <directory>${webapp.dir}/META-INF</directory>
+                        </directories>
+                    </parser>
+                </parsers>
+            </objectDescription>
         </manager>
         <manager name="ServletContextInterface" type="AppserverIo\Appserver\ServletEngine\ServletManager" factory="AppserverIo\Appserver\ServletEngine\ServletManagerFactory" contextFactory="AppserverIo\Appserver\Naming\NamingContextFactory">
             <params>
                 <param name="baseDirectory" type="string">WEB-INF</param>
             </params>
-            <directories>
-                <directory>${webapp.dir}/vendor/appserver-io/routlt/src</directory>
-                <directory>${webapp.dir}/WEB-INF/classes</directory>
-            </directories>
+            <objectDescription>
+                <descriptors>
+                    <descriptor>AppserverIo\Description\ServletDescriptor</descriptor>
+                    <descriptor>AppserverIo\Routlt\Description\PathDescriptor</descriptor>
+                    <descriptor>AppserverIo\Routlt\Description\ResultDescriptor</descriptor>
+                </descriptors>
+                <parsers>
+                    <parser name="directory" type="AppserverIo\Appserver\DependencyInjectionContainer\DirectoryParser" factory="AppserverIo\Appserver\DependencyInjectionContainer\ParserFactory">
+                        <directories>
+                            <directory>${webapp.dir}/vendor/appserver-io/routlt/src</directory>
+                            <directory>${webapp.dir}/WEB-INF/classes</directory>
+                        </directories>
+                    </parser>
+                    <parser name="deploymentDescriptor" type="AppserverIo\Appserver\ServletEngine\DependencyInjection\DeploymentDescriptorParser" factory="AppserverIo\Appserver\DependencyInjectionContainer\ParserFactory" descriptorName="web">
+                        <directories>
+                            <directory>${webapp.dir}/WEB-INF</directory>
+                        </directories>
+                    </parser>
+                </parsers>
+            </objectDescription>
         </manager>
         <manager name="AuthenticationManagerInterface" type="AppserverIo\Appserver\ServletEngine\Security\StandardAuthenticationManager" factory="AppserverIo\Appserver\ServletEngine\Security\StandardAuthenticationManagerFactory">
             <securityDomains>

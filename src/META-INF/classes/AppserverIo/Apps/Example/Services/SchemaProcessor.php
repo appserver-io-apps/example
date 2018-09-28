@@ -20,12 +20,10 @@
 
 namespace AppserverIo\Apps\Example\Services;
 
-use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\DBAL\Schema\SqliteSchemaManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppserverIo\Apps\Example\Entities\Impl\Product;
 use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
+use AppserverIo\Console\Server\Services\SchemaProcessorTrait;
 
 /**
  * A singleton session bean implementation that handles the
@@ -43,27 +41,43 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
 {
 
     /**
-     * The name of the configuration key that contains the database name.
-     *
-     * @var string
+     * Trait that provides schema managing functionality.
+     * 
+     * @var AppserverIo\Console\Server\Services\SchemaProcessorTrait 
      */
-    const PARAM_DBNAME = 'dbname';
-
+    use SchemaProcessorTrait;
+    
     /**
-     * The DIC provider instance.
+     * The application instance.
      *
-     * @var \AppserverIo\Psr\Di\ProviderInterface $provider
+     * @var \AppserverIo\Psr\Application\ApplicationInterface
+     * @EPB\Resource(type="ApplicationInterface")
+     */
+    protected $application;
+    
+    /**
+     * The DI provider instance.
+     *
+     * @var \AppserverIo\Psr\Di\ProviderInterface
      * @EPB\Resource(type="ProviderInterface")
      */
-    protected $providerInterface;
-
+    protected $provider;
+    
     /**
-     * The system logger implementation.
+     * The timer service context instance.
      *
-     * @var \AppserverIo\Logger\Logger
-     * @EPB\Resource(type="SystemLogger")
+     * @var \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface
+     * @EPB\Resource(type="TimerServiceContextInterface")
      */
-    protected $systemLogger;
+    protected $timerServiceContext;
+    
+    /**
+     * The object manager instance.
+     *
+     * @var \AppserverIo\Psr\Di\ObjectManagerInterface
+     * @EPB\Resource(type="ObjectManagerInterface")
+     */
+    protected $objectManager;
 
     /**
      * A list with default credentials for login testing.
@@ -83,95 +97,45 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
         array('appserver_09', 'appserver.i0', array('Customer')),
         array('guest', 'appserver.i0', array('Guest'))
     );
-
+    
     /**
-     * Example method that should be invoked after constructor.
+     * Returns the application instance.
      *
-     * @return void
-     * @EPB\PostConstruct
+     * @return \AppserverIo\Psr\Application\ApplicationInterface The initialized Doctrine entity manager
      */
-    public function initialize()
+    protected function getApplication()
     {
-        \info(
-            sprintf('%s has successfully been invoked by @PostConstruct annotation', __METHOD__)
-        );
+        return $this->application;
     }
-
+    
     /**
-     * Return's the system logger instance.
+     * Returns the DI provider instance.
      *
-     * @return \AppserverIo\Logger\Logger The sytsem logger instance
+     * @return \AppserverIo\Psr\Di\ProviderInterface The DI provider instance
      */
-    public function getSystemLogger()
+    protected function getProvider()
     {
-        return $this->systemLogger;
+        return $this->provider;
     }
-
+    
     /**
-     * Create's the database itself.
+     * Returns the object manager instance.
      *
-     * This quite seems to be a bit strange, because with all databases
-     * other than SQLite, we need to remove the database name from the
-     * connection parameters BEFORE connecting to the database, as
-     * connection to a not existing database fails.
-     *
-     * @return void
+     * @return \AppserverIo\Psr\Di\ObjectManagerInterface The object manager instance
      */
-    public function createDatabase()
+    protected function getObjectManager()
     {
-
-        try {
-            // clone the connection and load the database name
-            $connection = clone $this->getEntityManager()->getConnection();
-            $dbname = $connection->getDatabase();
-
-            // remove the the database name
-            $params = $connection->getParams();
-            if (isset($params[SchemaProcessor::PARAM_DBNAME])) {
-                unset($params[SchemaProcessor::PARAM_DBNAME]);
-            }
-
-            // create a new connection WITHOUT the database name
-            $cn = DriverManager::getConnection($params);
-            $sm = $cn->getDriver()->getSchemaManager($cn);
-
-            // SQLite doesn't support database creation by a method
-            if ($sm instanceof SqliteSchemaManager) {
-                return;
-            }
-
-            // query whether or not the database already exists
-            if (!in_array($dbname, $sm->listDatabases())) {
-                $sm->createDatabase($dbname);
-            }
-        } catch (\Exception $e) {
-            \error($e->__toString());
-        }
+        return $this->objectManager;
     }
-
+    
     /**
-     * Deletes the database schema and creates it new.
+     * Returns the timer service context instance.
      *
-     * Attention: All data will be lost if this method has been invoked.
-     *
-     * @return void
+     * @return \AppserverIo\Psr\EnterpriseBeans\TimerServiceContextInterface The timer service context instance
      */
-    public function createSchema()
+    protected function getTimerServiceContext()
     {
-
-        try {
-            // load the entity manager and the schema tool
-            $entityManager = $this->getEntityManager();
-            $schemaTool = new SchemaTool($entityManager);
-
-            // load the class definitions
-            $classes = $entityManager->getMetadataFactory()->getAllMetadata();
-
-            // create or update the schema
-            $schemaTool->updateSchema($classes);
-        } catch (\Exception $e) {
-            \error($e->__toString());
-        }
+        return $this->timerServiceContext;
     }
 
     /**
@@ -196,7 +160,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             }
 
             // set user data and save it
-            $product = $this->providerInterface->newInstance($className);
+            $product = $this->getProvider()->newInstance($className);
             $product->setName("Product-$i");
             $product->setStatus(Product::STATUS_ACTIVE);
             $product->setUrlKey("product-$i");
@@ -237,7 +201,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
             }
 
             // set user data and save it
-            $user = $this->providerInterface->newInstance($className);
+            $user = $this->getProvider()->newInstance($className);
             $user->setEmail(sprintf('%s@appserver.io', $username));
             $user->setUsername($username);
             $user->setUserLocale('en_US');
@@ -253,7 +217,7 @@ class SchemaProcessor extends AbstractPersistenceProcessor implements SchemaProc
 
             // create the user's roles
             foreach ($roleNames as $roleName) {
-                $role = $this->providerInterface->newInstance('\AppserverIo\Apps\Example\Entities\Impl\Role');
+                $role = $this->getProvider()->newInstance('\AppserverIo\Apps\Example\Entities\Impl\Role');
                 $role->setUser($user);
                 $role->setName($roleName);
                 $roles->add($role);

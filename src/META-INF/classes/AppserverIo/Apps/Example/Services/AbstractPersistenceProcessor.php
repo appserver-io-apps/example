@@ -47,38 +47,8 @@ abstract class AbstractPersistenceProcessor extends AbstractProcessor
      *
      * @return \Doctrine\ORM\EntityManagerInterface The initialized Doctrine entity manager
      */
-    public function getEntityManager()
+    protected function getEntityManager()
     {
         return $this->entityManager;
-    }
-
-    /**
-     * Close the entity manager's connection before destroying the bean.
-     *
-     * @return void
-     * @EPB\PreDestroy
-     */
-    public function preDestroy()
-    {
-        if ($entityManager = $this->getEntityManager()) {
-            if ($connection = $entityManager->getConnection()) {
-                $connection->close();
-            }
-        }
-    }
-
-    /**
-     * Close the entity manager's connection before re-attaching it to the container.
-     *
-     * @return void
-     * @EPB\PreAttach
-     */
-    public function preAttach()
-    {
-        if ($entityManager = $this->getEntityManager()) {
-            if ($connection = $entityManager->getConnection()) {
-                $connection->close();
-            }
-        }
     }
 }

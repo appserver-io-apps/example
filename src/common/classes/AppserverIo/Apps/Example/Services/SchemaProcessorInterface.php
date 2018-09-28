@@ -30,17 +30,8 @@ namespace AppserverIo\Apps\Example\Services;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
-interface SchemaProcessorInterface
+interface SchemaProcessorInterface extends \AppserverIo\Console\Server\Services\SchemaProcessorInterface
 {
-
-    /**
-     * Deletes the database schema and creates it new.
-     *
-     * Attention: All data will be lost if this method has been invoked.
-     *
-     * @return void
-     */
-    public function createSchema();
 
     /**
      * Creates the default credentials to login.

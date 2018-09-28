@@ -14,14 +14,14 @@
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io/appserver
+ * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  */
 
 namespace AppserverIo\Apps\Example\Provisioning;
 
+use AppserverIo\Provisioning\Steps\AbstractStep;
 use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
-use AppserverIo\Appserver\Provisioning\Steps\AbstractStep;
 
 /**
  * An step implementation that creates a database, login credentials and dummy
@@ -30,21 +30,31 @@ use AppserverIo\Appserver\Provisioning\Steps\AbstractStep;
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      https://github.com/appserver-io/appserver
+ * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
  * @EPB\Inject(shared=false)
  */
 class PrepareDatabaseStep extends AbstractStep
 {
-    
+
     /**
      * The user processor instance (a SFB instance).
      *
-     * @var \AppserverIo\Apps\Example\Services\SchemaProcessor
+     * @var \AppserverIo\Apps\Example\Services\SchemaProcessorInterface
      * @EPB\EnterpriseBean(name="SchemaProcessor")
      */
     protected $schemaProcessor;
+
+    /**
+     * Returns the schema processor instance.
+     * 
+     * @return \AppserverIo\Apps\Example\Services\SchemaProcessorInterface
+     */
+    protected function getSchemaProcessor()
+    {
+        return $this->schemaProcessor;
+    }
 
     /**
      * Executes the functionality for this step, in this case the execution of
@@ -58,15 +68,15 @@ class PrepareDatabaseStep extends AbstractStep
     {
         
         // log a message that provisioning starts
-        \info('Now start to prepare database using SchemaProcessor!');
+        \info(sprintf('Now start to prepare database using "%s"', get_class($this->getSchemaProcessor())));
 
         // create schema, default products + login credentials
-        $this->schemaProcessor->createDatabase();
-        $this->schemaProcessor->createSchema();
-        $this->schemaProcessor->createDefaultProducts();
-        $this->schemaProcessor->createDefaultCredentials();
+        $this->getSchemaProcessor()->createDatabase();
+        $this->getSchemaProcessor()->createSchema();
+        $this->getSchemaProcessor()->createDefaultProducts();
+        $this->getSchemaProcessor()->createDefaultCredentials();
 
         // log a message that provisioning has been successfull
-        \info('Successfully prepared database using SchemaProcessor!');
+        \info(sprintf('Successfully prepared database using "%s"', get_class($this->getSchemaProcessor())));
     }
 }
