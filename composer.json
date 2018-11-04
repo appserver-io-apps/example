@@ -10,7 +10,7 @@
         "jms/serializer": "~1.0",
         "doctrine/orm": "2.5.*",
         "appserver-io/routlt": "2.4.*",
-        "appserver-io/console": "10.0.*",
+        "appserver-io/console": "dev-master",
         "appserver-io/provisioning": "1.0.*"
     },
     "require-dev": {
@@ -33,6 +33,12 @@
         {
             "name": "Bernhard Wick",
             "email": "bw@appserver.io"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../appserver-io/console"
         }
     ]
 }
