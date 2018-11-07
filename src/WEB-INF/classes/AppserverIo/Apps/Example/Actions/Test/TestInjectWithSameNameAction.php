@@ -54,23 +54,23 @@ class TestInjectWithSameNameAction extends DispatchAction
      * The first bean reference.
      *
      * @var \AppserverIo\Apps\Example\Actions\Test\RandomBeanImplementation
-     * @EPB\Inject(name="RandomBeanImplementation")
+     * @EPB\Inject(beanName="RandomBeanImplementation")
      */
     protected $beanImpl1;
-    
+
     /**
      * The second bean reference.
      *
      * @var \AppserverIo\Apps\Example\Actions\Test\RandomBeanImplementation
-     * @EPB\Inject(name="RandomBeanImplementation")
+     * @EPB\Inject(beanName="RandomBeanImplementation")
      */
     protected $beanImpl2;
-    
+
     /**
      * The third bean reference.
      *
      * @var \AppserverIo\Apps\Example\Actions\Test\RandomBeanImplementation
-     * @EPB\Inject(name="RandomBeanImplementation")
+     * @EPB\Inject(beanName="RandomBeanImplementation")
      */
     protected $beanImpl3;
 
@@ -83,7 +83,7 @@ class TestInjectWithSameNameAction extends DispatchAction
     {
         return $this->beanImpl1;
     }
-    
+
     /**
      * Returns the second bean reference.
      *
@@ -93,7 +93,7 @@ class TestInjectWithSameNameAction extends DispatchAction
     {
         return $this->beanImpl2;
     }
-    
+
     /**
      * Returns the third bean reference.
      *
