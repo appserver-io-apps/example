@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AppserverIo\Apps\Example\Actions\Test\RandomBeanImplementation
+ * AppserverIo\Apps\Example\Actions\Test\RandomBeanFactory
  *
  * NOTICE OF LICENSE
  *
@@ -23,7 +23,7 @@ namespace AppserverIo\Apps\Example\Actions\Test;
 use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
 
 /**
- * A bean for testing purposes that'll be created by a factory.
+ * A factory for the random bean instances.
  *
  * @author    Tim Wagner <tw@appserver.io>
  * @copyright 2015 TechDivision GmbH <info@appserver.io>
@@ -31,20 +31,18 @@ use AppserverIo\Psr\EnterpriseBeans\Annotations as EPB;
  * @link      https://github.com/appserver-io-apps/example
  * @link      http://www.appserver.io
  *
- * @EPB\Inject(factory="RandomBeanFactory", factoryMethod="createRandomBean")
+ * @EPB\Inject
  */
-class RandomBeanImplementation
+class RandomBeanFactory
 {
 
     /**
-     * A test method that returns what has been passed.
+     * The factory method to create a new instance of a random bean instance.
      *
-     * @param mixed $stuff The stuff that has to be returned
-     *
-     * @return mixed The passed stuff
+     * @return \AppserverIo\Apps\Example\Actions\Test\RandomBeanImplementation The bean instance
      */
-    public function someMethod($stuff)
+    public function createRandomBean()
     {
-        return $stuff;
+        return new RandomBeanImplementation();
     }
 }

@@ -1,3 +1,23 @@
+# Version 2.4.2
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Factory example
+
+# Version 2.4.1
+
+## Bugfixes
+
+* None
+
+## Features
+
+* Minor changes
+
 # Version 2.4.0
 
 ## Bugfixes
